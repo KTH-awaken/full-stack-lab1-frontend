@@ -1,15 +1,12 @@
-FROM node
+FROM node:14 AS build
+WORKDIR /app
+COPY ./package.json ./package-lock.json ./
+RUN npm install
+COPY . ./
+RUN npm run build
 
-WORKDIR /client/
 
-
-COPY package.json .
-RUN npm i
-
-COPY . .
-
-## EXPOSE [Port you mentioned in the vite.config file]
-
-EXPOSE 3000
-
-CMD ["npm", "run", "dev"]
+FROM nginx:alpine
+COPY --from=build /app/dist /usr/share/nginx/html
+EXPOSE 80
+CMD ["nginx", "-g", "daemon off;"]
