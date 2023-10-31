@@ -1,4 +1,4 @@
-FROM node:14 AS build
+FROM node:20.5.1-bookworm-slim AS build
 WORKDIR /app
 COPY ./package.json ./package-lock.json ./
 RUN npm install
