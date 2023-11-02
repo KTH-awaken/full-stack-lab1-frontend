@@ -4,12 +4,15 @@ import { Outlet } from "react-router-dom";
 function Layout() {
 
     return (
-        <Container>
-            <Navbar />
-            <div className="pt-8">
-                <Outlet />
-            </div>
-        </Container>
+        <div className="bg-accent min-h-screen">
+            <Container>
+                <Navbar />
+                <div className="pt-8">
+                    <Outlet />
+                </div>
+            </Container>
+        </div>
+
     )
 }
 

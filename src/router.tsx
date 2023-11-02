@@ -23,6 +23,7 @@ export const router = createBrowserRouter([
                 element: <Messages />,
                 children: [
                     {
+                        
                         path: ":chatid",
                         element: <Chat />
                     }

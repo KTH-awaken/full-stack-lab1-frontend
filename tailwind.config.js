@@ -51,8 +51,6 @@ module.exports = {
           foreground: "hsl(var(--card-foreground))",
         },
         main: "var(--main)",
-        txt: "var(--text)",
-        gray: "var(--gray)",
 
       },
       borderRadius: {
