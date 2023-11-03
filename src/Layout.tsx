@@ -1,11 +1,14 @@
 import Container from "./components/Container"
 import Navbar from "./components/Navbar"
 import { Outlet } from "react-router-dom";
-import { ThemeProvider } from "./context/themeProvider";
+import Providers from "./context/providers";
+
+
+
 function Layout() {
 
     return (
-        <ThemeProvider>
+        <Providers>
             <div className="bg-globe-bg min-h-screen">
                 <Container>
                     <Navbar />
@@ -14,7 +17,7 @@ function Layout() {
                     </div>
                 </Container>
             </div>
-        </ThemeProvider>
+        </Providers>
 
 
     )

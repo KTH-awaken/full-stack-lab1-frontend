@@ -1,10 +1,10 @@
 import { useParams } from "react-router-dom";
-import { CHATS } from "./Messages";
 import { currentUser } from "../auth/fake-user";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Card } from "../components/ui/card";
+import { CHATS } from "../auth/fake-data";
 
 
 export const chatname = (chat: any) => currentUser.name === chat.sender ? chat.reciver : chat.sender;
