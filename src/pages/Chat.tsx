@@ -4,6 +4,7 @@ import { currentUser } from "../auth/fake-user";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { Card } from "../components/ui/card";
 
 
 export const chatname = (chat: any) => currentUser.name === chat.sender ? chat.reciver : chat.sender;
@@ -17,14 +18,14 @@ const Chat = () => {
         <>
             {
                 chat &&
-                <div className="bg-white p-6 flex flex-col justify-center rounded-2xl h-[80vh] ">
+                <Card className="bg-background p-6 flex flex-col justify-center rounded-2xl h-[80vh] ">
                     <div className="mb-4 pb-2 flex gap-3">
                         <Avatar>
                             <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
                         </Avatar>
                         <div>
                             <p className="font-bold text-xl">{chatname(chat)}</p>
-                            <p className="text-sm text-black/50">username@gmail.com</p>
+                            <p className="text-sm text-foreground/50">username@gmail.com</p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
@@ -36,7 +37,7 @@ const Chat = () => {
                         <Input className="border-none bg-accent" placeholder="Write a message..." type="text" name="" id="" ></Input>
                         <Button type="submit">Send</Button>
                     </form>
-                </div>
+                </Card>
             }
         </>
 

@@ -2,10 +2,7 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --main: #4796FF;
 
-}
 
 
 
@@ -32,6 +29,7 @@
     --input: 214.3 31.8% 91.4%;
     --ring: 219.2 83.2% 54.3%;
     --radius: 1rem;
+    --globe-bg: #F1F5F9
   }
 
   .dark {
@@ -42,7 +40,7 @@
     --popover: 222.2 84% 4.9%;
     --popover-foreground: 210 40% 98%;
     --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary-foreground: 0 0% 100%;
     --secondary: 217.2 32.6% 17.5%;
     --secondary-foreground: 210 40% 98%;
     --muted: 217.2 32.6% 17.5%;
@@ -54,6 +52,7 @@
     --border: 217.2 32.6% 17.5%;
     --input: 217.2 32.6% 17.5%;
     --ring: 224.3 76.3% 48%;
+    --globe-bg: #020817
   }
 }
 

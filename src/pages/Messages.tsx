@@ -3,6 +3,7 @@ import { Button } from "../components/ui/button";
 import { currentUser } from "../auth/fake-user";
 import { chatname } from "./Chat";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
+import { Card } from "../components/ui/card";
 
 interface Message {
     content: string,
@@ -87,8 +88,8 @@ const MessageRow = ({ chat }: { chat: Chat }) => {
             <div className="flex-grow">
                 <p className="font-semibold mb-1 ">{chatname(chat)}</p>
                 <div className="flex justify-between  items-center">
-                    <p className="text-sm font-light text-black/80">{chat.messages[chat.messages.length - 1].content}</p>
-                    <p className="text-xs font-light text-black/80">{chat.messages[chat.messages.length - 1].timestamp}</p>
+                    <p className="text-sm font-light text-foreground/80">{chat.messages[chat.messages.length - 1].content}</p>
+                    <p className="text-xs font-light text-foreground/80">{chat.messages[chat.messages.length - 1].timestamp}</p>
 
                 </div>
             </div>
@@ -101,15 +102,15 @@ const Messages = () => {
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">
-            <div className="w-1/2 p-6 pt-0 bg-white rounded-2xl overflow-y-auto relative">
-                <div className="flex items-start justify-between mb-4 pb-2 pt-6  sticky top-0 bg-white">
+            <Card className="w-1/2 p-6 pt-0 bg-background rounded-2xl overflow-y-auto relative">
+                <div className="flex items-start justify-between mb-4 pb-2 pt-6  sticky top-0 bg-background">
                     <h1 className="text-xl font-bold">Message</h1>
                     <Button variant="default">New Message</Button>
                 </div>
                 <div className="">
                     {CHATS.map((chat, index) => <MessageRow key={index} chat={chat} />)}
                 </div>
-            </div>
+            </Card>
             <div className="w-1/2 h-full">
                 <Outlet />
             </div>
