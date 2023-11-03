@@ -1,4 +1,4 @@
-import { Chat } from "../pages/Messages";
+import { Chat } from "../pages/Message/Index";
 
 export const CHATS: Chat[] = [
     {

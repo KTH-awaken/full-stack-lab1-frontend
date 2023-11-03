@@ -1,10 +1,6 @@
-interface User {
-    name: string;
-    email: string;
-    role: "patient" | "doctor" | "stuff";
-}
+import { Account } from "../types";
 
-export const currentUser: User = {
+export const currentUser: Account = {
     name: "Hamada",
     email: "hamada@gmail.com",
     role: "patient",
