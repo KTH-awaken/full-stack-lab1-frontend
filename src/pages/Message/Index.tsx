@@ -3,7 +3,6 @@ import { Card } from "../../components/ui/card";
 import { useGetCall } from "../../api/crud";
 import CustomAlert from "../../components/CustomAlert";
 import NewChatDialog from "./NewChatDialog";
-import { Chat } from "../../types";
 import ChatRow, { ChatRowLoading } from "./ChatRow";
 import { ChatApi } from "../../api/types/chat";
 

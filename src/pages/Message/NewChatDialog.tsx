@@ -4,15 +4,10 @@ import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
-import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
-import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "../../components/ui/command";
 import { Button } from "../../components/ui/button";
-import { cn } from "../../lib/lib";
 import { Textarea } from "../../components/ui/textarea";
-import {  DoctorSelect } from "../../types";
-import { uid } from "../../helpers/helpers";
 import { useAuth } from "../../context/auth-context";
+import SelectPopover from "../../components/SelectPopover";
 
 
 
@@ -37,67 +32,11 @@ const formSchema = z.object({
 
 
 
-type DoctorSelectPopoverProps = {
-    doctors: DoctorSelect[];
-    email: string;
-    onValueChange: (newValue: string) => void;
-}
-
-const DoctorSelectPopover = ({ doctors, email, onValueChange }: DoctorSelectPopoverProps) => {
-    const [open, setOpen] = useState(false);
-
-    return (
-        <Popover open={open} onOpenChange={setOpen}>
-            <PopoverTrigger asChild>
-                <Button
-                    variant="outline"
-                    role="combobox"
-                    aria-expanded={open}
-                    className="w-full justify-between border-none bg-accent"
-                >
-                    {email
-                        ? doctors.find((doctor) => doctor.email === email)?.name
-                        : "Select doctor..."}
-                    <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
-                </Button>
-            </PopoverTrigger>
-            <PopoverContent className="w-[200px] p-0">
-                <Command>
-                    <CommandInput placeholder="Search framework..." />
-                    <CommandEmpty>No Doctor found.</CommandEmpty>
-                    <CommandGroup>
-                        {doctors.map((doctor) => (
-                            <CommandItem
-                                key={uid()}
-                                value={doctor.email}
-                                onSelect={(currentValue) => {
-                                    onValueChange(currentValue === email ? "" : currentValue);
-                                    setOpen(false);
-                                }}
-                            >
-                                <Check
-                                    className={cn(
-                                        "mr-2 h-4 w-4",
-                                        email === doctor.email ? "opacity-100" : "opacity-0"
-                                    )}
-                                />
-                                {doctor.name}
-                            </CommandItem>
-                        ))}
-                    </CommandGroup>
-                </Command>
-            </PopoverContent>
-        </Popover>
-    );
-};
-
-
-
 
 const NewChatDialog = () => {
-    const {account} = useAuth();
+    const { account } = useAuth();
 
-    const { data: doctors } = useGetCall<DoctorSelect[]>("/doctors");
+    const { data: doctors } = useGetCall<{label:string,value:string}[]>("/doctors");
     const [reciever, setReviever] = useState("")
 
     const { register, handleSubmit, setValue, reset, formState: { errors }, } = useForm<FormData>({
@@ -115,7 +54,7 @@ const NewChatDialog = () => {
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
         // CREATE NEW CHAT
-        
+
 
         console.log(data);
         reset();
@@ -143,9 +82,10 @@ const NewChatDialog = () => {
 
                     <p className="mb-2">Doctor</p>
                     {
-                        doctors && <DoctorSelectPopover
-                            doctors={doctors}
-                            email={reciever}
+                        doctors && <SelectPopover
+                            title="doctor"
+                            list={doctors}
+                            value={reciever}
                             onValueChange={(newValue) => setReviever(newValue)}
                         />
                     }

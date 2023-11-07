@@ -1,10 +1,10 @@
 import axios, { AxiosResponse } from "axios";
-import { SERVER_URL } from "../data/fake-data";
+
+
+const BASE_URL = "http://localhost:3001"
+// export const BASE_URL = "http://localhost:8000/api/v1";
 
 axios.defaults.timeout = 3 * 1000;
-
-const BASE_URL = SERVER_URL;
-
 export const apiService = {
     get: async <T>(endpoint: string): Promise<T> => {
         const response: AxiosResponse<T> = await axios.get(

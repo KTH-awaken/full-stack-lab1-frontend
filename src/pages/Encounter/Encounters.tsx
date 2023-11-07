@@ -32,9 +32,11 @@ const Loading = () => {
 const Encounters = () => {
     const {account} = useAuth();
     const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters");
+    // const url = account.role.toLocaleLowerCase();
+    // const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters/"+url+"/"+account.id);
     
 
-    
+
     
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
@@ -46,9 +48,7 @@ const Encounters = () => {
                 {encounters && encounters.map((enc:EncounterApi) => 
                     <EncounterRow 
                         key={uid()} 
-                        observations={enc.observations} 
-                        title={enc.title} 
-                        details={enc.details} 
+                        encounter={enc}
                     />)}
             </Accordion>
 

@@ -16,10 +16,6 @@ export interface Chat {
     messages: Message[]
     id: string,
 }
-export interface DoctorSelect {
-    name: string,
-    email: string
-}
 
 export interface Encounter {
     title: string,

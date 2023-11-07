@@ -5,10 +5,12 @@ import Messages from './pages/Message/Index.tsx';
 import Encounters from './pages/Encounter/Encounters.tsx';
 import Chat from "./pages/Message/ChatWindow.tsx";
 import Home from "./pages/Home.tsx";
+import Patients from "./pages/Patient/Index.tsx";
+import PatientDetails from "./pages/Patient/PatientDetails.tsx";
 
 export const router = createBrowserRouter([
     {
-        path:"/",
+        path: "/",
         element: <Layout />,
         errorElement: <ErrorPage />,
 
@@ -23,7 +25,7 @@ export const router = createBrowserRouter([
                 element: <Messages />,
                 children: [
                     {
-                        
+
                         path: ":chatid",
                         element: <Chat />
                     }
@@ -32,6 +34,14 @@ export const router = createBrowserRouter([
             {
                 path: 'encounters',
                 element: <Encounters />
+            },
+            {
+                path: 'patients',
+                element: <Patients />,
+            },
+            {
+                path: 'patients/:patientId',
+                element: <PatientDetails />
             }
         ]
     },

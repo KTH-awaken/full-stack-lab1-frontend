@@ -81,66 +81,83 @@
             "timestamp": "2023-11-06T15:30:31"
         }
     ],
+    "patients": [
+        {
+            "id": 1,
+            "name": "Patient 1",
+            "email": "patient1@email.com"
+        },
+        {
+            "id": 2,
+            "name": "Patient 2",
+            "email": "patient2@email.com"
+        },
+        {
+            "id": 3,
+            "name": "Patient 3",
+            "email": "patient3@email.com"
+        }
+    ],
     "doctors": [
         {
-            "email": "hamada@gmail.com",
-            "name": "Dr. Hamada Aljarrah"
+            "value": "hamada@gmail.com",
+            "label": "Dr. Hamada Aljarrah"
         },
         {
-            "email": "smith@gmail.com",
-            "name": "Dr. John Smith"
+            "value": "smith@gmail.com",
+            "label": "Dr. John Smith"
         },
         {
-            "email": "jones@gmail.com",
-            "name": "Dr. Emily Jones"
+            "value": "jones@gmail.com",
+            "label": "Dr. Emily Jones"
         },
         {
-            "email": "ali@gmail.com",
-            "name": "Dr. Ali Hassan"
+            "value": "ali@gmail.com",
+            "label": "Dr. Ali Hassan"
         },
         {
-            "email": "lisa@gmail.com",
-            "name": "Dr. Lisa Anderson"
+            "value": "lisa@gmail.com",
+            "label": "Dr. Lisa Anderson"
         },
         {
-            "email": "ahmad@gmail.com",
-            "name": "Dr. Ahmad Ibrahim"
+            "value": "ahmad@gmail.com",
+            "label": "Dr. Ahmad Ibrahim"
         },
         {
-            "email": "jackson@gmail.com",
-            "name": "Dr. Sarah Jackson"
+            "value": "jackson@gmail.com",
+            "label": "Dr. Sarah Jackson"
         },
         {
-            "email": "davis@gmail.com",
-            "name": "Dr. Michael Davis"
+            "value": "davis@gmail.com",
+            "label": "Dr. Michael Davis"
         },
         {
-            "email": "mohammed@gmail.com",
-            "name": "Dr. Mohammed Khan"
+            "value": "mohammed@gmail.com",
+            "label": "Dr. Mohammed Khan"
         },
         {
-            "email": "garcia@gmail.com",
-            "name": "Dr. Maria Garcia"
+            "value": "garcia@gmail.com",
+            "label": "Dr. Maria Garcia"
         },
         {
-            "email": "wilson@gmail.com",
-            "name": "Dr. Jennifer Wilson"
+            "value": "wilson@gmail.com",
+            "label": "Dr. Jennifer Wilson"
         },
         {
-            "email": "chen@gmail.com",
-            "name": "Dr. Wei Chen"
+            "value": "chen@gmail.com",
+            "label": "Dr. Wei Chen"
         },
         {
-            "email": "lee@gmail.com",
-            "name": "Dr. David Lee"
+            "value": "lee@gmail.com",
+            "label": "Dr. David Lee"
         },
         {
-            "email": "lopez@gmail.com",
-            "name": "Dr. Sofia Lopez"
+            "value": "lopez@gmail.com",
+            "label": "Dr. Sofia Lopez"
         },
         {
-            "email": "wang@gmail.com",
-            "name": "Dr. Li Wang"
+            "value": "wang@gmail.com",
+            "label": "Dr. Li Wang"
         },
         {
             "value": "harris@gmail.com",
@@ -167,199 +184,397 @@
         {
             "id": 1,
             "title": "Encounter A1",
-            "patientId": 1,
-            "doctorId": 4,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
             "observations": [
                 {
                     "id": 1,
-                    "patientId": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 1,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation A1"
                 },
                 {
                     "id": 2,
-                    "patientId": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 1,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation A11"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details A1"
         },
         {
             "id": 2,
             "title": "Encounter A2",
-            "patientId": 1,
-            "doctorId": 4,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
             "observations": [
                 {
                     "id": 3,
-                    "patientId": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 2,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation A2"
                 },
                 {
                     "id": 4,
-                    "patientId": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 2,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation A22"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details A2"
         },
         {
             "id": 3,
             "title": "Encounter A3",
-            "patientId": 1,
-            "doctorId": 5,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
             "observations": [
                 {
                     "id": 5,
-                    "patientId": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 3,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation A3"
                 },
                 {
                     "id": 6,
-                    "patientId": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 3,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation A33"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details A3"
         },
         {
             "id": 4,
             "title": "Encounter B1",
-            "patientId": 2,
-            "doctorId": 5,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
             "observations": [
                 {
                     "id": 7,
-                    "patientId": 2,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 4,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation B1"
                 },
                 {
                     "id": 8,
-                    "patientId": 2,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 4,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation B11"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details B1"
         },
         {
             "id": 5,
             "title": "Encounter B2",
-            "patientId": 2,
-            "doctorId": 4,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
             "observations": [
                 {
                     "id": 9,
-                    "patientId": 2,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 5,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation B2"
                 },
                 {
                     "id": 10,
-                    "patientId": 2,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
                     "encounterId": 5,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation B22"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details B2"
         },
         {
             "id": 6,
             "title": "Encounter B3",
-            "patientId": 2,
-            "doctorId": 5,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
             "observations": [
                 {
                     "id": 11,
-                    "patientId": 2,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 6,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation B3"
                 },
                 {
                     "id": 12,
-                    "patientId": 2,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 6,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation B33"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details B3"
         },
         {
             "id": 7,
             "title": "Encounter C1",
-            "patientId": 3,
-            "doctorId": 4,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
             "observations": [
                 {
                     "id": 13,
-                    "patientId": 3,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 7,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation C1"
                 },
                 {
                     "id": 14,
-                    "patientId": 3,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 7,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation C11"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details C1"
         },
         {
             "id": 8,
             "title": "Encounter C2",
-            "patientId": 3,
-            "doctorId": 5,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
             "observations": [
                 {
                     "id": 15,
-                    "patientId": 3,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 8,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation C2"
                 },
                 {
                     "id": 16,
-                    "patientId": 3,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 8,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation C22"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details C2"
         },
         {
             "id": 9,
             "title": "Encounter C3",
-            "patientId": 3,
-            "doctorId": 4,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
             "observations": [
                 {
                     "id": 17,
-                    "patientId": 3,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 9,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation C3"
                 },
                 {
                     "id": 18,
-                    "patientId": 3,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
                     "encounterId": 9,
+                    "timestamp": "2023-11-07T00:00:00",
                     "content": "Observation C33"
                 }
             ],
-            "date": "2023-11-06T15:30:31",
+            "date": "2023-11-07T14:22:19",
             "details": "Details C3"
         }
     ]
