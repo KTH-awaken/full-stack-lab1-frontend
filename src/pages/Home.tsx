@@ -1,11 +1,11 @@
-import { currentUser } from '../auth/fake-user'
+import { useAuth } from '../context/auth-context'
 
 
 const Home = () => {
-
+    const {account} = useAuth();
     return (
         <>
-            <h1 className='font-bold text-3xl'>Hi {currentUser.name}</h1>
+            <h1 className='font-bold text-3xl'>Hi {account.name}</h1>
         </>
     )
 }

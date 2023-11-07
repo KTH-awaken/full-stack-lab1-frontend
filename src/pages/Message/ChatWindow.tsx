@@ -1,15 +1,17 @@
 import { useParams } from "react-router-dom";
-import { currentUser } from "../../auth/fake-user";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Card } from "../../components/ui/card";
 import { useGetCall } from "../../api/crud";
-import {  getDisplayName } from "../../helpers/helpers";
+import { getDisplayName } from "../../helpers/helpers";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
 import { Chat } from "../../types";
 import { MessageRow } from "./MessageRow";
+import { FormEvent, useState } from "react";
+import { useAuth } from "../../context/auth-context";
+import { MessageApi } from "../../api/types/chat";
 
 
 
@@ -42,36 +44,58 @@ const Loading = () => {
 }
 
 const ChatWindow = () => {
-
+    const {account} = useAuth();
     const params = useParams();
-    const { data: chat, isLoading, isError } = useGetCall<Chat>("/chats/" + params.chatid)
+    const { data, isLoading, isError } = useGetCall<MessageApi[]>("/messages/");
+    const messages = data?.filter(d => d.chatId.toString() === params.chatid)
+    const [message, setMessage] = useState("");
 
-    if(isLoading) return <Loading />;
-    if(isError) return <CustomAlert title='Error' message='An error occured. Please try again later'/>
+    const handleSubmit = (e: FormEvent) => {
+        e.preventDefault();
+        if (!message.trim()) {
+            return
+        }
+        const now = new Date();
+        const messageToSend = {
+            user: account.email,
+            time: `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
+            content: message
+        }
+        setMessage("");
+        console.log(messageToSend);
+        // CREATE NEW MESSAGE IN CHAT
+
+    }
+
+    
+
+
+    if (isLoading) return <Loading />;
+    if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
 
 
 
     return (
         <>
             {
-                chat &&
+                messages &&
                 <Card className="bg-background p-6 flex flex-col justify-center rounded-2xl h-[80vh] ">
                     <div className="mb-4 pb-2 flex gap-3">
                         <Avatar>
                             <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
                         </Avatar>
                         <div>
-                            <p className="font-bold text-xl">{getDisplayName(chat).name}</p>
-                            <p className="text-sm text-foreground/50">{getDisplayName(chat).email}</p>
+                            <p className="font-bold text-xl">{messages[0].sender.name}</p>
+                            <p className="text-sm text-foreground/50">{messages[0].sender.email}</p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
 
-                        {chat.messages.map((message, index) => <MessageRow key={index} self={message.user === currentUser.name} content={message.content} />)}
+                        {messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.content} />)}
 
                     </div>
-                    <form className="flex gap-3 pt-3">
-                        <Input className="border-none bg-accent" placeholder="Type a message..." type="text" name="" id="" ></Input>
+                    <form onSubmit={handleSubmit} className="flex gap-3 pt-3">
+                        <Input value={message} onChange={(e) => setMessage(e.target.value)} className="border-none bg-accent" placeholder="Type a message..." type="text" name="" id="" ></Input>
                         <Button type="submit">Send</Button>
                     </form>
                 </Card>

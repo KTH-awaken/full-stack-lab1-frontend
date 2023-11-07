@@ -1,5 +1,5 @@
 import axios, { AxiosResponse } from "axios";
-import { SERVER_URL } from "../auth/fake-user";
+import { SERVER_URL } from "../data/fake-data";
 
 axios.defaults.timeout = 3 * 1000;
 

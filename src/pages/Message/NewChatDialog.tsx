@@ -3,7 +3,6 @@ import { useGetCall } from "../../api/crud";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { currentUser } from "../../auth/fake-user";
 import { Dialog, DialogClose, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "../../components/ui/dialog";
 import { Popover, PopoverContent, PopoverTrigger } from "../../components/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
@@ -11,7 +10,9 @@ import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem } from "
 import { Button } from "../../components/ui/button";
 import { cn } from "../../lib/lib";
 import { Textarea } from "../../components/ui/textarea";
-import { DoctorSelect } from "../../types";
+import {  DoctorSelect } from "../../types";
+import { uid } from "../../helpers/helpers";
+import { useAuth } from "../../context/auth-context";
 
 
 
@@ -38,11 +39,11 @@ const formSchema = z.object({
 
 type DoctorSelectPopoverProps = {
     doctors: DoctorSelect[];
-    value: string;
+    email: string;
     onValueChange: (newValue: string) => void;
 }
 
-const DoctorSelectPopover = ({ doctors, value, onValueChange }: DoctorSelectPopoverProps) => {
+const DoctorSelectPopover = ({ doctors, email, onValueChange }: DoctorSelectPopoverProps) => {
     const [open, setOpen] = useState(false);
 
     return (
@@ -54,8 +55,8 @@ const DoctorSelectPopover = ({ doctors, value, onValueChange }: DoctorSelectPopo
                     aria-expanded={open}
                     className="w-full justify-between border-none bg-accent"
                 >
-                    {value
-                        ? doctors.find((doctor) => doctor.value === value)?.label
+                    {email
+                        ? doctors.find((doctor) => doctor.email === email)?.name
                         : "Select doctor..."}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
                 </Button>
@@ -67,20 +68,20 @@ const DoctorSelectPopover = ({ doctors, value, onValueChange }: DoctorSelectPopo
                     <CommandGroup>
                         {doctors.map((doctor) => (
                             <CommandItem
-                                key={doctor.value}
-                                value={doctor.value}
+                                key={uid()}
+                                value={doctor.email}
                                 onSelect={(currentValue) => {
-                                    onValueChange(currentValue === value ? "" : currentValue);
+                                    onValueChange(currentValue === email ? "" : currentValue);
                                     setOpen(false);
                                 }}
                             >
                                 <Check
                                     className={cn(
                                         "mr-2 h-4 w-4",
-                                        value === doctor.value ? "opacity-100" : "opacity-0"
+                                        email === doctor.email ? "opacity-100" : "opacity-0"
                                     )}
                                 />
-                                {doctor.label}
+                                {doctor.name}
                             </CommandItem>
                         ))}
                     </CommandGroup>
@@ -94,6 +95,7 @@ const DoctorSelectPopover = ({ doctors, value, onValueChange }: DoctorSelectPopo
 
 
 const NewChatDialog = () => {
+    const {account} = useAuth();
 
     const { data: doctors } = useGetCall<DoctorSelect[]>("/doctors");
     const [reciever, setReviever] = useState("")
@@ -101,7 +103,7 @@ const NewChatDialog = () => {
     const { register, handleSubmit, setValue, reset, formState: { errors }, } = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            sender: currentUser.email,
+            sender: account.email,
             reciever: reciever,
             message: "",
         },
@@ -112,11 +114,11 @@ const NewChatDialog = () => {
     }, [reciever]);
 
     const onSubmit: SubmitHandler<FormData> = (data) => {
-        // HERE DO REST API HERE...
+        // CREATE NEW CHAT
+        
 
         console.log(data);
         reset();
-        setReviever("");
         (function () { document.getElementById('closeDialog')?.click(); }())
 
     };
@@ -143,7 +145,7 @@ const NewChatDialog = () => {
                     {
                         doctors && <DoctorSelectPopover
                             doctors={doctors}
-                            value={reciever}
+                            email={reciever}
                             onValueChange={(newValue) => setReviever(newValue)}
                         />
                     }

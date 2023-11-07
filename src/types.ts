@@ -1,4 +1,6 @@
 
+//TODO: REMOVE THIS WHEN ALL DATA ARE RETREIVED FROM SERVER
+
 export interface User {
     name: string,
     email: string
@@ -15,17 +17,19 @@ export interface Chat {
     id: string,
 }
 export interface DoctorSelect {
-    label: string,
-    value: string
+    name: string,
+    email: string
 }
 
 export interface Encounter {
     title: string,
     details: string
+
 }
 
 export interface Account {
+    id:number,
     name: string;
     email: string;
-    role: "patient" | "doctor" | "stuff";
+    role: "PATIENT" | "DOCTOR" | "STAFF";
 }

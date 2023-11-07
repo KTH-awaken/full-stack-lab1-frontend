@@ -14,7 +14,7 @@ export const useGetCall = <T>(endpoint: string): UseQueryResult<T, unknown> => {
     );
 };
 
-export const useCreateCall = <T, U = {}>(
+export const usePostCall = <T, U = {}>(
     endpoint: string
 ): UseMutationResult<T, unknown, U, unknown> => {
     const queryClient = useQueryClient();
@@ -28,7 +28,7 @@ export const useCreateCall = <T, U = {}>(
     );
 };
 
-export const useUpdateCall = <T, U = {}>(
+export const usePutCall = <T, U = {}>(
     endpoint: string
 ): UseMutationResult<T, unknown, U, unknown> => {
     const queryClient = useQueryClient();

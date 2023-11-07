@@ -1,11 +1,12 @@
-import { useGetCall } from "../api/crud";
-import CustomAlert from "../components/CustomAlert";
-import Explandable from "../components/Explandable";
-import { Accordion, } from "../components/ui/accordion"
-import { Card } from "../components/ui/card";
-import { Skeleton } from "../components/ui/skeleton";
-import { uid } from "../helpers/helpers";
-import { Encounter } from "../types";
+import { useGetCall } from "../../api/crud";
+import CustomAlert from "../../components/CustomAlert";
+import EncounterRow from "./EncounterRow";
+import { Accordion, } from "../../components/ui/accordion"
+import { Card } from "../../components/ui/card";
+import { Skeleton } from "../../components/ui/skeleton";
+import { uid } from "../../helpers/helpers";
+import { useAuth } from "../../context/auth-context";
+import { EncounterApi } from "../../api/types/encounter";
 
 
 
@@ -29,8 +30,12 @@ const Loading = () => {
 }
 
 const Encounters = () => {
-    const { data, isLoading, isError } = useGetCall<Encounter[]>("/encounters");
+    const {account} = useAuth();
+    const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters");
+    
 
+    
+    
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
 
@@ -38,7 +43,13 @@ const Encounters = () => {
         <>
             <h1 className="text-3xl font-bold mb-8">My Encounters</h1>
             <Accordion type="single" collapsible>
-                {data && data.map(row => <Explandable key={uid()} title={row.title} details={row.details} />)}
+                {encounters && encounters.map((enc:EncounterApi) => 
+                    <EncounterRow 
+                        key={uid()} 
+                        observations={enc.observations} 
+                        title={enc.title} 
+                        details={enc.details} 
+                    />)}
             </Accordion>
 
         </>

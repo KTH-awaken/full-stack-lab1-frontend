@@ -1,7 +1,7 @@
 import * as React from "react"
 
 import { cn } from "../../lib/lib"
-import { useTheme } from "../../context/themeProvider"
+import { useTheme } from "../../context/theme-context"
 
 const Card = React.forwardRef<
   HTMLDivElement,

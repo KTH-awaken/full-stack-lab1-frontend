@@ -5,6 +5,7 @@ import CustomAlert from "../../components/CustomAlert";
 import NewChatDialog from "./NewChatDialog";
 import { Chat } from "../../types";
 import ChatRow, { ChatRowLoading } from "./ChatRow";
+import { ChatApi } from "../../api/types/chat";
 
 
 
@@ -12,7 +13,7 @@ import ChatRow, { ChatRowLoading } from "./ChatRow";
 
 
 const Messages = () => {
-    const { data: chats, isLoading, isError } = useGetCall<Chat[]>("/chats");
+    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats");
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">

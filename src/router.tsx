@@ -2,7 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import Layout from './Layout.tsx'
 import ErrorPage from './pages/ErrorPage.tsx';
 import Messages from './pages/Message/Index.tsx';
-import Encounters from './pages/Encounters.tsx';
+import Encounters from './pages/Encounter/Encounters.tsx';
 import Chat from "./pages/Message/ChatWindow.tsx";
 import Home from "./pages/Home.tsx";
 
