@@ -37,7 +37,7 @@ const Navbar = () => {
                             {currentUser.name}
                         </MenubarTrigger>
                         <MenubarContent className="p-4 border-none shadow-md">
-                            <MenubarItem disabled>Email: {currentUser.email}</MenubarItem>
+                            <MenubarItem  >Email: {currentUser.email}</MenubarItem>
                             <MenubarItem disabled>Role: {currentUser.role}</MenubarItem>
                             <MenubarSeparator />
                             <MenubarItem>Setting <MenubarShortcut><SettingIcon /></MenubarShortcut></MenubarItem>

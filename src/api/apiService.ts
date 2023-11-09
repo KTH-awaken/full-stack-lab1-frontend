@@ -1,5 +1,7 @@
 import axios, { AxiosResponse } from "axios";
-import { SERVER_URL } from "../auth/fake-user";
+// import { SERVER_URL } from "../auth/fake-user";
+export const SERVER_URL = "http://localhost:8080"
+
 
 axios.defaults.timeout = 3 * 1000;
 
