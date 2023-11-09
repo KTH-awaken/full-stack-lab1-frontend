@@ -1,4 +1,4 @@
-import { useGetCall } from "../../api/crud";
+import { useGetCall } from "../../api/apiService";
 import CustomAlert from "../../components/CustomAlert";
 import EncounterRow from "./EncounterRow";
 import { Accordion, } from "../../components/ui/accordion"
@@ -12,6 +12,7 @@ import { EncounterApi } from "../../api/types/encounter";
 
 const Loading = () => {
     const arr = new Array(10).fill(1);
+    
     return (
         <>
             <h1 className="text-3xl font-bold mb-8">My Encounters</h1>

@@ -1,10 +1,11 @@
 import React, { useState, useRef } from 'react';
 
 interface TimePickerProps {
-    onValueChange: (value: { hour: number, min: number }) => void
+    onValueChange: (value: { hour: number, min: number }) => void,
+    className?:string
 }
 
-const TimePicker = ({ onValueChange }: TimePickerProps) => {
+const TimePicker = ({ onValueChange,className }: TimePickerProps) => {
     const [hour, setHour] = useState<string>('');
     const [minute, setMinute] = useState<string>('');
     const minuteInputRef = useRef<HTMLInputElement>(null);
@@ -27,18 +28,18 @@ const TimePicker = ({ onValueChange }: TimePickerProps) => {
     };
 
     return (
-        <div className="flex items-center justify-start border rounded-md px-4 py-[6px] w-[110px]">
+        <div className={className}>
             <input
-                className='w-6 px-1 box-content focus:outline-none'
+                className='focus:outline-none placeholder:text-sm w-6 bg-background'
                 type="text"
                 value={hour}
                 onChange={(e) => { handleHourChange(e); onValueChange({ hour: parseInt(e.target.value), min: parseInt(minute, 10) }) }}
                 maxLength={2}
                 placeholder="HH"
             />
-            <span className=''>: </span>
+            <span className='text-foreground/50'>: </span>
             <input
-                className='w-7 px-1 box-content focus:outline-none'
+                className='focus:outline-none placeholder:text-sm w-6 bg-background'
                 type="text"
                 value={minute}
                 onChange={(e) => { handleMinuteChange(e); onValueChange({ hour: parseInt(hour, 10), min: parseInt(e.target.value) }) }}

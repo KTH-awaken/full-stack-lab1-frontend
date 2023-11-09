@@ -1,17 +1,19 @@
 import { Card } from '../../components/ui/card'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
-import { BookUserIcon, EditIcon, UsersIcon } from 'lucide-react'
-import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '../../components/ui/tooltip'
-import { useGetCall } from '../../api/crud'
+import { BookUserIcon} from 'lucide-react'
+import { TooltipProvider } from '../../components/ui/tooltip'
+import { useGetCall } from '../../api/apiService'
 import { PatientApi } from '../../api/types/user'
 import { Skeleton } from '../../components/ui/skeleton'
 import { uid } from '../../helpers/helpers'
 import { NavLink } from 'react-router-dom'
 import AddEncounterDialog from './AddEncounterDialog'
+import AddConditoinDialog from './AddConditionDialog'
+import CustomTooltip from '../../components/Tooltip'
 
 
 
-const Loading = () => {
+export const Loading = () => {
     const arr = new Array(5).fill(1);
     return (
 
@@ -26,7 +28,7 @@ const Loading = () => {
 
 const Patients = () => {
     const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
-    const patientList = patients?.map(d => ({label:d.name, value:d.email}))
+    const patientList = patients?.map(d => ({ label: d.name, value: d.email }))
 
     return (
         <Card className='p-6 rounded-2xl bg-background'>
@@ -54,30 +56,14 @@ const Patients = () => {
                             <TableCell>{patient.email}</TableCell>
                             <TableCell className="text-right flex items-center justify-end gap-4">
                                 <TooltipProvider>
-                                    <Tooltip>
-                                        <TooltipTrigger className='px-2 py-1 box-content cursor-pointer' asChild>
-                                            <NavLink to={patient.id + ""}>
-                                                <BookUserIcon size={22} />
-                                            </NavLink>
+                                    <CustomTooltip desciption='Patient Details'>
+                                        <NavLink to={patient.id + ""}>
+                                            <BookUserIcon size={22} />
+                                        </NavLink>
+                                    </CustomTooltip>
 
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>See Patient Details</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-
-                                    <Tooltip>
-                                        <TooltipTrigger className='px-2 py-1 box-content cursor-pointer' asChild>
-                                            <EditIcon size={22} />
-
-
-                                        </TooltipTrigger>
-                                        <TooltipContent>
-                                            <p>Add Condition</p>
-                                        </TooltipContent>
-                                    </Tooltip>
-
-                                    {patientList && <AddEncounterDialog patientList={patientList}/>}
+                                    {patientList && <AddConditoinDialog patientList={patientList} />}
+                                    {patientList && <AddEncounterDialog patientList={patientList} />}
 
                                 </TooltipProvider>
 

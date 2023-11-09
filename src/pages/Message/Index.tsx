@@ -1,6 +1,6 @@
 import {  Outlet } from "react-router-dom"
 import { Card } from "../../components/ui/card";
-import { useGetCall } from "../../api/crud";
+import { useGetCall } from "../../api/apiService";
 import CustomAlert from "../../components/CustomAlert";
 import NewChatDialog from "./NewChatDialog";
 import ChatRow, { ChatRowLoading } from "./ChatRow";

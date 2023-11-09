@@ -9,4 +9,6 @@ export interface ConditionApi {
         id: number;
     };
     diagnosis: string;
+    timestamp: string;
+
 }

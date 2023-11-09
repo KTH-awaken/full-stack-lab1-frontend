@@ -1,14 +1,15 @@
+import { ReactNode } from "react"
 import { EncounterApi, ObservationApi } from "../../api/types/encounter"
 import { AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion"
 import { Card } from "../../components/ui/card"
 import { uid } from "../../helpers/helpers"
 
 
-const EncounterRow = ({ encounter }: { encounter: EncounterApi }) => {
+const EncounterRow = ({ encounter, children, className }: { encounter: EncounterApi, children?:ReactNode,className?:string}) => {
     return (
 
-        <Card className="mb-3 ">
-            <AccordionItem value={encounter.title} className=" border-b-0 data-[state=open]:border-l-8 border-primary px-5 py-2 rounded-2xl bg-background" >
+        <Card className={`mb-3`}>
+            <AccordionItem value={encounter.title} className={`border-b-0 data-[state=open]:border-l-8 border-primary px-5 py-2 rounded-2xl bg-background ${className}`} >
                 <AccordionTrigger className="hover:no-underline">
                     <p>{encounter.title}</p>
                 </AccordionTrigger>
@@ -39,7 +40,7 @@ const EncounterRow = ({ encounter }: { encounter: EncounterApi }) => {
                     </div>
 
 
-
+                    {children}
 
                     {/* <Button className="bg-primary/10 hover:bg-primary/20  text-primary/80">More details</Button> */}
 

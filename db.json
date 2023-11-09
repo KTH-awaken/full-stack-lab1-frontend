@@ -577,5 +577,124 @@
             "date": "2023-11-07T14:22:19",
             "details": "Details C3"
         }
+    ],
+    "conditions": [
+        {
+            "id": 1,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition A1"
+        },
+        {
+            "id": 2,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition A2"
+        },
+        {
+            "id": 3,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition A3"
+        },
+        {
+            "id": 4,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition B1"
+        },
+        {
+            "id": 5,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition B2"
+        },
+        {
+            "id": 6,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition B3"
+        },
+        {
+            "id": 7,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition C1"
+        },
+        {
+            "id": 8,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition C2"
+        },
+        {
+            "id": 9,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition C3"
+        }
     ]
 }
