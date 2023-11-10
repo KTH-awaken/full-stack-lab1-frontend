@@ -1,4 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
+
 import {
     useQuery,
     useMutation,
@@ -7,7 +8,8 @@ import {
     UseMutationResult,
 } from "react-query";
 
-const BASE_URL = "http://localhost:3001";
+// const BASE_URL = "http://localhost:3001";
+const BASE_URL = "http://localhost:8080";
 
 export const useGetCall = <T>(
     endpoint: string,
