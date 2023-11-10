@@ -7,6 +7,13 @@ import {
     UseMutationResult,
 } from "react-query";
 
+import Cookies from 'js-cookie';
+const token = Cookies.get('token');
+
+if (token) {
+  axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+}
+
 const BASE_URL = "http://localhost:3001";
 
 export const useGetCall = <T>(

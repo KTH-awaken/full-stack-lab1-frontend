@@ -57,7 +57,7 @@ const ChatWindow = () => {
         }
         const now = new Date();
         const messageToSend = {
-            user: account.email,
+            user: account && account.email,
             time: `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
             content: message
         }
@@ -92,7 +92,7 @@ const ChatWindow = () => {
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
 
-                        {messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.content} />)}
+                        {account && messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.content} />)}
 
                     </div>
                     <form onSubmit={handleSubmit} className="flex gap-3 pt-3">

@@ -31,12 +31,12 @@ const Navbar = () => {
                             <Avatar className="w-7 rounded-full overflow-hidden">
                                 <AvatarImage src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="avatar" />
                             </Avatar>
-                            {account.name}
+                            {account && account.firstName} {account && account.lastName}
                         </MenubarTrigger>
 
                         <MenubarContent className="p-4 border-none shadow-md">
-                            <MenubarItem disabled>Email: {account.email}</MenubarItem>
-                            <MenubarItem disabled>Role: {account.role}</MenubarItem>
+                            <MenubarItem disabled>Email: {account && account.email}</MenubarItem>
+                            <MenubarItem disabled>Role: {account && account.role}</MenubarItem>
                             <MenubarSeparator />
                             <MenubarItem>Setting <MenubarShortcut><SettingIcon /></MenubarShortcut></MenubarItem>
                             <MenubarItem>Theme <MenubarShortcut><ToggleThemeSwitch /></MenubarShortcut></MenubarItem>
