@@ -1,5 +1,4 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-
 import {
     useQuery,
     useMutation,
@@ -7,8 +6,12 @@ import {
     UseQueryResult,
     UseMutationResult,
 } from "react-query";
+import Cookies from 'js-cookie';
 
-// const BASE_URL = "http://localhost:3001";
+
+
+const token = Cookies.get('token');
+if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
 const BASE_URL = "http://localhost:8080";
 
 export const useGetCall = <T>(
@@ -112,3 +115,4 @@ export const useDeleteCall = <T>(
         }
     );
 };
+

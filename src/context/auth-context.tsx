@@ -1,27 +1,113 @@
-import { Account } from "../types"
-import { Dispatch, ReactNode, SetStateAction, createContext, useContext, useState } from "react";
+import { usePostCall } from "../api/apiService";
+import { ReactNode, createContext, useContext, useEffect, useState } from "react";
+import Cookies from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
+export interface Account {
+    id:number,
+    firstName: string;
+    lastName: string,
+    email: string;
+    userType: UserType;
+    token:string
+}
 
 interface IAuthContext {
-    account: Account;
-    setAccount: Dispatch<SetStateAction<Account>>
+    account: Account | null;
+    login: (req:LoginRequest)=> void,
+    register: (req:RegisterRequest)=> void,
+    logout: ()=> void,
+    isAuth: boolean,
+
+}
+export type UserType = 'DOCTOR' | 'PATIENT' | 'STAFF'
+export type LoginRequest = {
+    email: string,
+    password: string
 }
 
-const fakeLogin:Account = {
-    id:1,
-    name: "Patient 1",
-    email: "patient1@email.com",
-    role: "PATIENT",
+export type RegisterRequest = {
+    firstName: string,
+    lastName: string,
+    email:string,
+    password: string,
+    userType: UserType
 }
+const init:IAuthContext = { 
+    account: null,
+    isAuth: false ,
+    register: ()=> {} ,
+    login: ()=> {} ,
+    logout: ()=>{}
+}
+const authContext = createContext<IAuthContext>(init);
 
-const authContext = createContext<IAuthContext>({account:fakeLogin, setAccount: ()=>{}});
+export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
-export const AuthProvider = ({children}:{children:ReactNode}) => {
+    const [account, setAccount] = useState<Account | null>(null);
+    const navigate = useNavigate();
 
-    const [account,setAccount] = useState<Account>(fakeLogin)
+    const { mutate: registerMutate,
+        data: registerData,
+        isSuccess: registerSuccess
+    } = usePostCall<Account>("/auth/register", "account");
+
+
+    const { mutate: loginMutate,
+        data: loginData,
+        isSuccess: loginSuccess
+    } = usePostCall<Account>("/auth/login", "account");
+
+
+
+
+    const register = (request: RegisterRequest): void => {
+        registerMutate(request);
+      
+    }
+
+    const login = (request: LoginRequest): void => {
+        loginMutate(request);
+   
+    }
+
+    const logout= () => {
+        //TODO: send logout request
+        Cookies.remove('token');
+        localStorage.clear()
+        setAccount(null);
+    }
+
+    const isAuth = account !== null;
+
+    useEffect(()=>{
+        if(registerSuccess && registerData ){
+            setAccount({...registerData})
+            console.log(registerData);
+            Cookies.set('token', registerData.token, { expires: 1 })
+            localStorage.setItem('user', JSON.stringify({...registerData}))
+            navigate("/encounters")
+        }
+        if(loginSuccess && loginData ){
+            setAccount({...loginData})
+            Cookies.set('token', loginData.token, { expires: 1 })
+            localStorage.setItem('user', JSON.stringify({...loginData}))
+            navigate("/encounters")
+        }
+    },[registerData, registerSuccess, loginData, loginSuccess])
+  
+
+    useEffect(() => {
+        const loggedInUser = localStorage.getItem("user");
+        if (loggedInUser) {
+          const foundUser = JSON.parse(loggedInUser);
+          setAccount(foundUser);
+        }
+      }, []);
+
 
     return (
-        <authContext.Provider value={{account,setAccount}}>
+        <authContext.Provider value={{ account,register,login,logout,isAuth }}>
             {children}
         </authContext.Provider>
     )
@@ -34,3 +120,5 @@ export const useAuth = () => {
     }
     return context;
 };
+
+

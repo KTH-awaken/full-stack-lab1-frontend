@@ -34,7 +34,7 @@ const ChatRow = ({ chat }: { chat: ChatApi }) => {
                 <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
             </Avatar>
             <div className="flex-grow">
-                <p className="font-semibold mb-1 ">{getDisplayName(chat.users, account.email)}</p>
+                {/* <p className="font-semibold mb-1 ">{getDisplayName(chat.users, account.email)}</p> */}
                 <div className="flex justify-between  items-center">
                     <p className="text-sm font-light text-foreground/80">{chat.lastMessage}</p>
                     <p className="text-xs font-light text-foreground/80">{chat.lastSend}</p>

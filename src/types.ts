@@ -23,9 +23,3 @@ export interface Encounter {
 
 }
 
-export interface Account {
-    id:number,
-    name: string;
-    email: string;
-    role: "PATIENT" | "DOCTOR" | "STAFF";
-}

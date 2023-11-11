@@ -42,7 +42,7 @@ const NewChatDialog = () => {
     const { register, handleSubmit, setValue, reset, formState: { errors }, } = useForm<FormData>({
         resolver: zodResolver(formSchema),
         defaultValues: {
-            sender: account.email,
+            sender: "" ,
             reciever: reciever,
             message: "",
         },
