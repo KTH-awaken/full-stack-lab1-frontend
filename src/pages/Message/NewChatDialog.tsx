@@ -75,7 +75,6 @@ const NewChatDialog = () => {
 
     return (
         <Dialog>
-
             <DialogTrigger asChild>
                 <Button variant="default">New Message</Button>
             </DialogTrigger>
@@ -115,9 +114,7 @@ const NewChatDialog = () => {
                         <Button type="submit">Send Message</Button>
                     </DialogFooter>
                 </form>
-
             </DialogContent >
-
         </Dialog >
     )
 }

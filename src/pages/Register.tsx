@@ -71,7 +71,7 @@ const Register = () => {
                                 type="radio"
                                 name="type"
                                 id="radioPatient" 
-                                value="Patient"
+                                value="PATIENT"
                                 onChange={(e) => settype(e.target.value)}
                                 />
                             <label className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"> Patient</label>
@@ -82,7 +82,7 @@ const Register = () => {
                                 type="radio"
                                 name="type"
                                 id="radioDoctor" 
-                                value="Doctor"
+                                value="DOCTOR"
                                 onChange={(e) => settype(e.target.value)}
                                 />
                             <label className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"> Doctor</label>
@@ -93,7 +93,7 @@ const Register = () => {
                                 type="radio"
                                 name="type"
                                 id="radioEmployee" 
-                                value="Employee"
+                                value="EMPLOYEE"
                                 onChange={(e) => settype(e.target.value)}
                                 />
                             <label className="mt-px inline-block pl-[0.15rem] hover:cursor-pointer"> Employee</label>
