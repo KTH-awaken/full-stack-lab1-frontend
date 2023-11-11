@@ -18,7 +18,6 @@ interface IAuthContext {
     register: (req:RegisterRequest)=> void,
     logout: ()=> void,
     isAuth: boolean,
-
 }
 export type UserType = 'DOCTOR' | 'PATIENT' | 'STAFF'
 export type LoginRequest = {
