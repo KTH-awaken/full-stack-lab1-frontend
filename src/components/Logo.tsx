@@ -1,4 +1,4 @@
-import { useTheme } from "../context/themeProvider"
+import { useTheme } from "../context/theme-context"
 
 export const Logo = () => {
 

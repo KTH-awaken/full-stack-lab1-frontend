@@ -1,154 +1,101 @@
 {
     "chats": [
         {
-            "receiver": "Hamada",
-            "sender": "Milad",
-            "id": "1",
-            "messages": [
-                {
-                    "content": "Hello Hamada, how are you?",
-                    "timestamp": "Mon 21:23",
-                    "user": "Milad"
-                },
-                {
-                    "content": "I'm doing well, thanks for asking!",
-                    "timestamp": "Mon 21:24",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "What's new with you?",
-                    "timestamp": "Mon 21:25",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "Hello Hamada, how are you?",
-                    "timestamp": "Mon 21:23",
-                    "user": "Milad"
-                },
-                {
-                    "content": "I'm doing well, thanks for asking!",
-                    "timestamp": "Mon 21:24",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "What's new with you?",
-                    "timestamp": "Mon 21:25",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "Hello Hamada, how are you?",
-                    "timestamp": "Mon 21:23",
-                    "user": "Milad"
-                },
-                {
-                    "content": "I'm doing well, thanks for asking!",
-                    "timestamp": "Mon 21:24",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "What's new with you?",
-                    "timestamp": "Mon 21:25",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "Hello Hamada, how are you?",
-                    "timestamp": "Mon 21:23",
-                    "user": "Milad"
-                },
-                {
-                    "content": "I'm doing well, thanks for asking!",
-                    "timestamp": "Mon 21:24",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "What's new with you?",
-                    "timestamp": "Mon 21:25",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "Hello Hamada, how are you?",
-                    "timestamp": "Mon 21:23",
-                    "user": "Milad"
-                },
-                {
-                    "content": "I'm doing well, thanks for asking!",
-                    "timestamp": "Mon 21:24",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "What's new with you?",
-                    "timestamp": "Mon 21:25",
-                    "user": "Hamada"
-                }
-            ]
+            "id": 1,
+            "users": ["Patient 1", "Doctor 1"],
+            "lastMessage": "Message from Doctor 1",
+            "lastSend": "2023-11-06T15:30:31"
         },
         {
-            "receiver": "Hamada",
-            "sender": "Marucs",
-            "id": "2",
-            "messages": [
-                {
-                    "content": "Hey Marcus, did you finish that project?",
-                    "timestamp": "Tue 09:15",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "Yes, I completed it last night.",
-                    "timestamp": "Tue 09:20",
-                    "user": "Marucs"
-                }
-            ]
+            "id": 2,
+            "users": ["Doctor 2", "Patient 2"],
+            "lastMessage": "Message from Doctor 2",
+            "lastSend": "2023-11-06T15:30:31"
         },
         {
-            "receiver": "Hamada",
-            "sender": "Alex",
-            "id": "3",
-            "messages": [
-                {
-                    "content": "Alex, have you seen the new computer science lab?",
-                    "timestamp": "Wed 14:30",
-                    "user": "Hamada"
-                },
-                {
-                    "content": "No, I haven't. Is it impressive?",
-                    "timestamp": "Wed 14:35",
-                    "user": "Alex"
-                }
-            ]
+            "id": 3,
+            "users": ["Patient 3", "Staff 1"],
+            "lastMessage": "Message from Staff 1",
+            "lastSend": "2023-11-06T15:30:31"
+        }
+    ],
+    "messages": [
+        {
+            "id": 1,
+            "sender": {
+                "name": "Patient 1",
+                "email": "patient1@email.com"
+            },
+            "chatId": 1,
+            "content": "Message from Patient 1",
+            "timestamp": "2023-11-06T15:30:31"
         },
         {
-            "receiver": "Balder",
-            "sender": "Hamada",
-            "id": "4",
-            "messages": [
-                {
-                    "content": "Hamada, let's meet up to discuss our project tomorrow.",
-                    "timestamp": "Thu 17:42",
-                    "user": "Balder"
-                },
-                {
-                    "content": "Sure, that sounds like a plan.",
-                    "timestamp": "Thu 17:45",
-                    "user": "Hamada"
-                }
-            ]
+            "id": 2,
+            "sender": {
+                "name": "Doctor 1",
+                "email": "doctor1@email.com"
+            },
+            "chatId": 1,
+            "content": "Message from Doctor 1",
+            "timestamp": "2023-11-06T15:30:31"
         },
         {
-            "receiver": "Tim",
-            "sender": "Hamada",
-            "id": "5",
-            "messages": [
-                {
-                    "content": "Hamada, how's your final year of studies going?",
-                    "timestamp": "Fri 11:10",
-                    "user": "Tim"
-                },
-                {
-                    "content": "It's challenging, but I'm learning a lot.",
-                    "timestamp": "Fri 11:15",
-                    "user": "Hamada"
-                }
-            ]
+            "id": 3,
+            "sender": {
+                "name": "Patient 2",
+                "email": "patient2@email.com"
+            },
+            "chatId": 2,
+            "content": "Message from Patient 2",
+            "timestamp": "2023-11-06T15:30:31"
+        },
+        {
+            "id": 4,
+            "sender": {
+                "name": "Doctor 2",
+                "email": "doctor2@email.com"
+            },
+            "chatId": 2,
+            "content": "Message from Doctor 2",
+            "timestamp": "2023-11-06T15:30:31"
+        },
+        {
+            "id": 5,
+            "sender": {
+                "name": "Patient 3",
+                "email": "patient3@email.com"
+            },
+            "chatId": 3,
+            "content": "Message from Patient 3",
+            "timestamp": "2023-11-06T15:30:31"
+        },
+        {
+            "id": 6,
+            "sender": {
+                "name": "Staff 1",
+                "email": "staff1@email.com"
+            },
+            "chatId": 3,
+            "content": "Message from Staff 1",
+            "timestamp": "2023-11-06T15:30:31"
+        }
+    ],
+    "patients": [
+        {
+            "id": 1,
+            "name": "Patient 1",
+            "email": "patient1@email.com"
+        },
+        {
+            "id": 2,
+            "name": "Patient 2",
+            "email": "patient2@email.com"
+        },
+        {
+            "id": 3,
+            "name": "Patient 3",
+            "email": "patient3@email.com"
         }
     ],
     "doctors": [
@@ -235,44 +182,519 @@
     ],
     "encounters": [
         {
-            "title": "First Doctor Visit",
-            "details": "Visited the doctor for a routine checkup."
+            "id": 1,
+            "title": "Encounter A1",
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "observations": [
+                {
+                    "id": 1,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 1,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation A1"
+                },
+                {
+                    "id": 2,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 1,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation A11"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details A1"
         },
         {
-            "title": "Second Doctor Visit",
-            "details": "Consulted a specialist for a specific health issue."
+            "id": 2,
+            "title": "Encounter A2",
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "observations": [
+                {
+                    "id": 3,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 2,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation A2"
+                },
+                {
+                    "id": 4,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 2,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation A22"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details A2"
         },
         {
-            "title": "Emergency Room Visit",
-            "details": "Had to go to the ER due to an injury."
+            "id": 3,
+            "title": "Encounter A3",
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "observations": [
+                {
+                    "id": 5,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 3,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation A3"
+                },
+                {
+                    "id": 6,
+                    "patient": {
+                        "id": 1,
+                        "name": "Patient 1"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 3,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation A33"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details A3"
         },
         {
-            "title": "Dental Appointment",
-            "details": "Scheduled a dental checkup and cleaning."
+            "id": 4,
+            "title": "Encounter B1",
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "observations": [
+                {
+                    "id": 7,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 4,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation B1"
+                },
+                {
+                    "id": 8,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 4,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation B11"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details B1"
         },
         {
-            "title": "Vaccination Appointment",
-            "details": "Received a COVID-19 vaccination."
+            "id": 5,
+            "title": "Encounter B2",
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "observations": [
+                {
+                    "id": 9,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 5,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation B2"
+                },
+                {
+                    "id": 10,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 4,
+                        "name": "Doctor 1"
+                    },
+                    "encounterId": 5,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation B22"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details B2"
         },
         {
-            "title": "Medical Test Results",
-            "details": "Received test results and discussed them with the doctor."
+            "id": 6,
+            "title": "Encounter B3",
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "observations": [
+                {
+                    "id": 11,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 6,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation B3"
+                },
+                {
+                    "id": 12,
+                    "patient": {
+                        "id": 2,
+                        "name": "Patient 2"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 6,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation B33"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details B3"
         },
         {
-            "title": "Prescription Refill",
-            "details": "Visited the doctor to get a prescription renewed."
+            "id": 7,
+            "title": "Encounter C1",
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "observations": [
+                {
+                    "id": 13,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 7,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation C1"
+                },
+                {
+                    "id": 14,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 7,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation C11"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details C1"
         },
         {
-            "title": "Physical Therapy Session",
-            "details": "Attended a physical therapy session for rehabilitation."
+            "id": 8,
+            "title": "Encounter C2",
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "observations": [
+                {
+                    "id": 15,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 8,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation C2"
+                },
+                {
+                    "id": 16,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 8,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation C22"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details C2"
         },
         {
-            "title": "Annual Health Checkup",
-            "details": "Went for the yearly comprehensive health checkup."
+            "id": 9,
+            "title": "Encounter C3",
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "observations": [
+                {
+                    "id": 17,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 9,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation C3"
+                },
+                {
+                    "id": 18,
+                    "patient": {
+                        "id": 3,
+                        "name": "Patient 3"
+                    },
+                    "doctor": {
+                        "id": 5,
+                        "name": "Doctor 2"
+                    },
+                    "encounterId": 9,
+                    "timestamp": "2023-11-07T00:00:00",
+                    "content": "Observation C33"
+                }
+            ],
+            "date": "2023-11-07T14:22:19",
+            "details": "Details C3"
+        }
+    ],
+    "conditions": [
+        {
+            "id": 1,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition A1"
         },
         {
-            "title": "Pediatrician Visit",
-            "details": "Took a child to the pediatrician for a checkup."
+            "id": 2,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition A2"
+        },
+        {
+            "id": 3,
+            "patient": {
+                "id": 1,
+                "name": "Patient 1"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition A3"
+        },
+        {
+            "id": 4,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition B1"
+        },
+        {
+            "id": 5,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition B2"
+        },
+        {
+            "id": 6,
+            "patient": {
+                "id": 2,
+                "name": "Patient 2"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition B3"
+        },
+        {
+            "id": 7,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 4,
+                "name": "Doctor 1"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition C1"
+        },
+        {
+            "id": 8,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition C2"
+        },
+        {
+            "id": 9,
+            "patient": {
+                "id": 3,
+                "name": "Patient 3"
+            },
+            "doctor": {
+                "id": 5,
+                "name": "Doctor 2"
+            },
+            "timestamp": "2023-11-08T16:41:55",
+            "diagnosis": "Condition C3"
         }
     ]
 }

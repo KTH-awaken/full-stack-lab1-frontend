@@ -1,16 +1,19 @@
 import { ReactNode } from "react"
-import { ThemeProvider } from "./themeProvider"
+import { ThemeProvider } from "./theme-context"
 import { QueryClient, QueryClientProvider } from "react-query";
+import { AuthProvider } from "./auth-context";
 
 const queryClient = new QueryClient();
 
 const Providers = ({ children }: { children: ReactNode }) => {
     return (
-        <QueryClientProvider client={queryClient}>
-            <ThemeProvider>
-                {children}
-            </ThemeProvider>
-        </QueryClientProvider>
+        <AuthProvider>
+            <QueryClientProvider client={queryClient}>
+                <ThemeProvider>
+                    {children}
+                </ThemeProvider>
+            </QueryClientProvider>
+        </AuthProvider>
 
     )
 }

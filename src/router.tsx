@@ -1,14 +1,18 @@
 import { createBrowserRouter } from "react-router-dom";
 import Layout from './Layout.tsx'
 import ErrorPage from './pages/ErrorPage.tsx';
-import Messages from './pages/Messages.tsx';
-import Encounters from './pages/Encounters.tsx';
-import Chat from "./pages/Chat.tsx";
+import Messages from './pages/Message/Index.tsx';
+import Encounters from './pages/Encounter/Encounters.tsx';
+import Chat from "./pages/Message/ChatWindow.tsx";
 import Home from "./pages/Home.tsx";
+import Patients from "./pages/Patient/Index.tsx";
+import PatientDetails from "./pages/Patient/PatientDetails.tsx";
+import SignIn from "./pages/SignInPage.tsx";
+import Register from "./pages/Register.tsx";
 
 export const router = createBrowserRouter([
     {
-        path:"/",
+        path: "/",
         element: <Layout />,
         errorElement: <ErrorPage />,
 
@@ -23,7 +27,7 @@ export const router = createBrowserRouter([
                 element: <Messages />,
                 children: [
                     {
-                        
+
                         path: ":chatid",
                         element: <Chat />
                     }
@@ -32,7 +36,25 @@ export const router = createBrowserRouter([
             {
                 path: 'encounters',
                 element: <Encounters />
+            },
+            {
+                path: 'patients',
+                element: <Patients />,
+            },
+            {
+                path: 'patients/:patientId',
+                element: <PatientDetails />
+            },
+            {
+                path: 'register',
+                element: <Register></Register>
+            },
+            {
+                path: 'signIn',
+                element: <SignIn></SignIn>
             }
         ]
     },
+        
+
 ]);
