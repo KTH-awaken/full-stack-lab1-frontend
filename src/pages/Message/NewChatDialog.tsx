@@ -35,9 +35,9 @@ const formSchema = z.object({
 
 const NewChatDialog = () => {
     const { account } = useAuth();
+    const { data: doctors, isLoading, error } = useGetCall<{ accountVm: { firstName: string; lastName: string; email: string } }[]>("/doctors");
 
-    const { data: doctors } = useGetCall<{label:string,value:string}[]>("/doctors");
-    const [reciever, setReviever] = useState("")
+    const [reciever, setReceiver] = useState("")
 
     const { register, handleSubmit, setValue, reset, formState: { errors }, } = useForm<FormData>({
         resolver: zodResolver(formSchema),
@@ -47,6 +47,16 @@ const NewChatDialog = () => {
             message: "",
         },
     });
+
+    useEffect(() => {
+        console.log("Doctors data:", doctors);
+        if (isLoading) {
+            console.log("Loading doctors data...");
+        }
+        if (error) {
+            console.error("Error loading doctors data:", error);
+        }
+    }, [doctors, isLoading, error]);
 
     useEffect(() => {
         setValue('reciever', reciever);
@@ -81,14 +91,18 @@ const NewChatDialog = () => {
                     </DialogHeader>
 
                     <p className="mb-2">Doctor</p>
-                    {
-                        doctors && <SelectPopover
-                            title="doctor"
-                            list={doctors}
-                            value={reciever}
-                            onValueChange={(newValue) => setReviever(newValue)}
-                        />
-                    }
+        
+                    {isLoading && <p>Loading doctors...</p>}
+                    {doctors && (
+                        <>
+                            <SelectPopover
+                                title="doctor"
+                                list={doctors.map(doctor => ({ label: doctor.accountVm.firstName, value: doctor.accountVm.firstName }))}
+                                value={reciever}
+                                onValueChange={(newValue) => setReceiver(newValue)}
+                            />
+                        </>
+                    )}
                     {errors.reciever && <p className="text-red-400 inline-block  rounded-md my-2">{errors.reciever.message}</p>}
                     <div className="my-3"></div>
                     <p className="mb-2">Message</p>
