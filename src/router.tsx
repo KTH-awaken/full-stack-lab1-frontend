@@ -29,7 +29,7 @@ export const router = createBrowserRouter([
                     {
 
                         path: ":chatid",
-                        element: <Chat />
+                        // element: <Chat />//todo sät på
                     }
                 ]
             },

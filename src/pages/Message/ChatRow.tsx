@@ -37,7 +37,8 @@ const ChatRow = ({ chat }: { chat: ChatApi }) => {
                 {/* <p className="font-semibold mb-1 ">{getDisplayName(chat.users, account.email)}</p> */}
                 <div className="flex justify-between  items-center">
                     <p className="text-sm font-light text-foreground/80">{chat.lastMessage}</p>
-                    <p className="text-xs font-light text-foreground/80">{chat.lastSend}</p>
+                    <p className="text-xs font-light text-foreground/80">{chat.date}</p>
+      
                 </div>
             </div>
 

@@ -72,9 +72,9 @@ const Condition = ({ patientList }: { patientList: { label: string, value: strin
     )
 }
 const Encounter = ({ patientList }: { patientList: { label: string, value: string }[] }) => {
-    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters");
-    if (isLoading) return <Loading />
-    if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
+    // const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters");// todo sät på igen
+    // if (isLoading) return <Loading />
+    // if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
     return (
         <div className="flex flex-col justify-start mt-4 gap-5">
             <TooltipProvider>
@@ -83,7 +83,7 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
 
 
             <Accordion type="single" collapsible>
-                {encounters && encounters.map((enc: EncounterApi) =>
+                {/* {encounters && encounters.map((enc: EncounterApi) =>
                     <EncounterRow
                         key={enc.id}
                         encounter={enc}
@@ -92,7 +92,7 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
                         <div className="p-2">
                             <ButtonNew text=" observation" />
                         </div>
-                    </EncounterRow>)}
+                    </EncounterRow>)} */}
             </Accordion>
 
         </div>

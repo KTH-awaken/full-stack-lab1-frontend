@@ -19,7 +19,6 @@ type SelectPopoverProps = {
 
  const SelectPopover = ({ title, className, list, value, onValueChange }: SelectPopoverProps) => {
     const [open, setOpen] = useState(false);
-    
     return (
         <Popover open={open} onOpenChange={setOpen}>
             <PopoverTrigger asChild>
@@ -30,7 +29,7 @@ type SelectPopoverProps = {
                     className={"justify-between "+ className}
                 >
                     {value
-                        ? list.find((data) => data.value === value)?.label
+                        ? list.find((data) => data.value == value)?.label
                         : `Select ${title}...`}
                     <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50 " />
                 </Button>
