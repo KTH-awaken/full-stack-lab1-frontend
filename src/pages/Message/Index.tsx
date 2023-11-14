@@ -14,7 +14,6 @@ import { ChatApi } from "../../api/types/chat";
 const Messages = () => {
     
     const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+"1");//todo byt 1 mot current user id
-    // const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/messages");
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">

@@ -28,10 +28,10 @@ const formSchema = z.object({
         .max(50, "Sender must be at most 50 characters.")
         .refine(value => value !== '', "Sender is required"),
 
-    reciever: z.string()
-        .min(2, "Doctor name is required")
-        .max(50, "Doctor name must be at most 50 characters.")
-        .refine(value => value !== '', "Doctor name is required."),
+    reciever: z.string(),
+        // .min(2, "Doctor name is required")
+        // .max(50, "Doctor name must be at most 50 characters."),
+        // .refine(value => value !== '', "Doctor name is required."),
 
     message: z.string()
         .min(2, "Message is required")
@@ -80,23 +80,23 @@ const NewChatDialog = () => {
     const onSubmit: SubmitHandler<FormData> = async (data) => {
       try {
         
-
+        console.log(doctors);
+        
         //todo remove hardcodeing 
         const senderId = 1;
       
         const messageVm: MessageVm = {
           text: data.message,
-          senderId,
-          receiverId,
+          sender: senderId,
+          receiver: Number(data.reciever),
         };
         console.log(messageVm);
-        const response = await sendMessageMutation.mutateAsync(messageVm);
-        console.log(messageVm);
-  
-        console.log("Message sent successfully:", response);
-  
+        sendMessageMutation.mutateAsync(messageVm).then( response => {
+            if(response){
+              console.log(response);
+            }
+        });
         reset();
-  
         document.getElementById("closeDialog")?.click();
       } catch (error) {
         console.error("Error sending message:", error);
@@ -116,23 +116,20 @@ const NewChatDialog = () => {
                             In order to create new chat, choose the doctor you want to chat with first
                         </DialogDescription>
                     </DialogHeader>
-
-                    <p className="mb-2">Sender for testing remove later</p>
-                    {/* <input type="text" {...register('sender')}  value={`${account?.firstName} ${account?.lastName} `} /> */}
-                    <input type="text" {...register('sender')}  value={`${account?.id}  `} />
+                    <input type="hidden" {...register('sender')}  value={`${account?.id}  `} />
 
                     <p className="mb-2">Doctor</p>
                     {isLoading && <p>Loading doctors...</p>}
                     {doctors && (
-                       <>
+                      <>
                         <SelectPopover
                           title="doctor"
-                          list={doctors.map(doctor => ({ label: doctor.accountVm.firstName, value: doctor.accountVm.id }))}
+                          list={doctors.map((doctor) => ({ label: doctor.accountVm.firstName, value: doctor.accountVm.id.toString() }))}
                           value={reciever}
                           onValueChange={(newValue) => {
-                            setReceiver(newValue);
-
-                            // Find the selected doctor and set receiverId
+                            setReceiver(newValue.toString());
+                            
+                            {console.log(newValue)}
                             const selectedDoctor = doctors.find(doctor => doctor.accountVm.id === newValue);
                             if (selectedDoctor) {
                               setReceiverId(selectedDoctor.accountVm.id);

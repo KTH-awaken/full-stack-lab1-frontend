@@ -1,6 +1,7 @@
 export interface ChatApi {
     id: number;
     otherParticipantName: string;
+    otherParticipantId:number;
     lastMessage: string;
     date: string;
 }
