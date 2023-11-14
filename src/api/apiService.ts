@@ -65,6 +65,7 @@ export const usePostCall = <T, U = {}>(
     );
 };
 
+
 export const usePutCall = <T, U = {}>(
     endpoint: string,
     headers?: AxiosRequestConfig["headers"]

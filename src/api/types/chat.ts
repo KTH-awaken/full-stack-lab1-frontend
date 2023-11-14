@@ -1,8 +1,9 @@
 export interface ChatApi {
     id: number;
-    users: string[];
+    otherParticipantName: string;
+    otherParticipantId:number;
     lastMessage: string;
-    lastSend: string;
+    date: string;
 }
 
 export interface MessageApi {
@@ -13,5 +14,10 @@ export interface MessageApi {
     };
     chatId: number;
     content: string;
-    timestamp: string;
+    date: string;
+}
+export interface MessageVm {
+    text: string;
+    senderId: number;
+    receiverId: number;
 }

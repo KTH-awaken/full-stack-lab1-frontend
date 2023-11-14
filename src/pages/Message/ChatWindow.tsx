@@ -3,15 +3,16 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Card } from "../../components/ui/card";
-import { useGetCall } from "../../api/apiService";
+import { useGetCall, usePostCall } from "../../api/apiService";
 import { getDisplayName } from "../../helpers/helpers";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
 import { Chat } from "../../types";
 import { MessageRow } from "./MessageRow";
-import { FormEvent, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../context/auth-context";
-import { MessageApi } from "../../api/types/chat";
+import { MessageApi, MessageVm } from "../../api/types/chat";
+import { UseMutationResult } from "react-query";
 
 
 
@@ -42,38 +43,47 @@ const Loading = () => {
         </Card>
     )
 }
-
+// const useSendMessageMutation = (): UseMutationResult<MessageVm, unknown, MessageVm, unknown> => {
+//     return usePostCall<MessageVm, MessageVm>('/message', 'message');
+// };
 const ChatWindow = () => {
     const {account} = useAuth();
     const params = useParams();
-    const { data, isLoading, isError } = useGetCall<MessageApi[]>("/messages/");
-    const messages = data?.filter(d => d.chatId.toString() === params.chatid)
+    const myId = 1; 
+    const participantId = 4; //todo  Replace with the actual participantId
+    const { mutate,data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${myId}/${params.chatid}`,'');
+    const { mutate:sendMessage } = usePostCall<MessageVm[]>(`/message`,'');
+    const messages = data;
     const [message, setMessage] = useState("");
-
+    
+    useEffect(()=>{
+        mutate("");
+    },[])
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!message.trim()) {
             return
         }
         const now = new Date();
-        const messageToSend = {
+        const messageToSend = {//todo remove
             user: account && account.email,
             time: `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
             content: message
         }
+        const messageVm: MessageVm ={
+            text: message,
+            sender: myId,
+            receiver: Number(params.chatid),
+        }
         setMessage("");
         console.log(messageToSend);
+        console.log(messageVm);
         // CREATE NEW MESSAGE IN CHAT
-
+        sendMessage(messageVm);
     }
-
-    
-
 
     if (isLoading) return <Loading />;
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
-
-
 
     return (
         <>
@@ -92,14 +102,15 @@ const ChatWindow = () => {
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
 
-                        {account && messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.content} />)}
+                        {/* {account && messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.content} />)} */}
+                        {account && messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.text} />)}
 
                     </div>
                     <form onSubmit={handleSubmit} className="flex gap-3 pt-3">
                         <Input value={message} onChange={(e) => setMessage(e.target.value)} className="border-none bg-accent" placeholder="Type a message..." type="text" name="" id="" ></Input>
                         <Button type="submit">Send</Button>
                     </form>
-                    
+   
                 </Card>
             }
         </>
