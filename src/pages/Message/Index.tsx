@@ -5,6 +5,7 @@ import CustomAlert from "../../components/CustomAlert";
 import NewChatDialog from "./NewChatDialog";
 import ChatRow, { ChatRowLoading } from "./ChatRow";
 import { ChatApi } from "../../api/types/chat";
+import { useAuth } from "../../context/auth-context";
 
 
 
@@ -12,8 +13,10 @@ import { ChatApi } from "../../api/types/chat";
 
 
 const Messages = () => {
-    
-    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+"1");//todo byt 1 mot current user id
+    const {account} = useAuth();
+    const myId =1; 
+    // const myId = account?.id;//todo use this
+    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+myId);
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">

@@ -49,8 +49,8 @@ const Loading = () => {
 const ChatWindow = () => {
     const {account} = useAuth();
     const params = useParams();
-    const myId = 1; 
-    const participantId = 4; //todo  Replace with the actual participantId
+    // const myId = account?.id;//todo use this
+    const myId = 1;
     const { mutate,data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${myId}/${params.chatid}`,'');
     const { mutate:sendMessage } = usePostCall<MessageVm[]>(`/message`,'');
     const messages = data;
@@ -72,12 +72,13 @@ const ChatWindow = () => {
         }
         const messageVm: MessageVm ={
             text: message,
-            sender: myId,
+            sender: account?.id,
             receiver: Number(params.chatid),
         }
         setMessage("");
         console.log(messageToSend);
         console.log(messageVm);
+        console.log(account?.id);
         // CREATE NEW MESSAGE IN CHAT
         sendMessage(messageVm);
     }
@@ -90,7 +91,6 @@ const ChatWindow = () => {
             {
                 messages &&
                 <Card className="bg-background p-6 flex flex-col justify-center rounded-2xl h-[80vh] ">
-
                     <div className="mb-4 pb-2 flex gap-3">
                         <Avatar>
                             <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
