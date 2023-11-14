@@ -76,6 +76,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     useEffect(()=>{
         if(registerSuccess && registerData ){
             setAccount({...registerData})
+            
             console.log(registerData);
             Cookies.set('token', registerData.token, { expires: 1 })
             localStorage.setItem('user', JSON.stringify({...registerData}))

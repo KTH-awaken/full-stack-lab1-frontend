@@ -25,6 +25,8 @@ const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
     const {mutate:newCondition} = usePostCall<ConditionApi>("/condition","conditions")
 
     const handleClick = () => {
+        console.log(account?.email);
+        
         newCondition({diagnosis, patientId, doctorEmail:account?.email});
         (function () { document.getElementById('closeDialog')?.click(); }())
 
