@@ -3,12 +3,16 @@ import { ReactNode, createContext, useContext, useEffect, useState } from "react
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 
+
+
+export type UserType = 'DOCTOR' | 'PATIENT' | 'EMPLOYEE'
+
 export interface Account {
     id:number,
     firstName: string;
-    lastName: string,
+    lastName:string,
     email: string;
-    userType: UserType;
+    userType:UserType;
     token:string
 }
 
@@ -20,7 +24,6 @@ interface IAuthContext {
     isAuth: boolean,
 
 }
-export type UserType = 'DOCTOR' | 'PATIENT' | 'STAFF'
 export type LoginRequest = {
     email: string,
     password: string
@@ -28,7 +31,7 @@ export type LoginRequest = {
 
 export type RegisterRequest = {
     firstName: string,
-    lastName: string,
+    lastName:string,
     email:string,
     password: string,
     userType: UserType
@@ -47,38 +50,28 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const [account, setAccount] = useState<Account | null>(null);
     const navigate = useNavigate();
 
-    const { mutate: registerMutate,
-        data: registerData,
-        isSuccess: registerSuccess
-    } = usePostCall<Account>("/auth/register", "account");
 
-
-    const { mutate: loginMutate,
-        data: loginData,
-        isSuccess: loginSuccess
-    } = usePostCall<Account>("/auth/login", "account");
+    const { mutate: registerMutate,data: registerData,isSuccess: registerSuccess} = usePostCall<Account>("/auth/register", "account");
+    const { mutate: loginMutate,data: loginData,isSuccess: loginSuccess} = usePostCall<Account>("/auth/login", "account");
 
 
 
 
-    const register = (request: RegisterRequest): void => {
-        registerMutate(request);
-      
-    }
-
-    const login = (request: LoginRequest): void => {
-        loginMutate(request);
-   
-    }
+    const register = (request: RegisterRequest): void => registerMutate(request);
+    const login = (request: LoginRequest): void => loginMutate(request);
+       
 
     const logout= () => {
         //TODO: send logout request
+        localStorage.clear();
         Cookies.remove('token');
-        localStorage.clear()
         setAccount(null);
+        navigate("/login");
+
     }
 
     const isAuth = account !== null;
+
 
     useEffect(()=>{
         if(registerSuccess && registerData ){
@@ -86,13 +79,13 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
             console.log(registerData);
             Cookies.set('token', registerData.token, { expires: 1 })
             localStorage.setItem('user', JSON.stringify({...registerData}))
-            navigate("/encounters")
+            navigate("/messages")
         }
         if(loginSuccess && loginData ){
             setAccount({...loginData})
             Cookies.set('token', loginData.token, { expires: 1 })
             localStorage.setItem('user', JSON.stringify({...loginData}))
-            navigate("/encounters")
+            navigate("/messages")
         }
     },[registerData, registerSuccess, loginData, loginSuccess])
   
@@ -105,6 +98,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         }
       }, []);
 
+  
 
     return (
         <authContext.Provider value={{ account,register,login,logout,isAuth }}>

@@ -27,8 +27,8 @@ export const Loading = () => {
 
 
 const Patients = () => {
-    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
-    const patientList = patients?.map(d => ({ label: d.name, value: d.email }))
+    const { data: patients, isLoading } = useGetCall<PatientApi[]>("/patients");
+    const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
     return (
         <Card className='p-6 rounded-2xl bg-background'>
@@ -37,7 +37,7 @@ const Patients = () => {
                 <TableCaption>List of all patients.</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[100px]">Name</TableHead>
+                        <TableHead className="w-[200px]">Name</TableHead>
                         <TableHead>Email</TableHead>
                         <TableHead className="text-right">Actions</TableHead>
                     </TableRow>
@@ -52,8 +52,8 @@ const Patients = () => {
                     }
                     {patients && patients.map((patient) => (
                         <TableRow key={patient.id}>
-                            <TableCell className="font-medium">{patient.name}</TableCell>
-                            <TableCell>{patient.email}</TableCell>
+                            <TableCell className="font-medium">{patient.account.firstName.concat(" " +patient.account.lastName)}</TableCell>
+                            <TableCell>{patient.account.email}</TableCell>
                             <TableCell className="text-right flex items-center justify-end gap-4">
                                 <TooltipProvider>
                                     <CustomTooltip desciption='Patient Details'>

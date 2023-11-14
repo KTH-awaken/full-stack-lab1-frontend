@@ -32,7 +32,7 @@ const Loading = () => {
 
 const Encounters = () => {
     const {account} = useAuth();
-    const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters");
+    const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
     // const url = account.role.toLocaleLowerCase();
     // const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters/"+url+"/"+account.id);
     

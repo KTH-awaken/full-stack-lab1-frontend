@@ -1,14 +1,17 @@
 export interface ConditionApi {
     id: number;
-    doctor: {
-        name: string;
-        id: number;
-    };
     patient: {
-        name: string;
         id: number;
+        firstName: any;
+        lastName: any;
+        email: any;
     };
-    diagnosis: string;
+    doctor: {
+        id: number;
+        firstName: any;
+        lastName: any;
+        email: any;
+    };
     timestamp: string;
-
+    diagnosis: string;
 }
