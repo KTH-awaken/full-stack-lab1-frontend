@@ -1,28 +1,25 @@
 export interface ObservationApi {
-    id: number;
-    patient: {
-        name:string,
-        id:number
-    };
-    doctor: {
-        name:string,
-        id:number
-    };
-    content: string;
+    id:string;
+    description: string;
+    date: string;
 }
 
 export interface EncounterApi {
     id: number;
-    title: string;
     patient: {
-        name:string,
-        id:number
+        id: number;
+        firstName: string;
+        lastName: string;
+        email: string;
     };
     doctor: {
-        name:string,
-        id:number
+        id: number;
+        firstName: string;
+        lastName: string;
+        email: string;
     };
-    observations: ObservationApi[];
+    title: string;
+    description: string;
     date: string;
-    details: string;
+    observations: ObservationApi[];
 }

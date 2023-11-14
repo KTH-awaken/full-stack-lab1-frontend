@@ -9,24 +9,28 @@ import AddEncounterDialog from "./AddEncounterDialog";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { Loading } from "./Index";
-import { ConditionApi } from "../../api/types/condition";
 import { EncounterApi } from "../../api/types/encounter";
 import CustomAlert from "../../components/CustomAlert";
 import { Accordion } from "../../components/ui/accordion";
 import EncounterRow from "../Encounter/EncounterRow";
+import AddObservationDialog from "./AddObservationDialog";
+import { ConditionApi } from "../../api/types/condition";
 
 
 const ButtonNew = ({ text }: { text: string }) => <p className="float-right inline-block px-4 py-2 bg-primary rounded-lg text-primary-foreground">New {text}</p>
 
 const Information = () => {
+    const params = useParams();
+    const { data: patient } = useGetCall<PatientApi>("/patients/"+params.patientId);
     return (
         <>
             <h1 className="text-2xl font-bold mb-4">Information</h1>
             <div className="flex flex-col gap-2">
-                <p><strong className="text-foreground/50 font-medium">Name: </strong> Hamada Aljarrah</p>
-                <p><strong className="text-foreground/50 font-medium">Email: </strong> hamada@gmail.com</p>
-                <p><strong className="text-foreground/50 font-medium">Conditions: </strong> 4 </p>
-                <p><strong className="text-foreground/50 font-medium">Observations: </strong> 5</p>
+                <p><strong className="text-foreground/50 font-medium">Firstname: </strong> {patient&&patient.account.firstName}</p>
+                <p><strong className="text-foreground/50 font-medium">Lastname: </strong> {patient&&patient.account.lastName}</p>
+                <p><strong className="text-foreground/50 font-medium">Email: </strong> {patient&&patient.account.email}</p>
+                {/* <p><strong className="text-foreground/50 font-medium">Conditions: </strong> {patient&&patient.accountVm.} </p>
+                <p><strong className="text-foreground/50 font-medium">Encounters: </strong> {patient&&patient.encounters.length}</p> */}
             </div>
         </>
 
@@ -35,7 +39,10 @@ const Information = () => {
 
 
 const Condition = ({ patientList }: { patientList: { label: string, value: string }[] }) => {
-    const { data: conditions, isLoading, isError } = useGetCall<ConditionApi[]>("/conditions");
+    const params = useParams();
+    const { data: conditions, isLoading} = useGetCall<ConditionApi[]>("/condition/"+params.patientId);
+    console.log(conditions);
+    
     return (
         <div className="flex flex-col justify-start mt-4 gap-3">
             <TooltipProvider>
@@ -46,7 +53,7 @@ const Condition = ({ patientList }: { patientList: { label: string, value: strin
                 <TableCaption>List of patient conditions</TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="w-[65%]">Diagnosis</TableHead>
+                        <TableHead className="w-[50%]">Diagnosis</TableHead>
                         <TableHead>Diagnosed by</TableHead>
                         <TableHead>Date</TableHead>
                     </TableRow>
@@ -62,17 +69,19 @@ const Condition = ({ patientList }: { patientList: { label: string, value: strin
                     {conditions && conditions.map((condition) => (
                         <TableRow key={condition.id}>
                             <TableCell>{condition.diagnosis}</TableCell>
-                            <TableCell>{condition.doctor.name}</TableCell>
+                            <TableCell>{condition.doctor?.firstName.concat(" " + condition.doctor?.lastName)}</TableCell>
                             <TableCell>{condition.timestamp}</TableCell>
                         </TableRow>
-                    ))}
+                    ))} 
                 </TableBody>
             </Table>
         </div>
     )
 }
 const Encounter = ({ patientList }: { patientList: { label: string, value: string }[] }) => {
-    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters");
+    const params = useParams();
+    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter/"+params.patientId);
+
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
     return (
@@ -90,7 +99,7 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
                         className="bg-accent shadow-none data-[state=open]:pb-4"
                     >
                         <div className="p-2">
-                            <ButtonNew text=" observation" />
+                           <AddObservationDialog patientId={enc.patient.id} encounterId={enc.id}/>
                         </div>
                     </EncounterRow>)}
             </Accordion>
@@ -101,10 +110,9 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
 
 
 const PatientDetails = () => {
-    const params = useParams();
-    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
-    const patientList = patients?.map(d => ({ label: d.name, value: d.email }))
-    console.log(params, isLoading, isError);
+    // const params = useParams();
+    const { data: patients } = useGetCall<PatientApi[]>("/patients");
+    const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
 
     return (

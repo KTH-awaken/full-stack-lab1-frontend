@@ -5,7 +5,7 @@ import { Card } from "../../components/ui/card"
 import { uid } from "../../helpers/helpers"
 
 
-const EncounterRow = ({ encounter, children, className }: { encounter: EncounterApi, children?:ReactNode,className?:string}) => {
+const EncounterRow = ({ encounter, children, className }: { encounter: EncounterApi, children?: ReactNode, className?: string }) => {
     return (
 
         <Card className={`mb-3`}>
@@ -17,15 +17,19 @@ const EncounterRow = ({ encounter, children, className }: { encounter: Encounter
                     <div className="flex flex-col gap-3">
                         <div>
                             <p className="font-semibold text-foreground/50 mb-1">Details</p>
-                            <p>{encounter.details}</p>
+                            <p>{encounter.description}</p>
+                        </div>
+                        <div>
+                            <p className="font-semibold text-foreground/50 mb-1">Date</p>
+                            <p>{encounter.date.substring(0, 10)}</p>
                         </div>
                         <div>
                             <p className="font-semibold text-foreground/50 mb-1">Time</p>
-                            <p>{encounter.date}</p>
+                            <p> {encounter.date.substring(11, 16)}</p>
                         </div>
                         <div>
                             <p className="font-semibold text-foreground/50 mb-1">Doctor</p>
-                            <p>{encounter.doctor.name}</p>
+                            <p>{encounter.doctor.firstName.concat(" "+encounter.doctor.lastName)}</p>
                         </div>
                         <div>
 
@@ -33,7 +37,7 @@ const EncounterRow = ({ encounter, children, className }: { encounter: Encounter
                             <ul>
                                 {encounter.observations.map((o: ObservationApi) => <div key={o.id} className="flex gap-2 items-center mb-1 pl-2">
                                     <span className="w-2 h-2 block rounded-full bg-primary/80"></span>
-                                    <li key={uid()}>{o.content}</li>
+                                    <li key={uid()}>{o.description}</li>
                                 </div>)}
                             </ul>
                         </div>

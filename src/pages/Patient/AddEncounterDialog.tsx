@@ -8,23 +8,51 @@ import { ReactNode, useState } from "react"
 import { DatePicker } from "../../components/DatePicker"
 import TimePicker from "../../components/TimePicker"
 import CustomTooltip from "../../components/Tooltip"
+import { Textarea } from "../../components/ui/textarea"
+import { usePostCall } from "../../api/apiService"
+import { EncounterApi } from "../../api/types/encounter"
+import { useAuth } from "../../context/auth-context"
 
 interface Props {
     patientList: {
         label: string,
         value: string
     }[],
-    customTrigger?:ReactNode
+    customTrigger?: ReactNode
 }
 
-const AddEncounterDialog = ({ patientList,customTrigger }: Props) => {
+const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
+    const {account} = useAuth();
     const [patient, setPatient] = useState("");
     const [date, setDate] = useState<Date>(new Date())
+    const [details, setDetails] = useState("");
     const [time, setTime] = useState<{ hour: number, min: number }>({ hour: 0, min: 0 })
     const [title, setTitle] = useState("");
 
+    const {mutate:newEncounter} = usePostCall<EncounterApi>("/encounter", "encounters")
+
     const handleClick = () => {
-        console.log(patient, date, time, title);
+        
+        console.log({
+            patintId:+patient,       
+            doctorEmail: account?.email,
+            title,
+            description:details,
+            date,
+            time,
+        });
+        
+        newEncounter({
+            patientId:+patient,       
+            title,
+            doctorEmail:account?.email,
+            details,
+            date,
+            time,
+        });
+       
+        
+        (function () { document.getElementById('closeDialog')?.click(); }())
 
     }
     const Trigger = () => customTrigger ? customTrigger :
@@ -35,7 +63,7 @@ const AddEncounterDialog = ({ patientList,customTrigger }: Props) => {
     return (
         <Dialog>
             <DialogTrigger>
-                <Trigger/>
+                <Trigger />
             </DialogTrigger>
 
 
@@ -63,6 +91,11 @@ const AddEncounterDialog = ({ patientList,customTrigger }: Props) => {
                             value={patient}
                             onValueChange={(newValue) => setPatient(newValue)}
                         />
+                    </div>
+                    <div className="grid grid-flow-col grid-cols-4 items-start">
+                        <Label className="col-span-1 pt-2">Details</Label>
+                        <Textarea className="col-span-3" onChange={(e) => setDetails(e.target.value)}></Textarea>
+
                     </div>
                     <div className="grid grid-flow-col grid-cols-4 items-center ">
                         <Label className="col-span-1">Date</Label>

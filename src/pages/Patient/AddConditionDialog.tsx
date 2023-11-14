@@ -6,6 +6,9 @@ import { Button } from "../../components/ui/button"
 import SelectPopover from "../../components/SelectPopover"
 import { ReactNode, useState } from "react"
 import CustomTooltip from "../../components/Tooltip"
+import { usePostCall } from "../../api/apiService"
+import { ConditionApi } from "../../api/types/condition"
+import { useAuth } from "../../context/auth-context"
 
 interface Props {
     patientList: {
@@ -16,12 +19,16 @@ interface Props {
 }
 
 const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
-    const [patient, setPatient] = useState("");
-    const [condition, setCondition] = useState("");
+    const [patientId, setPatientId] = useState("");
+    const [diagnosis, setDiagnosis] = useState("");
+    const {account} = useAuth();
+    const {mutate:newCondition} = usePostCall<ConditionApi>("/condition","conditions")
 
     const handleClick = () => {
-        const date = new Date().toLocaleDateString();
-        console.log(patient, date, condition);
+        console.log(account?.email);
+        
+        newCondition({diagnosis, patientId, doctorEmail:account?.email});
+        (function () { document.getElementById('closeDialog')?.click(); }())
 
     }
     const Trigger = () => customTrigger ? customTrigger :
@@ -48,7 +55,7 @@ const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
                 <div className="grid gap-4 py-4">
                     <div className="grid grid-flow-col grid-cols-4  items-center ">
                         <Label className="col-span-1" >Condition</Label>
-                        <Input onChange={(e) => setCondition(e.target.value)} className="col-span-3" placeholder="Condition..." />
+                        <Input onChange={(e) => setDiagnosis(e.target.value)} className="col-span-3" placeholder="Condition..." />
                     </div>
 
                     <div className="grid grid-flow-col grid-cols-4 items-center ">
@@ -57,8 +64,8 @@ const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
                             className="col-span-3"
                             title="patient"
                             list={patientList}
-                            value={patient}
-                            onValueChange={(newValue) => setPatient(newValue)}
+                            value={patientId}
+                            onValueChange={(newValue) => setPatientId(newValue)}
                         />
                     </div>
 
