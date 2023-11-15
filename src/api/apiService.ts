@@ -6,23 +6,23 @@ import {
     UseQueryResult,
     UseMutationResult,
 } from "react-query";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
-
-
-const token = Cookies.get('token');
-if (token) axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+const token = Cookies.get("token");
+if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const BASE_URL = "http://localhost:8080";
 
 export const useGetCall = <T>(
     endpoint: string,
+    queryKey?: string,
     headers?: AxiosRequestConfig["headers"]
 ): UseQueryResult<T, unknown> => {
-    return useQuery<T, unknown>(["data", endpoint], async () => {
+    return useQuery<T, unknown>([queryKey, endpoint], async () => {
         const config: AxiosRequestConfig = {};
         if (headers) {
             config.headers = headers;
         }
+
         const response: AxiosResponse<T> = await axios.get(
             `${BASE_URL}${endpoint}`,
             config
@@ -43,6 +43,8 @@ export const usePostCall = <T, U = {}>(
             if (headers) {
                 config.headers = headers;
             }
+         `Bearer ${token}`;
+
             const response: AxiosResponse<T> = await axios.post(
                 `${BASE_URL}${endpoint}`,
                 data,
@@ -51,15 +53,12 @@ export const usePostCall = <T, U = {}>(
             return response.data;
         },
         {
-            onSuccess: (newEncounter: T) => {
-                queryClient.invalidateQueries(["data", endpoint]);
-                queryClient.setQueryData<T[]>(
-                    queryKey,
-                    (oldEncounters = []) => {
-                        // Append the new encounter to the existing encounters
-                        return [...oldEncounters, newEncounter];
-                    }
-                );
+            onSuccess: (newValue: T) => {
+                queryClient.invalidateQueries([queryKey, endpoint]);
+                queryClient.setQueryData<T[]>(queryKey, (oldValue = []) => {
+                    // Append the new encounter to the existing encounters
+                    return [...oldValue, newValue];
+                });
             },
         }
     );
@@ -115,4 +114,3 @@ export const useDeleteCall = <T>(
         }
     );
 };
-

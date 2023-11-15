@@ -15,9 +15,9 @@ const AuthenticatedMenu = () => {
 
     return (
         <div className="flex items-center gap-8">
-            {account?.userType === "DOCTOR" && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>}
+            {(account?.userType === "DOCTOR" || account?.userType === "EMPLOYEE") && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>}
             <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/messages">Messages</NavLink>
-            {account?.userType === 'PATIENT' && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/encounters">Encounters</NavLink>}
+            {(account?.userType === 'PATIENT' || account?.userType === 'DOCTOR') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/encounters">Encounters</NavLink>}
 
 
             <Menubar className="border-none cursor-pointer">
