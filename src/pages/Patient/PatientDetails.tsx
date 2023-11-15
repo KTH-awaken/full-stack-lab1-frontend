@@ -40,7 +40,7 @@ const Information = () => {
 
 const Condition = ({ patientList }: { patientList: { label: string, value: string }[] }) => {
     const params = useParams();
-    const { data: conditions, isLoading} = useGetCall<ConditionApi[]>("/condition/"+params.patientId);
+    const { data: conditions, isLoading} = useGetCall<ConditionApi[]>("/condition/"+params.patientId,"conditions");
     console.log(conditions);
     
     return (
@@ -112,6 +112,8 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
 const PatientDetails = () => {
     // const params = useParams();
     const { data: patients } = useGetCall<PatientApi[]>("/patients");
+    console.log(patients);
+    
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
 

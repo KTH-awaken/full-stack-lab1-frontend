@@ -9,22 +9,22 @@ import Patients from "./pages/Patient/Index.tsx";
 import PatientDetails from "./pages/Patient/PatientDetails.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import Register from "./pages/Register.tsx";
+import Protected from "./components/Protected.tsx";
 
 export const router = createBrowserRouter([
     {
         path: "/",
         element: <Layout />,
         errorElement: <ErrorPage />,
-
         children: [
             {
                 path: '',
-                element: <Home />
+                element: <Protected><Home /></Protected>
 
             },
             {
                 path: 'messages',
-                element: <Messages />,
+                element: <Protected><Messages /></Protected>,
                 children: [
                     {
 
@@ -35,15 +35,15 @@ export const router = createBrowserRouter([
             },
             {
                 path: 'encounters',
-                element: <Encounters />
+                element: <Protected><Encounters /></Protected>
             },
             {
                 path: 'patients',
-                element: <Patients />,
+                element: <Protected><Patients /></Protected>,
             },
             {
                 path: 'patients/:patientId',
-                element: <PatientDetails />
+                element: <Protected><PatientDetails /></Protected>
             },
             {
                 path: 'register',
@@ -55,6 +55,6 @@ export const router = createBrowserRouter([
             }
         ]
     },
-        
+
 
 ]);

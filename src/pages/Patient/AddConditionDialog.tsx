@@ -24,15 +24,13 @@ const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
     const {account} = useAuth();
     const {mutate:newCondition} = usePostCall<ConditionApi>("/condition","conditions")
 
-    const handleClick = () => {
-        console.log(account?.email);
-        
+    const handleClick = () => {        
         newCondition({diagnosis, patientId, doctorEmail:account?.email});
         (function () { document.getElementById('closeDialog')?.click(); }())
 
     }
     const Trigger = () => customTrigger ? customTrigger :
-        <CustomTooltip desciption="Add Encounter">
+        <CustomTooltip desciption="Add Condition">
             <EditIcon size={22} />
         </CustomTooltip>
 
