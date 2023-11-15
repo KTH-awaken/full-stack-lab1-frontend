@@ -17,7 +17,7 @@ import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import { useAuth } from "../../context/auth-context";
 import SelectPopover from "../../components/SelectPopover";
-import { MessageVm } from "../../api/types/chat";
+import { AccountVm, MessageVm } from "../../api/types/chat";
 import type { UseMutationResult } from "react-query";
 
 type FormData = z.infer<typeof formSchema>;
@@ -46,9 +46,12 @@ const useSendMessageMutation = (): UseMutationResult<MessageVm, unknown, Message
 const NewChatDialog = () => {
 
     const { account } = useAuth();
-    const { data: doctors, isLoading, error } = useGetCall<{
-      account: { firstName: string; lastName: string; email: string };
-    }>("/doctors");
+    // const { data: doctors, isLoading, error } = useGetCall<{
+    //   account: { firstName: string; lastName: string; email: string };
+    // }>("/doctors");
+    // const { data: doctors, isLoading, error } = useGetCall< { firstName: string; lastName: string; email: string }[]>("/workers");
+    const { data: doctors, isLoading, error } = useGetCall<AccountVm[]>("/workers");
+
     const [reciever, setReceiver] = useState("");
     const [receiverId, setReceiverId] = useState<number >();
     const { register, handleSubmit, setValue, reset, formState: { errors } } =
@@ -113,15 +116,15 @@ const NewChatDialog = () => {
                       <>
                         <SelectPopover
                           title="doctor"
-                          list={doctors.map((doctor) => ({ label: doctor.account?.firstName, value: doctor.account?.id.toString() }))}
+                          list={doctors.map((doctor) => ({ label: doctor?.firstName, value: doctor?.id.toString() }))}
                           value={reciever}
                           onValueChange={(newValue) => {
                             setReceiver(newValue.toString());
                             
                             {console.log(newValue)}
-                            const selectedDoctor = doctors.find(doctor => doctor.account.id === newValue);
+                            const selectedDoctor = doctors.find(doctor => doctor.id === newValue);
                             if (selectedDoctor) {
-                              setReceiverId(selectedDoctor.account.id);
+                              setReceiverId(selectedDoctor.id);
                             }
                           }}
                         />
