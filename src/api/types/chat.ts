@@ -24,5 +24,7 @@ export interface MessageVm {
     senderLastName:string;
     receiverFirstName:string;
     receiverLastName:string;
+    date: string;
+
 
 }

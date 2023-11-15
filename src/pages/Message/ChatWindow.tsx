@@ -85,7 +85,11 @@ const ChatWindow = () => {
                             <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
                         </Avatar>
                         <div>
-                            <p className="font-bold text-xl">{account&&messages[0].receiverFirstName} {account&&messages[0].receiverLastName}</p>
+                            <p className="font-bold text-xl">
+                            {account && (messages[0].sender === account.id ? messages[0].receiverFirstName : messages[1].receiverFirstName)}{' '}
+                            {account && (messages[0].sender === account.id ? messages[0].receiverLastName : messages[1].receiverLastName)}
+                            </p>
+
                         </div>
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
