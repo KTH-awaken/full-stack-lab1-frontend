@@ -19,7 +19,7 @@ import { useAuth } from "../../context/auth-context";
 import SelectPopover from "../../components/SelectPopover";
 import { AccountVm, MessageVm } from "../../api/types/chat";
 import type { UseMutationResult } from "react-query";
-
+import {useNavigate} from "react-router-dom"
 type FormData = z.infer<typeof formSchema>;
 
 const formSchema = z.object({
@@ -46,10 +46,7 @@ const useSendMessageMutation = (): UseMutationResult<MessageVm, unknown, Message
 const NewChatDialog = () => {
 
     const { account } = useAuth();
-    // const { data: doctors, isLoading, error } = useGetCall<{
-    //   account: { firstName: string; lastName: string; email: string };
-    // }>("/doctors");
-    // const { data: doctors, isLoading, error } = useGetCall< { firstName: string; lastName: string; email: string }[]>("/workers");
+    const navigate = useNavigate();
     const { data: doctors, isLoading, error } = useGetCall<AccountVm[]>("/workers");
 
     const [reciever, setReceiver] = useState("");
@@ -90,6 +87,8 @@ const NewChatDialog = () => {
         });
         reset();
         document.getElementById("closeDialog")?.click();
+        navigate(0);
+
       } catch (error) {
         console.error("Error sending message:", error);
       }
