@@ -128,11 +128,7 @@ const NewChatDialog = () => {
                             {console.log(newValue)}
                             const selectedDoctor = doctors.find(doctor => doctor.id === newValue);
                             if (selectedDoctor) {
-<<<<<<< HEAD
                               setReceiverId(selectedDoctor.id);
-=======
-                              // setReceiverId(selectedDoctor.account.id);
->>>>>>> 4a3e75d3ee5dec812a2ec9c203a2718ef2f757db
                             }
                           }}
                         />
