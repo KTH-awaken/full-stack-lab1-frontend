@@ -6,6 +6,7 @@ import NewChatDialog from "./NewChatDialog";
 import ChatRow, { ChatRowLoading } from "./ChatRow";
 import { ChatApi } from "../../api/types/chat";
 import { useAuth } from "../../context/auth-context";
+import { useEffect } from "react";
 
 
 
@@ -15,6 +16,10 @@ import { useAuth } from "../../context/auth-context";
 const Messages = () => {
     const {account} = useAuth();
     const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+account?.id);
+
+    useEffect(()=>{
+        
+    },[account?.id])
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">

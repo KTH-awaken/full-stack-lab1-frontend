@@ -5,7 +5,6 @@ import { Accordion, } from "../../components/ui/accordion"
 import { Card } from "../../components/ui/card";
 import { Skeleton } from "../../components/ui/skeleton";
 import { uid } from "../../helpers/helpers";
-import { useAuth } from "../../context/auth-context";
 import { EncounterApi } from "../../api/types/encounter";
 
 
@@ -31,7 +30,6 @@ const Loading = () => {
 }
 
 const Encounters = () => {
-    const {account} = useAuth();
     const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
     // const url = account.role.toLocaleLowerCase();
     // const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters/"+url+"/"+account.id);

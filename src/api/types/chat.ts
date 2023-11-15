@@ -18,8 +18,8 @@ export interface MessageApi {
 }
 export interface MessageVm {
     text: string;
-    senderId: number;
-    receiverId: number;
+    sender: number;
+    receiver: number;
     senderFirstName:string;
     senderLastName:string;
     receiverFirstName:string;

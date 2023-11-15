@@ -3,16 +3,13 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Card } from "../../components/ui/card";
-import { useGetCall, usePostCall } from "../../api/apiService";
-import { getDisplayName } from "../../helpers/helpers";
+import { usePostCall } from "../../api/apiService";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
-import { Chat } from "../../types";
 import { MessageRow } from "./MessageRow";
 import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../context/auth-context";
 import { MessageVm } from "../../api/types/chat";
-import { UseMutationResult } from "react-query";
 
 
 
@@ -45,33 +42,38 @@ const Loading = () => {
 }
 
 const ChatWindow = () => {
-    const {account} = useAuth();
+    const { account } = useAuth();
     const params = useParams();
-    const { mutate,data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${account?.id}/${params.chatid}`,'');
-    const { mutate:sendMessage } = usePostCall<MessageVm[]>(`/message`,'');
+    const { mutate, data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${account?.id}/${params.chatid}`, '');
+    const { mutate: sendMessage } = usePostCall<MessageVm[]>(`/message`, '');
     const messages = data;
     const [message, setMessage] = useState("");
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         if (account?.id) {
             mutate("");
         }
-    },[account?.id])
+    }, [account?.id])
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!message.trim()) {
             return
         }
-        const messageVm: MessageVm ={
+        const messageVm: MessageVm = {
             text: message,
-            sender: account?.id,
+            sender: account?.id || -1,
             receiver: Number(params.chatid),
+            senderFirstName: "",
+            senderLastName: "",
+            receiverFirstName: "",
+            receiverLastName: "",
+            date: ""
         }
         setMessage("");
         sendMessage(messageVm);
     }
-    
+
     if (isLoading) return <Loading />;
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
 
@@ -86,8 +88,8 @@ const ChatWindow = () => {
                         </Avatar>
                         <div>
                             <p className="font-bold text-xl">
-                            {account && (messages[0].sender === account.id ? messages[0].receiverFirstName : messages[1].receiverFirstName)}{' '}
-                            {account && (messages[0].sender === account.id ? messages[0].receiverLastName : messages[1].receiverLastName)}
+                                {account && (messages[0].sender === account.id ? messages[0]?.receiverFirstName : messages[1]?.receiverFirstName)}{' '}
+                                {account && (messages[0].sender === account.id ? messages[0]?.receiverLastName : messages[1]?.receiverLastName)}
                             </p>
 
                         </div>
@@ -100,7 +102,7 @@ const ChatWindow = () => {
                         <Input value={message} onChange={(e) => setMessage(e.target.value)} className="border-none bg-accent" placeholder="Type a message..." type="text" name="" id="" ></Input>
                         <Button type="submit">Send</Button>
                     </form>
-   
+
                 </Card>
             }
         </>
