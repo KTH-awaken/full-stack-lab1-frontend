@@ -11,7 +11,7 @@ import { Chat } from "../../types";
 import { MessageRow } from "./MessageRow";
 import { FormEvent, useEffect, useState } from "react";
 import { useAuth } from "../../context/auth-context";
-import { MessageApi, MessageVm } from "../../api/types/chat";
+import { MessageVm } from "../../api/types/chat";
 import { UseMutationResult } from "react-query";
 
 
@@ -43,32 +43,25 @@ const Loading = () => {
         </Card>
     )
 }
-// const useSendMessageMutation = (): UseMutationResult<MessageVm, unknown, MessageVm, unknown> => {
-//     return usePostCall<MessageVm, MessageVm>('/message', 'message');
-// };
+
 const ChatWindow = () => {
     const {account} = useAuth();
     const params = useParams();
-    // const myId = account?.id;//todo use this
-    const myId = 1;
-    const { mutate,data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${myId}/${params.chatid}`,'');
+    const { mutate,data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${account?.id}/${params.chatid}`,'');
     const { mutate:sendMessage } = usePostCall<MessageVm[]>(`/message`,'');
     const messages = data;
     const [message, setMessage] = useState("");
     
     useEffect(()=>{
-        mutate("");
-    },[])
+        if (account?.id) {
+            mutate("");
+        }
+    },[account?.id])
+
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!message.trim()) {
             return
-        }
-        const now = new Date();
-        const messageToSend = {//todo remove
-            user: account && account.email,
-            time: `${now.toLocaleDateString()} ${now.toLocaleTimeString()}`,
-            content: message
         }
         const messageVm: MessageVm ={
             text: message,
@@ -76,13 +69,9 @@ const ChatWindow = () => {
             receiver: Number(params.chatid),
         }
         setMessage("");
-        console.log(messageToSend);
-        console.log(messageVm);
-        console.log(account?.id);
-        // CREATE NEW MESSAGE IN CHAT
         sendMessage(messageVm);
     }
-
+    
     if (isLoading) return <Loading />;
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
 
@@ -96,14 +85,11 @@ const ChatWindow = () => {
                             <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
                         </Avatar>
                         <div>
-                            <p className="font-bold text-xl">{messages[0].sender.name}</p>
-                            <p className="text-sm text-foreground/50">{messages[0].sender.email}</p>
+                            <p className="font-bold text-xl">{account&&messages[0].receiverFirstName} {account&&messages[0].receiverLastName}</p>
                         </div>
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
-
-                        {/* {account && messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.content} />)} */}
-                        {account && messages.map((message, index) => <MessageRow key={index} self={message.sender.email === account.email} content={message.text} />)}
+                        {account && messages && messages.map((message, index) => <MessageRow key={index} self={message.sender === account.id} content={message.text} />)}
 
                     </div>
                     <form onSubmit={handleSubmit} className="flex gap-3 pt-3">

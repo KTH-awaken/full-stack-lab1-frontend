@@ -14,9 +14,7 @@ import { useAuth } from "../../context/auth-context";
 
 const Messages = () => {
     const {account} = useAuth();
-    const myId =1; 
-    // const myId = account?.id;//todo use this
-    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+myId);
+    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+account?.id);
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">

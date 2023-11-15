@@ -20,4 +20,9 @@ export interface MessageVm {
     text: string;
     senderId: number;
     receiverId: number;
+    senderFirstName:string;
+    senderLastName:string;
+    receiverFirstName:string;
+    receiverLastName:string;
+
 }
