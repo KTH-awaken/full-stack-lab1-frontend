@@ -124,12 +124,6 @@ const NewChatDialog = () => {
                           value={reciever}
                           onValueChange={(newValue) => {
                             setReceiver(newValue.toString());
-                            
-                            {console.log(newValue)}
-                            const selectedDoctor = doctors.find(doctor => doctor.id === newValue);
-                            if (selectedDoctor) {
-                              setReceiverId(selectedDoctor.id);
-                            }
                           }}
                         />
                       </>
