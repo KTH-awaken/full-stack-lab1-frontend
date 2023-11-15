@@ -65,29 +65,18 @@ const NewChatDialog = () => {
       setValue("reciever", reciever);
     }, [reciever]);
   
-    useEffect(() => {
-      console.log("Doctors data:", doctors);
-      if (isLoading) {
-        console.log("Loading doctors data...");
-      }
-      if (error) {
-        console.error("Error loading doctors data:", error);
-      }
-    }, [doctors, isLoading, error]);
+
   
     const sendMessageMutation = useSendMessageMutation();
   
     const onSubmit: SubmitHandler<FormData> = async (data) => {
       try {
         
-        console.log(doctors);
-        
-        //todo remove hardcodeing 
-        const senderId = 1;
-      
+        console.log(account?.id);
+        console.log("ID ______");
         const messageVm: MessageVm = {
           text: data.message,
-          sender: senderId,
+          sender: account?.id,
           receiver: Number(data.reciever),
         };
         console.log(messageVm);

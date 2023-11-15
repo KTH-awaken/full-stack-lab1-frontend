@@ -38,7 +38,17 @@ const ChatRow = ({ chat }: { chat: ChatApi }) => {
                 <p className="font-semibold mb-1 ">{chat.otherParticipantName}</p>
                 <div className="flex justify-between  items-center">
                     <p className="text-sm font-light text-foreground/80">{chat.lastMessage}</p>
-                    <p className="text-xs font-light text-foreground/80">{chat.date}</p>
+                    <p className="text-xs font-light text-foreground/80">
+                    {new Date(chat.date).toLocaleString('en-US', {
+                        weekday: 'short',
+                        month: 'short',
+                        day: 'numeric',
+                        hour: 'numeric',
+                        minute: 'numeric',
+                        hour12: false,
+                    })}
+                    </p>
+
       
                 </div>
             </div>
