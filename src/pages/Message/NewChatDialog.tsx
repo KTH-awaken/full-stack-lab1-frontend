@@ -47,7 +47,7 @@ const NewChatDialog = () => {
 
     const { account } = useAuth();
     const navigate = useNavigate();
-    const { data: doctors, isLoading, error } = useGetCall<AccountVm[]>("/workers");
+    const { data: doctors, isLoading } = useGetCall<AccountVm[]>("/workers");
 
     const [reciever, setReceiver] = useState("");
     // const [ setReceiverId] = useState<number >();
