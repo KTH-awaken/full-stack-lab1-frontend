@@ -46,11 +46,11 @@ const useSendMessageMutation = (): UseMutationResult<MessageVm, unknown, Message
 const NewChatDialog = () => {
 
     const { account } = useAuth();
-    const { data: doctors, isLoading, error } = useGetCall<{
-      account: { firstName: string; lastName: string; email: string };
-    }>("/doctors");
+    const { data: doctors, isLoading } = useGetCall<{
+      account: { firstName: string; lastName: string; email: string, id:string };
+    }[]>("/doctors");
     const [reciever, setReceiver] = useState("");
-    const [receiverId, setReceiverId] = useState<number >();
+    // const [ setReceiverId] = useState<number >();
     const { register, handleSubmit, setValue, reset, formState: { errors } } =
       useForm<FormData>({
         resolver: zodResolver(formSchema),
@@ -76,8 +76,13 @@ const NewChatDialog = () => {
         console.log("ID ______");
         const messageVm: MessageVm = {
           text: data.message,
-          sender: account?.id,
+          sender: account?.id || -1,
           receiver: Number(data.reciever),
+          senderFirstName: "",
+          senderLastName: "",
+          receiverFirstName: "",
+          receiverLastName: "",
+          date: ""
         };
         console.log(messageVm);
         sendMessageMutation.mutateAsync(messageVm).then( response => {
@@ -121,7 +126,7 @@ const NewChatDialog = () => {
                             {console.log(newValue)}
                             const selectedDoctor = doctors.find(doctor => doctor.account.id === newValue);
                             if (selectedDoctor) {
-                              setReceiverId(selectedDoctor.account.id);
+                              // setReceiverId(selectedDoctor.account.id);
                             }
                           }}
                         />

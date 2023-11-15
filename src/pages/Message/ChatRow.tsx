@@ -1,8 +1,7 @@
 import { NavLink } from "react-router-dom"
 import { Avatar, AvatarImage } from "../../components/ui/avatar"
-import { getDisplayName, uid } from "../../helpers/helpers"
+import {  uid } from "../../helpers/helpers"
 import { Skeleton } from "../../components/ui/skeleton"
-import { useAuth } from "../../context/auth-context"
 import { ChatApi } from "../../api/types/chat"
 
 
@@ -27,7 +26,6 @@ export const ChatRowLoading = () => {
 
 const ChatRow = ({ chat }: { chat: ChatApi }) => {
     const classes = "p-4 py-2 mb-2 block border-b flex gap-4 pl-2"
-    const {account} = useAuth();
     return (
         <NavLink end className={({ isActive }) => isActive ? `bg-accent rounded-xl border-none ${classes}` : classes} to={`/messages/${chat.otherParticipantId}`}>
             <Avatar>

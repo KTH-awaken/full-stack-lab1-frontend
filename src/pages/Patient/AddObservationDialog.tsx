@@ -8,7 +8,7 @@ import { usePostCall } from '../../api/apiService'
 import { ObservationApi } from '../../api/types/encounter'
 import { useNavigate } from 'react-router-dom';
 
-const AddObservationDialog = ({patientId,encounterId}: {patientId:number, encounterId:number}) => {
+const AddObservationDialog = ({encounterId}: {patientId:number, encounterId:number}) => {
     const [observation, setObservation] = useState("");
     const {mutate:newObservation} = usePostCall<ObservationApi>("/observation","observations")
     const navigate = useNavigate()
