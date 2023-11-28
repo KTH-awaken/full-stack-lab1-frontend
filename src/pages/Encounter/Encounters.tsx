@@ -11,10 +11,10 @@ import { EncounterApi } from "../../api/types/encounter";
 
 const Loading = () => {
     const arr = new Array(10).fill(1);
-    
+
     return (
         <>
-            <h1 className="text-3xl font-bold mb-8">My Encounters</h1>
+            <h1 className="text-2xl font-semibold mb-5">My Encounters</h1>
             {arr.map(_ => (
                 <Card key={uid()} className="mb-3 ">
                     <div className=" flex items-center justify-between border-b-0 data-[state=open]:border-l-8 border-primary px-5 py-[27px] rounded-2xl bg-background" >
@@ -30,28 +30,27 @@ const Loading = () => {
 }
 
 const Encounters = () => {
-    const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
-    // const url = account.role.toLocaleLowerCase();
-    // const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters/"+url+"/"+account.id);
-    
-
-
-    
+    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
+ 
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
 
+    console.log(encounters);
+    
     return (
-        <>
-            <h1 className="text-3xl font-bold mb-8">My Encounters</h1>
+        <Card className="p-6">
+            <h1 className="text-2xl font-semibold mb-5">My Encounters</h1>
+            {encounters && encounters.length === 0 && <CustomAlert title="Info" message="This patient has no encounters" />}
             <Accordion type="single" collapsible>
-                {encounters && encounters.map((enc:EncounterApi) => 
-                    <EncounterRow 
-                        key={uid()} 
+                {encounters && encounters.map((enc: EncounterApi) =>
+                    <EncounterRow
+                        key={uid()}
                         encounter={enc}
+                        className="bg-accent shadow-none data-[state=open]:pb-4"
                     />)}
             </Accordion>
 
-        </>
+        </Card>
     )
 }
 

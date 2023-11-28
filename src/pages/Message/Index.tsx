@@ -27,9 +27,11 @@ const Messages = () => {
             <Card className="w-1/2 p-6 pt-0 bg-background rounded-2xl overflow-y-auto relative">
 
                 <div className="flex items-start justify-between mb-4 pb-2 pt-6  sticky top-0 bg-background">
-                    <h1 className="text-xl font-bold">Message</h1>
+                    <h1 className="text-2xl font-semibold mb-5">Message</h1>
                     <NewChatDialog />
                 </div>
+
+                {chats && chats.length === 0 && <CustomAlert title="Info" message="You have no chats" />}
 
                 {isLoading && <ChatRowLoading />}
                 {isError && <CustomAlert title='Error' message='An error occured. Please try again later' />}

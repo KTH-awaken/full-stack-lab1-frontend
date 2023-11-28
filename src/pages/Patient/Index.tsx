@@ -11,6 +11,7 @@ import AddEncounterDialog from './AddEncounterDialog'
 import AddConditoinDialog from './AddConditionDialog'
 import CustomTooltip from '../../components/Tooltip'
 import { useAuth } from '../../context/auth-context'
+import CustomAlert from '../../components/CustomAlert'
 
 
 
@@ -29,56 +30,60 @@ export const Loading = () => {
 
 const Patients = () => {
     const { account } = useAuth();
-    const { data: patients, isLoading } = useGetCall<PatientApi[]>("/patients");
+    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
     return (
-        <Card className='p-6 rounded-2xl bg-background'>
-            <h1 className='text-2xl font-semibold mb-5'>Patients</h1>
-            <Table>
-                <TableCaption>List of all patients.</TableCaption>
-                <TableHeader>
-                    <TableRow>
-                        <TableHead className="w-[200px]">Name</TableHead>
-                        <TableHead>Email</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
-                    </TableRow>
-                </TableHeader>
-                <TableBody>
-                    {isLoading &&
+        <>
+            {isError && <div className='mb-2'><CustomAlert title='Error' message='An error occured. Please try again later.' /></div>}
+            <Card className='p-6 rounded-2xl bg-background'>
+                <h1 className='text-2xl font-semibold mb-5'>Patients</h1>
+
+                <Table>
+                    <TableCaption>List of all patients.</TableCaption>
+                    <TableHeader>
                         <TableRow>
-                            <TableCell><Loading /></TableCell>
-                            <TableCell><Loading /></TableCell>
-                            <TableCell><Loading /></TableCell>
+                            <TableHead className="w-[200px]">Name</TableHead>
+                            <TableHead>Email</TableHead>
+                            <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
-                    }
-                    {patients && patients.map((patient) => (
-                        <TableRow key={patient.id}>
-                            <TableCell className="font-medium">{patient.account.firstName.concat(" " + patient.account.lastName)}</TableCell>
-                            <TableCell>{patient.account.email}</TableCell>
-                            <TableCell className="text-right flex items-center justify-end gap-4">
-                                <TooltipProvider>
-                                    {account?.userType === 'DOCTOR' && <CustomTooltip desciption='Patient Details'>
-                                        <NavLink to={patient.id + ""}>
-                                            <BookUserIcon size={22} />
-                                        </NavLink>
-                                    </CustomTooltip>}
+                    </TableHeader>
+                    <TableBody>
+                        {isLoading &&
+                            <TableRow>
+                                <TableCell><Loading /></TableCell>
+                                <TableCell><Loading /></TableCell>
+                                <TableCell><Loading /></TableCell>
+                            </TableRow>
+                        }
+                        {patients && patients.map((patient) => (
+                            <TableRow key={patient.id}>
+                                <TableCell className="font-medium">{patient.account.firstName.concat(" " + patient.account.lastName)}</TableCell>
+                                <TableCell>{patient.account.email}</TableCell>
+                                <TableCell className="text-right flex items-center justify-end gap-4">
+                                    <TooltipProvider>
+                                        {account?.userType === 'DOCTOR' && <CustomTooltip desciption='Patient Details'>
+                                            <NavLink to={patient.id + ""}>
+                                                <BookUserIcon size={22} />
+                                            </NavLink>
+                                        </CustomTooltip>}
 
 
-                                    {patientList && <AddConditoinDialog patientList={patientList} />}
-                                    {patientList && <AddEncounterDialog patientList={patientList} />}
+                                        {patientList && <AddConditoinDialog patientList={patientList} />}
+                                        {patientList && <AddEncounterDialog patientList={patientList} />}
 
-                                </TooltipProvider>
+                                    </TooltipProvider>
 
 
 
-                            </TableCell>
-                        </TableRow>
-                    ))}
-                </TableBody>
-            </Table>
+                                </TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+            </Card >
+        </>
 
-        </Card >
     )
 }
 

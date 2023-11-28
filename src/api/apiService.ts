@@ -11,12 +11,14 @@ import Cookies from "js-cookie";
 const token = Cookies.get("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 const BASE_URL = "http://localhost:8080";
+// const BASE_URL = process.env.REACT_APP_BACKEND_URL
 
 export const useGetCall = <T>(
     endpoint: string,
     queryKey?: string,
     headers?: AxiosRequestConfig["headers"]
 ): UseQueryResult<T, unknown> => {
+    
     return useQuery<T, unknown>([queryKey, endpoint], async () => {
         const config: AxiosRequestConfig = {};
         if (headers) {
