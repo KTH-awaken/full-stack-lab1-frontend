@@ -10,6 +10,8 @@ import PatientDetails from "./pages/Patient/PatientDetails.tsx";
 import SignIn from "./pages/SignIn.tsx";
 import Register from "./pages/Register.tsx";
 import Protected from "./components/Protected.tsx";
+import UploadPicture from "./pages/Picture/UploadPicture.tsx";
+import PatientPicturesPage from "./pages/Picture/PatientPicturesPage.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -52,6 +54,14 @@ export const router = createBrowserRouter([
             {
                 path: 'login',
                 element: <SignIn></SignIn>
+            },
+            {
+                path: 'picture',//todo move to patient details or encounter
+                element: <UploadPicture></UploadPicture>
+            },
+            {
+                path: 'pictures',//todo move to patient details or encounter
+                element: <PatientPicturesPage></PatientPicturesPage>
             }
         ]
     },

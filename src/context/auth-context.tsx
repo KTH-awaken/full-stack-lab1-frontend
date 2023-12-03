@@ -50,8 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const navigate = useNavigate();
 
 
-    const { mutate: registerMutate,data: registerData,isSuccess: registerSuccess} = usePostCall<Account>("/auth/register", "account");
-    const { mutate: loginMutate,data: loginData,isSuccess: loginSuccess} = usePostCall<Account>("/auth/login", "account");
+    const { mutate: registerMutate,data: registerData,isSuccess: registerSuccess} = usePostCall<Account>("http://localhost:8080","/auth/register", "account");
+    const { mutate: loginMutate,data: loginData,isSuccess: loginSuccess} = usePostCall<Account>("http://localhost:8080","/auth/login", "account");
 
 
 

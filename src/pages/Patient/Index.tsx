@@ -11,6 +11,7 @@ import AddEncounterDialog from './AddEncounterDialog'
 import AddConditoinDialog from './AddConditionDialog'
 import CustomTooltip from '../../components/Tooltip'
 import { useAuth } from '../../context/auth-context'
+import AddPictureDialog from './AddPictureDialog'
 
 
 
@@ -29,7 +30,7 @@ export const Loading = () => {
 
 const Patients = () => {
     const { account } = useAuth();
-    const { data: patients, isLoading } = useGetCall<PatientApi[]>("/patients");
+    const { data: patients, isLoading } = useGetCall<PatientApi[]>("http://localhost:8080","/patients");
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
     return (
@@ -67,6 +68,8 @@ const Patients = () => {
 
                                     {patientList && <AddConditoinDialog patientList={patientList} />}
                                     {patientList && <AddEncounterDialog patientList={patientList} />}
+                                    {patientList && <AddPictureDialog />}
+                                    
 
                                 </TooltipProvider>
 

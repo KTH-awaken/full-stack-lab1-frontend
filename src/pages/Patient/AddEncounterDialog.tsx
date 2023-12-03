@@ -29,7 +29,7 @@ const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
     const [time, setTime] = useState<{ hour: number, min: number }>({ hour: 0, min: 0 })
     const [title, setTitle] = useState("");
 
-    const {mutate:newEncounter} = usePostCall<EncounterApi>("/encounter", "encounters")
+    const {mutate:newEncounter} = usePostCall<EncounterApi>("http://localhost:8080","/encounter", "encounters")
 
     const handleClick = () => {
         

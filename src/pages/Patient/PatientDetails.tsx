@@ -21,7 +21,7 @@ const ButtonNew = ({ text }: { text: string }) => <p className="float-right inli
 
 const Information = () => {
     const params = useParams();
-    const { data: patient } = useGetCall<PatientApi>("/patients/"+params.patientId);
+    const { data: patient } = useGetCall<PatientApi>("http://localhost:8080","/patients/"+params.patientId);
     return (
         <>
             <h1 className="text-2xl font-bold mb-4">Information</h1>
@@ -40,7 +40,7 @@ const Information = () => {
 
 const Condition = ({ patientList }: { patientList: { label: string, value: string }[] }) => {
     const params = useParams();
-    const { data: conditions, isLoading} = useGetCall<ConditionApi[]>("/condition/"+params.patientId,"conditions");
+    const { data: conditions, isLoading} = useGetCall<ConditionApi[]>("http://localhost:8080","/condition/"+params.patientId,"conditions");
     console.log(conditions);
     
     return (
@@ -80,7 +80,7 @@ const Condition = ({ patientList }: { patientList: { label: string, value: strin
 }
 const Encounter = ({ patientList }: { patientList: { label: string, value: string }[] }) => {
     const params = useParams();
-    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter/"+params.patientId);
+    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("http://localhost:8080","/encounter/"+params.patientId);
 
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
@@ -111,7 +111,7 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
 
 const PatientDetails = () => {
     // const params = useParams();
-    const { data: patients } = useGetCall<PatientApi[]>("/patients");
+    const { data: patients } = useGetCall<PatientApi[]>("http://localhost:8080","/patients");
     console.log(patients);
     
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))

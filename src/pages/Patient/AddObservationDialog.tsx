@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 const AddObservationDialog = ({encounterId}: {patientId:number, encounterId:number}) => {
     const [observation, setObservation] = useState("");
-    const {mutate:newObservation} = usePostCall<ObservationApi>("/observation","observations")
+    const {mutate:newObservation} = usePostCall<ObservationApi>("http://localhost:8080","/observation","observations")
     const navigate = useNavigate()
 
     const handleClick = ()=>{

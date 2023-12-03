@@ -10,12 +10,13 @@ import Cookies from "js-cookie";
 
 const token = Cookies.get("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
-const BASE_URL = "http://localhost:8080";
+// const BASE_URL = "http://localhost:8080";
 
 export const useGetCall = <T>(
+    baseUrl: string,
     endpoint: string,
     queryKey?: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseQueryResult<T, unknown> => {
     return useQuery<T, unknown>([queryKey, endpoint], async () => {
         const config: AxiosRequestConfig = {};
@@ -24,7 +25,7 @@ export const useGetCall = <T>(
         }
 
         const response: AxiosResponse<T> = await axios.get(
-            `${BASE_URL}${endpoint}`,
+            `${baseUrl}${endpoint}`,
             config
         );
         return response.data;
@@ -32,9 +33,10 @@ export const useGetCall = <T>(
 };
 
 export const usePostCall = <T, U = {}>(
+    baseUrl: string,
     endpoint: string,
     queryKey: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseMutationResult<T, unknown, U, unknown> => {
     const queryClient = useQueryClient();
     return useMutation<T, unknown, U>(
@@ -46,7 +48,7 @@ export const usePostCall = <T, U = {}>(
          `Bearer ${token}`;
 
             const response: AxiosResponse<T> = await axios.post(
-                `${BASE_URL}${endpoint}`,
+                `${baseUrl}${endpoint}`,
                 data,
                 config
             );
@@ -66,8 +68,9 @@ export const usePostCall = <T, U = {}>(
 
 
 export const usePutCall = <T, U = {}>(
+    baseUrl: string,
     endpoint: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseMutationResult<T, unknown, U, unknown> => {
     const queryClient = useQueryClient();
     return useMutation<T, unknown, U>(
@@ -77,7 +80,7 @@ export const usePutCall = <T, U = {}>(
                 config.headers = headers;
             }
             const response: AxiosResponse<T> = await axios.put(
-                `${BASE_URL}${endpoint}`,
+                `${baseUrl}${endpoint}`,
                 data,
                 config
             );
@@ -92,8 +95,9 @@ export const usePutCall = <T, U = {}>(
 };
 
 export const useDeleteCall = <T>(
+    baseUrl: string,
     endpoint: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseMutationResult<T, unknown, void, unknown> => {
     const queryClient = useQueryClient();
     return useMutation<T, unknown, void>(
@@ -103,7 +107,7 @@ export const useDeleteCall = <T>(
                 config.headers = headers;
             }
             const response: AxiosResponse<T> = await axios.delete(
-                `${BASE_URL}${endpoint}`,
+                `${baseUrl}${endpoint}`,
                 config
             );
             return response.data;

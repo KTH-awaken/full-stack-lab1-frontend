@@ -44,8 +44,8 @@ const Loading = () => {
 const ChatWindow = () => {
     const { account } = useAuth();
     const params = useParams();
-    const { mutate, data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${account?.id}/${params.chatid}`, '');
-    const { mutate: sendMessage } = usePostCall<MessageVm[]>(`/message`, '');
+    const { mutate, data, isLoading, isError } = usePostCall<MessageVm[]>("http://localhost:8080",`/chat/${account?.id}/${params.chatid}`, '');
+    const { mutate: sendMessage } = usePostCall<MessageVm[]>("http://localhost:8080",`/message`, '');
     const messages = data;
     const [message, setMessage] = useState("");
 

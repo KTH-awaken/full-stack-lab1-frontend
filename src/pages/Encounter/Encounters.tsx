@@ -30,7 +30,7 @@ const Loading = () => {
 }
 
 const Encounters = () => {
-    const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
+    const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("http://localhost:8080","/encounter");
     // const url = account.role.toLocaleLowerCase();
     // const { data:encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounters/"+url+"/"+account.id);
     

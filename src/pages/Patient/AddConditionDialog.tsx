@@ -22,7 +22,7 @@ const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
     const [patientId, setPatientId] = useState("");
     const [diagnosis, setDiagnosis] = useState("");
     const {account} = useAuth();
-    const {mutate:newCondition} = usePostCall<ConditionApi>("/condition","conditions")
+    const {mutate:newCondition} = usePostCall<ConditionApi>("http://localhost:8080","/condition","conditions")
 
     const handleClick = () => {        
         newCondition({diagnosis, patientId, doctorEmail:account?.email});

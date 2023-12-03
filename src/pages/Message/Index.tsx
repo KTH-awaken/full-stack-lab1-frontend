@@ -15,7 +15,7 @@ import { useEffect } from "react";
 
 const Messages = () => {
     const {account} = useAuth();
-    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats?id="+account?.id);
+    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("http://localhost:8080","/chats?id="+account?.id);
 
     useEffect(()=>{
         

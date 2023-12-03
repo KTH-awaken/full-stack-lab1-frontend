@@ -40,14 +40,14 @@ const formSchema = z.object({
 });
 
 const useSendMessageMutation = (): UseMutationResult<MessageVm, unknown, MessageVm, unknown> => {
-    return usePostCall<MessageVm, MessageVm>('/message', 'message');
+    return usePostCall<MessageVm, MessageVm>("http://localhost:8080",'/message', 'message');
 };
 
 const NewChatDialog = () => {
 
     const { account } = useAuth();
     const navigate = useNavigate();
-    const { data: doctors, isLoading } = useGetCall<AccountVm[]>("/workers");
+    const { data: doctors, isLoading } = useGetCall<AccountVm[]>("http://localhost:8080","/workers");
 
     const [reciever, setReceiver] = useState("");
     // const [ setReceiverId] = useState<number >();
