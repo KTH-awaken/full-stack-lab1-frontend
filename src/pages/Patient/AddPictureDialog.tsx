@@ -1,5 +1,4 @@
 import { ChangeEvent, ReactNode, useState } from "react"
-// import { useAuth } from "../../context/auth-context"
 import { PictureApi } from "../../api/types/picture"
 import { usePostCall } from "../../api/apiService"
 import { DatePicker } from "../../components/DatePicker"
@@ -7,7 +6,6 @@ import { Button } from "../../components/ui/button"
 import { ImagePlus } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "../../components/ui/dialog"
 import { Label } from "../../components/ui/label"
-// import { Input } from "../../components/ui/input"
 import CustomTooltip from "../../components/Tooltip"
 import { Input } from "../../components/ui/input"
 

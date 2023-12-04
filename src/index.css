@@ -66,3 +66,26 @@
     @apply bg-background text-foreground;
   }
 }
+
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #3551d3 #a5c5fa;
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  height: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #3551d3;
+  border-radius: 12px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  border-radius: 12px;
+  background-color: hsl(214, 37%, 96%);
+}
+.dark .custom-scrollbar::-webkit-scrollbar-track {
+  border-radius: 12px;
+  background-color: hsl(222, 26%, 18%);
+}

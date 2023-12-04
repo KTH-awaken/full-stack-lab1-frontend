@@ -15,6 +15,7 @@ import { Accordion } from "../../components/ui/accordion";
 import EncounterRow from "../Encounter/EncounterRow";
 import AddObservationDialog from "./AddObservationDialog";
 import { ConditionApi } from "../../api/types/condition";
+import PatientPicturesPage from "../Picture/PatientPicturesPage";
 
 
 const ButtonNew = ({ text }: { text: string }) => <p className="float-right inline-block px-4 py-2 bg-primary rounded-lg text-primary-foreground">New {text}</p>
@@ -125,10 +126,12 @@ const PatientDetails = () => {
                     <TabsTrigger className="w-1/3" value="info">Information</TabsTrigger>
                     <TabsTrigger className="w-1/3" value="condition">Conditions</TabsTrigger>
                     <TabsTrigger className="w-1/3" value="encounter">Encounters</TabsTrigger>
+                    <TabsTrigger className="w-1/3" value="pictures">Pictures</TabsTrigger>
                 </TabsList>
                 <TabsContent value="info"><Information /></TabsContent>
                 <TabsContent value="condition">{patientList && <Condition patientList={patientList} />}</TabsContent>
                 <TabsContent value="encounter">{patientList && <Encounter patientList={patientList} />}</TabsContent>
+                <TabsContent value="pictures"><PatientPicturesPage/> </TabsContent>
             </Tabs>
         </Card>
     )
