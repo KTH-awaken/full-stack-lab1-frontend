@@ -3,7 +3,7 @@ import { Tabs, TabsList, TabsTrigger } from "../../components/ui/tabs";
 import { TabsContent } from "@radix-ui/react-tabs";
 import { Card } from "../../components/ui/card";
 import AddConditoinDialog from "./AddConditionDialog";
-import { useGetCall } from "../../api/apiService";
+import { BASE_URL, useGetCall } from "../../api/apiService";
 import { PatientApi } from "../../api/types/user";
 import AddEncounterDialog from "./AddEncounterDialog";
 import { TooltipProvider } from "@radix-ui/react-tooltip";
@@ -114,7 +114,7 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
 
 const PatientDetails = () => {
     // const params = useParams();
-    const { data: patients, isError } = useGetCall<PatientApi[]>("/patients");
+    const { data: patients, isError } = useGetCall<PatientApi[]>(BASE_URL.USER+"/patients");
 
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 

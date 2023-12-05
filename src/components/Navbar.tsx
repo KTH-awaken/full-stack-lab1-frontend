@@ -7,6 +7,7 @@ import { Card } from "./ui/card"
 import { useAuth } from "../context/auth-context"
 import { LogoutIcon, SettingIcon } from "./iconts"
 import { Button } from "./ui/button"
+import { SearchIcon } from "lucide-react"
 
 
 
@@ -19,6 +20,7 @@ const AuthenticatedMenu = () => {
             <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/messages">Messages</NavLink>
             {(account?.userType === 'PATIENT' || account?.userType === 'DOCTOR') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/encounters">Encounters</NavLink>}
 
+            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/search"><SearchIcon/></NavLink>
 
             <Menubar className="border-none cursor-pointer">
                 <MenubarMenu>

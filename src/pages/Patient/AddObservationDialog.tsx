@@ -4,13 +4,13 @@ import { DialogClose, DialogDescription, DialogTitle } from '@radix-ui/react-dia
 import { Label } from '@radix-ui/react-menubar'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
-import { usePostCall } from '../../api/apiService'
+import { BASE_URL, usePostCall } from '../../api/apiService'
 import { ObservationApi } from '../../api/types/encounter'
 import { useNavigate } from 'react-router-dom';
 
 const AddObservationDialog = ({encounterId}: {patientId:number, encounterId:number}) => {
     const [observation, setObservation] = useState("");
-    const {mutate:newObservation} = usePostCall<ObservationApi>("/observation","observations")
+    const {mutate:newObservation} = usePostCall<ObservationApi>(BASE_URL.JOURNAL+"/observation","observations")
     const navigate = useNavigate()
 
     const handleClick = ()=>{

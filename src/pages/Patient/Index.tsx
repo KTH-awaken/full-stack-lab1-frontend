@@ -2,7 +2,7 @@ import { Card } from '../../components/ui/card'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { BookUserIcon } from 'lucide-react'
 import { TooltipProvider } from '../../components/ui/tooltip'
-import { useGetCall } from '../../api/apiService'
+import { BASE_URL, useGetCall } from '../../api/apiService'
 import { PatientApi } from '../../api/types/user'
 import { Skeleton } from '../../components/ui/skeleton'
 import { uid } from '../../helpers/helpers'
@@ -30,7 +30,7 @@ export const Loading = () => {
 
 const Patients = () => {
     const { account } = useAuth();
-    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
+    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>(BASE_URL.USER +"/patients");
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
     return (

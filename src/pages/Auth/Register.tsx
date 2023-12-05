@@ -1,9 +1,9 @@
-import { Logo } from '../components/Logo';
-import { Button } from '../components/ui/button';
-import { Card } from "../components/ui/card";
-import { Input } from '../components/ui/input';
+import { Logo } from '../../components/Logo';
+import { Button } from '../../components/ui/button';
+import { Card } from "../../components/ui/card";
+import { Input } from '../../components/ui/input';
 import { FormEvent, useState } from 'react';
-import { RegisterRequest, UserType, useAuth } from '../context/auth-context';
+import { RegisterRequest, UserType, useAuth } from '../../context/auth-context';
 import { NavLink } from 'react-router-dom';
 
 

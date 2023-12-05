@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { useGetCall, usePostCall } from "../../api/apiService";
+import { BASE_URL, useGetCall, usePostCall } from "../../api/apiService";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,7 @@ const NewChatDialog = () => {
 
     const { account } = useAuth();
     const navigate = useNavigate();
-    const { data: doctors, isLoading } = useGetCall<AccountVm[]>("/workers");
+    const { data: doctors, isLoading } = useGetCall<AccountVm[]>(BASE_URL.USER+"/workers");
 
     const [reciever, setReceiver] = useState("");
     // const [ setReceiverId] = useState<number >();

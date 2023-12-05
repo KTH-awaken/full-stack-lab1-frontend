@@ -3,7 +3,7 @@ import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Card } from "../../components/ui/card";
-import { usePostCall } from "../../api/apiService";
+import { BASE_URL, usePostCall } from "../../api/apiService";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
 import { MessageRow } from "./MessageRow";
@@ -44,8 +44,8 @@ const Loading = () => {
 const ChatWindow = () => {
     const { account } = useAuth();
     const params = useParams();
-    const { mutate, data, isLoading, isError } = usePostCall<MessageVm[]>(`/chat/${account?.id}/${params.chatid}`, '');
-    const { mutate: sendMessage } = usePostCall<MessageVm[]>(`/message`, '');
+    const { mutate, data, isLoading, isError } = usePostCall<MessageVm[]>(BASE_URL.MESSAGE+`/chat/${account?.id}/${params.chatid}`, '');
+    const { mutate: sendMessage } = usePostCall<MessageVm[]>(BASE_URL.MESSAGE+`/message`, '');
     const messages = data;
     const [message, setMessage] = useState("");
 

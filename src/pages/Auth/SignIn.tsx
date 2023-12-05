@@ -1,8 +1,8 @@
-import { Logo } from '../components/Logo';
-import { Button } from '../components/ui/button';
-import { Card } from "../components/ui/card";
-import { Input } from '../components/ui/input';
-import { LoginRequest, useAuth } from '../context/auth-context';
+import { Logo } from '../../components/Logo';
+import { Button } from '../../components/ui/button';
+import { Card } from "../../components/ui/card";
+import { Input } from '../../components/ui/input';
+import { LoginRequest, useAuth } from '../../context/auth-context';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { NavLink } from 'react-router-dom';
 

@@ -9,7 +9,7 @@ import { DatePicker } from "../../components/DatePicker"
 import TimePicker from "../../components/TimePicker"
 import CustomTooltip from "../../components/Tooltip"
 import { Textarea } from "../../components/ui/textarea"
-import { usePostCall } from "../../api/apiService"
+import { BASE_URL, usePostCall } from "../../api/apiService"
 import { EncounterApi } from "../../api/types/encounter"
 import { useAuth } from "../../context/auth-context"
 
@@ -29,7 +29,7 @@ const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
     const [time, setTime] = useState<{ hour: number, min: number }>({ hour: 0, min: 0 })
     const [title, setTitle] = useState("");
 
-    const {mutate:newEncounter} = usePostCall<EncounterApi>("/encounter", "encounters")
+    const {mutate:newEncounter} = usePostCall<EncounterApi>(BASE_URL.JOURNAL+"/encounter", "encounters")
 
     const handleClick = () => {
         

@@ -1,4 +1,4 @@
-import { useGetCall } from "../../api/apiService";
+import { BASE_URL, useGetCall } from "../../api/apiService";
 import CustomAlert from "../../components/CustomAlert";
 import EncounterRow from "./EncounterRow";
 import { Accordion, } from "../../components/ui/accordion"
@@ -30,7 +30,7 @@ const Loading = () => {
 }
 
 const Encounters = () => {
-    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
+    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>(BASE_URL.JOURNAL+"/encounter");
  
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
