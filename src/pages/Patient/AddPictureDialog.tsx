@@ -8,8 +8,10 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, Dialog
 import { Label } from "../../components/ui/label"
 import CustomTooltip from "../../components/Tooltip"
 import { Input } from "../../components/ui/input"
+import { PatientApi } from "../../api/types/user"
 
 interface Props {
+    patient: PatientApi,
     customTrigger?: ReactNode
 }
 
@@ -34,12 +36,11 @@ const fileToBase64 = (file: File): Promise<string> => {
     });
   };
 
-const AddPictureDialog = ({ customTrigger }: Props) => {
-    
+const AddPictureDialog = ({patient, customTrigger }: Props) => {
     // const {account} = useAuth();
     const [file, setFile] = useState<File | null>(null);
-    const [patientEmail, setPatientEmail] = useState("Patient@Email1");
-    const [doctorEmail, setDoctorEmail] = useState("Doctor@Email1");
+    const [patientEmail, setPatientEmail] = useState("DefaultPatient@Email");
+    const [doctorEmail, setDoctorEmail] = useState("DefaultDoctor@Email");
     const [date, setDate] = useState<Date>(new Date())
 
     
@@ -61,7 +62,7 @@ const AddPictureDialog = ({ customTrigger }: Props) => {
       
             const formData = new FormData();
             formData.append("picture_data_base64", base64String);
-            formData.append("patientEmail", patientEmail);
+            formData.append("patientEmail", patient.account?.email);
             formData.append("doctorEmail", doctorEmail);
             formData.append("date", date.toISOString()); 
       
@@ -75,7 +76,7 @@ const AddPictureDialog = ({ customTrigger }: Props) => {
       
         // Reset values and close the dialog
         document.getElementById("closeDialog")?.click();
-        setPatientEmail("Patient@Email1");
+        setPatientEmail(patient?.account?.email);
         setDoctorEmail("Doctor@Email1");
         setDate(new Date());
       };

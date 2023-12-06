@@ -68,7 +68,7 @@ const Patients = () => {
 
                                     {patientList && <AddConditoinDialog patientList={patientList} />}
                                     {patientList && <AddEncounterDialog patientList={patientList} />}
-                                    {patientList && <AddPictureDialog />}
+                                    {patientList && <AddPictureDialog patient={patient} />}
                                     
 
                                 </TooltipProvider>

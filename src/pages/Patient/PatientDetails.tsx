@@ -113,7 +113,6 @@ const Encounter = ({ patientList }: { patientList: { label: string, value: strin
 const PatientDetails = () => {
     // const params = useParams();
     const { data: patients } = useGetCall<PatientApi[]>("http://localhost:8080","/patients");
-    console.log(patients);
     
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
