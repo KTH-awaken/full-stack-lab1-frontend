@@ -7,8 +7,6 @@ import Chat from "./pages/Message/ChatWindow.tsx";
 import Home from "./pages/Home.tsx";
 import Patients from "./pages/Patient/Index.tsx";
 import PatientDetails from "./pages/Patient/PatientDetails.tsx";
-import SignIn from "./pages/Auth/SignIn.tsx";
-import Register from "./pages/Auth/Register.tsx";
 import Protected from "./components/Protected.tsx";
 import SearchPage from "./pages/Search/Index.tsx";
 
@@ -45,14 +43,6 @@ export const router = createBrowserRouter([
             {
                 path: 'patients/:patientId',
                 element: <Protected><PatientDetails /></Protected>
-            },
-            {
-                path: 'register',
-                element: <Register></Register>
-            },
-            {
-                path: 'login',
-                element: <SignIn></SignIn>
             },
             {
                 path: 'search',

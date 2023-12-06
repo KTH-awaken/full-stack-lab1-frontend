@@ -1,5 +1,5 @@
+import { createContext, useContext, ReactNode, useEffect, useState } from 'react';
 import Keycloak from 'keycloak-js';
-import { ReactNode, useEffect, useState } from 'react';
 
 export const keycloak = new Keycloak({
     url: 'http://localhost:8181', 
@@ -7,28 +7,41 @@ export const keycloak = new Keycloak({
     clientId: 'journal-auth-service',
 });
 
+export interface IAuthContext {
+    keycloak: Keycloak;
+}
 
-// const KeycloakProvider = ({ children }: {children:ReactNode}) => {
-//     const [isAuthenticated, setIsAuthenticated] = useState(false);
+export const AuthContext = createContext<IAuthContext | undefined>(undefined);
 
-//     useEffect(() => {
-//         keycloak.init({ 
-//             onLoad: 'login-required',
-//             checkLoginIframe: false,
-//         })
-//             .then(authenticated => {
-//                 console.log(authenticated);
-                
-//                 setIsAuthenticated(authenticated);
-//             })
-//             .catch(err => console.log(err));
-//     }, []);
+export const KeycloakProvider = ({ children }: { children: ReactNode }) => {
 
-//     if (!isAuthenticated) {
-//         return <div>Loading...</div>; 
-//     }
+    const [isKeycloakReady, setIsKeycloakReady] = useState(false);
 
-//     return <>{children}</>;
-// };
 
-export default keycloak;
+    useEffect(() => {
+        keycloak.init({
+            onLoad: 'login-required',
+            checkLoginIframe: false,
+        }).then(() => {
+            setIsKeycloakReady(true);
+        }).catch(err => console.error('Keycloak init error:', err));
+    }, []);
+
+    if (!isKeycloakReady) {
+        return <div>Loading...</div>;
+    }
+
+    return (
+        <AuthContext.Provider value={{ keycloak }}>
+            {keycloak.authenticated ? children : <div>Loading...</div>}
+        </AuthContext.Provider>
+    );
+};
+
+export const useKeykloak = () => {
+    const context = useContext(AuthContext);
+    if (!context) {
+        throw new Error('useAuth must be used within an AuthProvider');
+    }
+    return context;
+};

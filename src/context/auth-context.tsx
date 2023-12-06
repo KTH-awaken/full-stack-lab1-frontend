@@ -1,4 +1,4 @@
-import { BASE_URL, usePostCall } from "../api/apiService";
+import {  usePostCall } from "../api/apiService";
 import { ReactNode, createContext, useContext, useEffect, useState } from "react";
 import Cookies from 'js-cookie';
 import { useNavigate } from "react-router-dom";
@@ -50,8 +50,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
     const navigate = useNavigate();
 
 
-    const { mutate: registerMutate,data: registerData,isSuccess: registerSuccess} = usePostCall<Account>(BASE_URL.USER + "/register", "account");
-    const { mutate: loginMutate,data: loginData,isSuccess: loginSuccess} = usePostCall<Account>(BASE_URL.USER + "/login", "account");
+    const { mutate: registerMutate,data: registerData,isSuccess: registerSuccess} = usePostCall<Account>("/register", "account");
+    const { mutate: loginMutate,data: loginData,isSuccess: loginSuccess} = usePostCall<Account>( "/login", "account");
 
 
 

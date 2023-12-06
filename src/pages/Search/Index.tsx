@@ -1,4 +1,4 @@
-import { Car, SearchIcon } from "lucide-react"
+import { SearchIcon } from "lucide-react"
 import { Input } from "../../components/ui/input"
 import { Card } from "../../components/ui/card"
 import { useGetCall } from "../../api/apiService"
