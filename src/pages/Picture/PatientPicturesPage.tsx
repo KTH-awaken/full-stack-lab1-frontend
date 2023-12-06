@@ -9,29 +9,22 @@ import { Save } from 'lucide-react';
 import { Type } from 'lucide-react';
 import { Undo } from 'lucide-react';
 
-//TODO Utility  covertToBase64
-// const compressAndConvertCanvasToBase64 = async (canvas: HTMLCanvasElement): Promise<string> => {
-//   return new Promise((resolve, reject) => {
+interface Props {
+  imageUrl: string;
+  onSave: () => void;
+  onCancel: () => void;
+  selectedPicture: PictureApi;
+}
 
-//       // Use JPEG format with quality set to 0.8 (adjust as needed)
-//       const base64String = canvas.toDataURL('image/jpeg', 0.8);
+const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => {
 
-//       resolve(base64String);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
-    
-//   });
-// };
-
-
-
-const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
-  const canvasRef = useRef(null);
   const [isDrawing, setIsDrawing] = useState(false);
   const [PencilMode, setPencilMode] = useState(false);
   const [TextMode, setTextMode] = useState(false);
-  const [text, setText] = useState('');
   const [color, setColor] = useState('black');
-  const [image, setImage] = useState(null);
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
 
   const {mutate:newPicture} = usePostCall<PictureApi>(
     'http://localhost:8000',
@@ -41,23 +34,30 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
 
   useEffect(() => {
     const canvas = canvasRef.current;
-
+    if(!canvas)return;
+    
     const context = canvas.getContext('2d');
+    if(!context) return;
     
     if (!image) {
       const img = new Image();
       img.src = imageUrl;
       img.onload = () => {
-        context.drawImage(img, 0, 0, canvas.width, canvas.height);
+        context.drawImage(img, 0, 0, canvas!.width, canvas.height);
         setImage(img);
       };
     }
+    if(PencilMode){
+      canvas.style.cursor = 'crosshair';
+      
+    } else {
+      canvas.style.cursor = 'auto';
+    }
 
-    const handleMouseMove = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const handleMouseMove = () => {
       if (!isDrawing) return;
       
       if (PencilMode) {
-        canvas.style.cursor = 'crosshair';
         context.lineWidth =6;
         context.lineCap = "round";
          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -65,14 +65,10 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
         context.lineTo(event.offsetX, event.offsetY);
         context.strokeStyle = color;
         context.stroke();
-
-        
-      } else {
-        canvas.style.cursor = 'auto';
       }
     };
 
-    const handleMouseDown = (event: React.MouseEvent<HTMLCanvasElement>) => {
+    const handleMouseDown = () => {
       context.beginPath();
       //eslint-disable-next-line @typescript-eslint/ban-ts-comment
       //@ts-ignore
@@ -93,8 +89,9 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
       canvas.removeEventListener('mousedown', handleMouseDown);
       canvas.removeEventListener('mouseup', handleMouseUp);
     };
-  }, [isDrawing, color, imageUrl]);
+  }, [isDrawing, color, imageUrl,PencilMode,image]);
 
+  
   const handelColorPicked = (color: string) => {
     if (color === 'black') {
       setColor('#000000');
@@ -105,13 +102,11 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
     }  else if(color==='white') {
       setColor('#FFFFFF')
     }
-
   };
 
 
   const handelPencilButtonClicked = () => {
     setPencilMode(!PencilMode)
-    console.log("pencil mode "+PencilMode)
   };
 
   const handleTextButtonClicked = () => {
@@ -120,28 +115,22 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
     console.log("text mode " +TextMode)
   };
 
-  const handleTextChange = (event) => {
-    setText(event.target.value);
-  };
-
 
   const handleSave = async () => {
     const canvas = canvasRef.current as HTMLCanvasElement | null;
-    // const canvas = canvasRef.current;
     if (canvas) {
-      // const imageData = canvas.toDataURL('image/jpeg',0.8);
       const idOfPictureToReplace = selectedPicture.id;
 
       try {
         const base64String = canvas.toDataURL("image/jpeg",0.2).split(';base64,')[1];
-        // const base64String = await compressAndConvertCanvasToBase64(canvas);//todo make imageDataToBase64 function
+
   
         const formData = new FormData();
-        formData.append("id", idOfPictureToReplace);
+        formData.append("id", idOfPictureToReplace.toString());
         formData.append("picture_data_base64", base64String);
         formData.append("patientEmail", selectedPicture.patientEmail);
         formData.append("doctorEmail", selectedPicture.doctorEmail);
-        formData.append("date", selectedPicture.date); 
+        formData.append("date", selectedPicture.date.toString()); 
   
         newPicture(formData);
         console.log(newPicture)
@@ -151,19 +140,12 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
       } catch (error) {
         console.error("Error converting file to base64:", error);
       }
-
- 
-      // ReplacePicture(idOfPictureToReplace, imageData, selectedPicture.patientEmail, selectedPicture.doctorEmail, selectedPicture.date);
   
       onSave();
     }
   };
-
-  
   const handleUndo = () => {
-
   };
-
 
   return (
     <div className='relative '>
@@ -192,7 +174,7 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}) => {
 };
 
 
-const Information = ({nrOfPictures}) => {
+const Information = ({nrOfPictures}: {nrOfPictures: number}) => {
   const params = useParams();
   const { data: patient } = useGetCall<PatientApi>("http://localhost:8080","/patients/"+params.patientId);
   return (
@@ -212,30 +194,27 @@ const Information = ({nrOfPictures}) => {
 interface PictureListProps {
   email: string;
 }
-
 const PictureList: React.FC<PictureListProps> = ({ email }) => {
-  console.log(email)
   const { data: pictures, isLoading, isError } = useGetCall<PictureApi[]>(
     'http://localhost:8000',
-    `/api/get-pictures/${encodeURIComponent(email)}`, // Updated endpoint
-    'pictures', // Adjust the queryKey if needed
+    `/api/get-pictures/${encodeURIComponent(email)}`,
+    'pictures', 
     );
-    const [selectedPicture, setSelectedPicture] = useState(null);
+    const [selectedPicture, setSelectedPicture] = useState<PictureApi>();
     const [editMode, setEditMode] = useState(false);
   if (isLoading) return <p>Loading...</p>;
   if (isError) return <p>Error fetching pictures</p>;
 
-  const nrOfPictures = pictures?.length
+  const nrOfPictures: number = pictures?.length || 0;
 
 
-  const handleEditButtonClick = (picture) => {
+  const handleEditButtonClick = (picture:PictureApi) => {
     console.log(picture);
     setSelectedPicture(picture);
     setEditMode(true);
   };
 
   const handleSave = () => {
-    // Handle save logic here, e.g., update the picture on the server
     setEditMode(false);
   };
 
