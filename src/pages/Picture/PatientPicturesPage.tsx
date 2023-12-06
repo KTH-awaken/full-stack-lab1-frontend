@@ -28,8 +28,8 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
   const [textInput, setTextInput] = useState('');
   const [textColor, setTextColor] = useState('black'); // Default color is black
   const [textSize] = useState('36px');
-  const [startX, setStartX] = useState<number | null>(null);
-  const [startY, setStartY] = useState<number | null>(null);
+  const [startX, setStartX] = useState<number>(0);
+  const [startY, setStartY] = useState<number>(0);
   const [isInputActive, setIsInputActive] = useState(false);
 
   const {mutate:newPicture} = usePostCall<PictureApi>(
@@ -44,7 +44,8 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
     
     const context = canvas.getContext('2d');
     if(!context) return;
-    
+
+    context.font = `${textSize}px`;
     if (!image) {
       const img = new Image();
       img.src = imageUrl;
@@ -110,10 +111,11 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
         setIsInputActive(true); 
 
         context.fillStyle = textColor;
-        context.font = `${textSize}`;
+        context.font = '40px Verdana';
         context.fillText(textInput, startX, startY);
-
       }
+
+
     };
 
 
@@ -196,11 +198,21 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
 
   const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Enter') {
-      event.preventDefault();
       console.log("Enter clicked")
+      const canvas = canvasRef.current;
+      if(!canvas)return;
+      
+      const context = canvas.getContext('2d');
+      if(!context) return;
+      
+      context.fillStyle = textColor;
+      context.font = '40px Verdana';
+      context.fillText(textInput, startX, startY);
+
+
       setIsInputActive(false);
-      setStartX(null);
-      setStartY(null);
+      setStartX(0);
+      setStartY(0);
       
       setTextMode(false);
     }
@@ -226,7 +238,7 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
             top: startY || 0,
             left: startX || 0,
             color: textColor,
-            fontSize: textSize,
+            fontSize: '40px',
             border: 'filled',
             outline: 'filled',
             background: 'transparent',
