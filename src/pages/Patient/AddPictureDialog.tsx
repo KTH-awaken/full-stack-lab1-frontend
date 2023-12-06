@@ -39,8 +39,7 @@ const fileToBase64 = (file: File): Promise<string> => {
 const AddPictureDialog = ({patient, customTrigger }: Props) => {
     // const {account} = useAuth();
     const [file, setFile] = useState<File | null>(null);
-    const [patientEmail, setPatientEmail] = useState("DefaultPatient@Email");
-    const [doctorEmail, setDoctorEmail] = useState("DefaultDoctor@Email");
+    const [doctorEmail, setDoctorEmail] = useState("DefaultDoctor@Email");//todo get from Auth
     const [date, setDate] = useState<Date>(new Date())
 
     
@@ -74,9 +73,8 @@ const AddPictureDialog = ({patient, customTrigger }: Props) => {
           }
         }
       
-        // Reset values and close the dialog
+ 
         document.getElementById("closeDialog")?.click();
-        setPatientEmail(patient?.account?.email);
         setDoctorEmail("Doctor@Email1");
         setDate(new Date());
       };

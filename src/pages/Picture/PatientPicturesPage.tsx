@@ -25,6 +25,12 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
   const [TextMode, setTextMode] = useState(false);
   const [color, setColor] = useState('black');
   const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [textInput, setTextInput] = useState('');
+  const [textColor, setTextColor] = useState('black'); // Default color is black
+  const [textSize] = useState('36px');
+  const [startX, setStartX] = useState<number | null>(null);
+  const [startY, setStartY] = useState<number | null>(null);
+  const [isInputActive, setIsInputActive] = useState(false);
 
   const {mutate:newPicture} = usePostCall<PictureApi>(
     'http://localhost:8000',
@@ -49,8 +55,9 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
     }
     if(PencilMode){
       canvas.style.cursor = 'crosshair';
-      
-    } else {
+    }else if(TextMode){
+      canvas.style.cursor = 'cell'
+    }else {
       canvas.style.cursor = 'auto';
     }
 
@@ -69,52 +76,90 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
     };
 
     const handleMouseDown = () => {
-      context.beginPath();
-      //eslint-disable-next-line @typescript-eslint/ban-ts-comment
-      //@ts-ignore
-      context.moveTo(event.offsetX, event.offsetY);
-      setIsDrawing(true);
+      if(PencilMode){
+        context.beginPath();
+        //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        context.moveTo(event.offsetX, event.offsetY);
+        setIsDrawing(true);
+      }
+
     };
     
     const handleMouseUp = () => {
-      setIsDrawing(false);
+      if(PencilMode){
+        setIsDrawing(false);
+      }
+      
+
     };
+
+    const handleMouseClick = () => {
+      if(PencilMode){
+        setIsDrawing(false);
+      }
+      if(TextMode){
+        setTextInput("");
+        console.log("mouse clicked TextMode true")
+        //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        setStartX(event.offsetX);
+          //eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
+        setStartY(event.offsetY);
+        setIsInputActive(true); 
+
+        context.fillStyle = textColor;
+        context.font = `${textSize}`;
+        context.fillText(textInput, startX, startY);
+
+      }
+    };
+
+
 
     canvas.addEventListener('mousemove', handleMouseMove);
     canvas.addEventListener('mousedown', handleMouseDown);
     canvas.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('click', handleMouseClick);
 
     return () => {
       canvas.removeEventListener('mousemove', handleMouseMove);
       canvas.removeEventListener('mousedown', handleMouseDown);
       canvas.removeEventListener('mouseup', handleMouseUp);
+      canvas.removeEventListener('click', handleMouseClick);
     };
-  }, [isDrawing, color, imageUrl,PencilMode,image]);
+  }, [isDrawing, color, imageUrl,PencilMode,TextMode,image,startX,startY,textColor,textSize,textInput,isInputActive]);
 
   
   const handelColorPicked = (color: string) => {
     if (color === 'black') {
       setColor('#000000');
+      setTextColor('#000000');
     }  else if(color==='blue') {
       setColor('#496FE7')
+      setTextColor('#496FE7')
     }else if (color === 'red') {
       setColor('#FF0000');
+      setTextColor('#FF0000');
     }  else if(color==='white') {
       setColor('#FFFFFF')
+      setTextColor('#FFFFFF')
     }
   };
 
 
   const handelPencilButtonClicked = () => {
     setPencilMode(!PencilMode)
+    setTextMode(false)
   };
 
   const handleTextButtonClicked = () => {
     setPencilMode(false)
     setTextMode(!TextMode)
-    console.log("text mode " +TextMode)
   };
 
+  
 
   const handleSave = async () => {
     const canvas = canvasRef.current as HTMLCanvasElement | null;
@@ -123,8 +168,6 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
 
       try {
         const base64String = canvas.toDataURL("image/jpeg",0.2).split(';base64,')[1];
-
-  
         const formData = new FormData();
         formData.append("id", idOfPictureToReplace.toString());
         formData.append("picture_data_base64", base64String);
@@ -147,6 +190,22 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
   const handleUndo = () => {
   };
 
+  const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setTextInput(event.target.value);
+  };
+
+  const handleInputKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Enter') {
+      event.preventDefault();
+      console.log("Enter clicked")
+      setIsInputActive(false);
+      setStartX(null);
+      setStartY(null);
+      
+      setTextMode(false);
+    }
+  };
+
   return (
     <div className='relative '>
       <canvas
@@ -155,6 +214,25 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
         width="930"
         height="930"
       />
+      {TextMode && isInputActive && (
+       <input
+          type="text"
+          value={textInput}
+          onChange={handleTextChange}
+          onKeyDown={handleInputKeyDown} // Listen for Enter key
+          id="textInput"
+          style={{
+            position: 'absolute',
+            top: startY || 0,
+            left: startX || 0,
+            color: textColor,
+            fontSize: textSize,
+            border: 'filled',
+            outline: 'filled',
+            background: 'transparent',
+          }}
+        />
+      )}
        <div className='flex flex-col absolute bottom-52 gap-3 right-5 p-3 bg-background text-primary rounded-lg cursor-pointer' >
         <button onClick={() => handelColorPicked('black')}><div className='w-8 h-8 rounded-full border-[3px] bg-black'>&nbsp;</div></button>
         <button onClick={() => handelColorPicked('blue')}><div className='w-8 h-8 rounded-full bg-primary'>&nbsp;</div></button>
