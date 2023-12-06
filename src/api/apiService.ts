@@ -11,13 +11,7 @@ import Cookies from "js-cookie";
 const token = Cookies.get("token");
 if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-export const BASE_URL = {
-    SEARCH: "http://localhost:8080",
-    USER: "http://localhost:8081",
-    MESSAGE:"http://localhost:8082",
-    JOURNAL: "http://localhost:8083",
-    DRAW: "http://localhost:8084"
-}
+export const BASE_URL = "http://localhost:8080";
 
 
 export const useGetCall = <T>(
@@ -33,7 +27,7 @@ export const useGetCall = <T>(
         }
 
         const response: AxiosResponse<T> = await axios.get(
-            endpoint,
+            BASE_URL + endpoint,
             config
         );
         return response.data;
@@ -55,7 +49,7 @@ export const usePostCall = <T, U = {}>(
          `Bearer ${token}`;
 
             const response: AxiosResponse<T> = await axios.post(
-                endpoint,
+                BASE_URL + endpoint,
                 data,
                 config
             );
@@ -86,7 +80,7 @@ export const usePutCall = <T, U = {}>(
                 config.headers = headers;
             }
             const response: AxiosResponse<T> = await axios.put(
-                endpoint,
+                BASE_URL + endpoint,
                 data,
                 config
             );
@@ -112,7 +106,7 @@ export const useDeleteCall = <T>(
                 config.headers = headers;
             }
             const response: AxiosResponse<T> = await axios.delete(
-                endpoint,
+                BASE_URL + endpoint,
                 config
             );
             return response.data;

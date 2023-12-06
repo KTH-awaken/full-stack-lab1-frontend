@@ -13,7 +13,6 @@ import { SearchIcon } from "lucide-react"
 
 const AuthenticatedMenu = () => {
     const { account, logout } = useAuth();
-
     return (
         <div className="flex items-center gap-8">
             {(account?.userType === "DOCTOR" ||  account?.userType === "EMPLOYEE") && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>}
@@ -50,6 +49,7 @@ const AuthenticatedMenu = () => {
 }
 
 const GuestMenu = () => {
+
     return (
         <div className="flex items-center gap-2">
             <NavLink to="/login"><Button variant="secondary">Login</Button></NavLink>

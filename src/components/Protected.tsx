@@ -14,6 +14,12 @@ const Protected = ({ children }: { children: ReactNode }) => {
     }, [isAuth, navigate]);
 
     return isAuth ? <>{children}</> : null;
+
+    // const { keycloak } = useKeycloak();
+
+    // const isLoggedIn = keycloak.authenticated;
+   
+    // return isLoggedIn ? children : null;
 };
 
 export default Protected

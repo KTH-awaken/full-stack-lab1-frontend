@@ -1,5 +1,5 @@
 import * as z from "zod";
-import { BASE_URL, useGetCall, usePostCall } from "../../api/apiService";
+import { useGetCall, usePostCall } from "../../api/apiService";
 import { useEffect, useState } from "react";
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -47,7 +47,7 @@ const NewChatDialog = () => {
 
     const { account } = useAuth();
     const navigate = useNavigate();
-    const { data: doctors, isLoading } = useGetCall<AccountVm[]>(BASE_URL.USER+"/workers");
+    const { data: doctors, isLoading } = useGetCall<AccountVm[]>("/workers");
 
     const [reciever, setReceiver] = useState("");
     // const [ setReceiverId] = useState<number >();
@@ -120,7 +120,7 @@ const NewChatDialog = () => {
                       <>
                         <SelectPopover
                           title="doctor"
-                          list={doctors.map((doctor) => ({ label: doctor?.firstName, value: doctor?.id.toString() }))}
+                          list={doctors.map((doctor) => ({ label: doctor?.firstName, value: doctor?.email }))}
                           value={reciever}
                           onValueChange={(newValue) => {
                             setReceiver(newValue.toString());

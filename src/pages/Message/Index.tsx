@@ -1,6 +1,6 @@
 import {  Outlet } from "react-router-dom"
 import { Card } from "../../components/ui/card";
-import { BASE_URL, useGetCall } from "../../api/apiService";
+import {useGetCall } from "../../api/apiService";
 import CustomAlert from "../../components/CustomAlert";
 import NewChatDialog from "./NewChatDialog";
 import ChatRow, { ChatRowLoading } from "./ChatRow";
@@ -15,11 +15,11 @@ import { useEffect } from "react";
 
 const Messages = () => {
     const {account} = useAuth();
-    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>(BASE_URL.MESSAGE+"/chats?id="+account?.id);
+    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats/"+account?.email);
 
     useEffect(()=>{
         
-    },[account?.id])
+    },[account?.email])
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">
