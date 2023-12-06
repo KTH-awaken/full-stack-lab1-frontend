@@ -7,7 +7,7 @@ import { Pencil } from 'lucide-react';
 import { X } from 'lucide-react';
 import { Save } from 'lucide-react';
 import { Type } from 'lucide-react';
-import { Undo } from 'lucide-react';
+// import { Undo } from 'lucide-react';
 
 interface Props {
   imageUrl: string;
@@ -21,7 +21,7 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
   const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   const [isDrawing, setIsDrawing] = useState(false);
-  const [PencilMode, setPencilMode] = useState(false);
+  const [PencilMode, setPencilMode] = useState(true);
   const [TextMode, setTextMode] = useState(false);
   const [color, setColor] = useState('black');
   const [image, setImage] = useState<HTMLImageElement | null>(null);
@@ -31,6 +31,7 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
   const [isInputActive, setIsInputActive] = useState(false);
+  const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
   const {mutate:newPicture} = usePostCall<PictureApi>(
     'http://localhost:8000',
@@ -148,17 +149,29 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
       setColor('#FFFFFF')
       setTextColor('#FFFFFF')
     }
+    setSelectedButton(color);
   };
 
 
   const handelPencilButtonClicked = () => {
+    if(PencilMode){
+      setSelectedButton('')
+    }else{
+      setSelectedButton('pencil')
+    }
     setPencilMode(!PencilMode)
     setTextMode(false)
   };
 
   const handleTextButtonClicked = () => {
+    if(TextMode){
+      setSelectedButton('')
+    }else{
+      setSelectedButton('text')
+    }
     setPencilMode(false)
     setTextMode(!TextMode)
+
   };
 
   
@@ -189,8 +202,8 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
       onSave();
     }
   };
-  const handleUndo = () => {
-  };
+  // const handleUndo = () => {
+  // };
 
   const handleTextChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setTextInput(event.target.value);
@@ -231,7 +244,7 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
           type="text"
           value={textInput}
           onChange={handleTextChange}
-          onKeyDown={handleInputKeyDown} // Listen for Enter key
+          onKeyDown={handleInputKeyDown} 
           id="textInput"
           style={{
             position: 'absolute',
@@ -245,17 +258,18 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
           }}
         />
       )}
-       <div className='flex flex-col absolute bottom-52 gap-3 right-5 p-3 bg-background text-primary rounded-lg cursor-pointer' >
-        <button onClick={() => handelColorPicked('black')}><div className='w-8 h-8 rounded-full border-[3px] bg-black'>&nbsp;</div></button>
-        <button onClick={() => handelColorPicked('blue')}><div className='w-8 h-8 rounded-full bg-primary'>&nbsp;</div></button>
-        <button onClick={() => handelColorPicked('red')}><div className='w-8 h-8 rounded-full bg-[#FF0000]'>&nbsp;</div></button>
-        <button onClick={() => handelColorPicked('white')}><div className='w-8 h-8 rounded-full bg-white border-[3px] border-slate-700'>&nbsp;</div></button>
-        <button onClick={() => handelPencilButtonClicked()}><Pencil size={30} /></button>
-        <button onClick={() => handleTextButtonClicked()}><Type size={30} /></button>
-       </div>
 
+
+       <div className='flex flex-col absolute bottom-52 gap-3 right-5 bg-background rounded-lg cursor-pointer p-3' >
+        <button onClick={() => handelColorPicked('black')}><div className={`w-8 h-8 rounded-full bg-black border-[3px] ${selectedButton === 'black' ? ' border-[4px] border-black' : ''}`}>&nbsp;</div></button>
+        <button onClick={() => handelColorPicked('blue')}><div className={`w-8 h-8 rounded-full bg-blue-700 border-[3px] ${selectedButton === 'blue' ? 'border-[4px] border-blue-700' : ''}`}>&nbsp;</div></button>
+        <button onClick={() => handelColorPicked('red')}><div className={`w-8 h-8 rounded-full bg-red-600 border-[3px] ${selectedButton === 'red' ? 'border-[4px] border-red-600' : ''}`}>&nbsp;</div></button>
+        <button onClick={() => handelColorPicked('white')}><div className={`w-8 h-8 rounded-full bg-white border-[3px] ${selectedButton === 'white' ? 'border-[4px] border-black' : 'border-slate-500'}`}>&nbsp;</div></button>
+        <button onClick={() => handelPencilButtonClicked()}> <Pencil size={30} className={`${selectedButton === 'pencil' ? 'text-' + selectedButton : 'text-black'}`} style={{ color: !TextMode ? selectedButton : 'black' }} /></button>
+        <button onClick={() => handleTextButtonClicked()}> <Type size={30} className={`${selectedButton === 'text' ? 'text-' + selectedButton : 'text-black'}`} style={{ color: !PencilMode ? selectedButton : 'black' }} /></button>
+      </div>
       <div className='flex flex-col gap-2 absolute bottom-5 right-5' >
-      <button className='p-3 bg-primary text-white rounded-lg cursor-pointer' onClick={() => handleUndo()}><Undo size={30} /></button>
+      {/* <button className='p-3 bg-primary text-white rounded-lg cursor-pointer' onClick={() => handleUndo()}><Undo size={30} /></button> */}
       <button className='p-3 bg-primary text-white rounded-lg cursor-pointer' onClick={onCancel}> <X size={30} /></button>
       <button className='p-3 bg-primary text-white rounded-lg cursor-pointer' onClick={() =>handleSave()}><Save size={30} /></button>
       </div>
