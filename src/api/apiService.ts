@@ -6,12 +6,15 @@ import {
     UseQueryResult,
     UseMutationResult,
 } from "react-query";
-import Cookies from "js-cookie";
 
-const token = Cookies.get("token");
-if (token) axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
 
-export const BASE_URL = "http://localhost:8080";
+
+export const BASE_URL = {
+    USER_SERVICE: "http://localhost:8081",
+    JOURNAL_SERVICE: "http://localhost:8082",
+    MESSAGE_SERVICE: "http://localhost:8083",
+    SEARCH_SERVICE: "http://localhost:8084"
+}
 
 
 export const useGetCall = <T>(
@@ -27,7 +30,7 @@ export const useGetCall = <T>(
         }
 
         const response: AxiosResponse<T> = await axios.get(
-            BASE_URL + endpoint,
+            endpoint,
             config
         );
         return response.data;
@@ -46,10 +49,8 @@ export const usePostCall = <T, U = {}>(
             if (headers) {
                 config.headers = headers;
             }
-         `Bearer ${token}`;
-
             const response: AxiosResponse<T> = await axios.post(
-                BASE_URL + endpoint,
+                endpoint,
                 data,
                 config
             );
@@ -80,7 +81,7 @@ export const usePutCall = <T, U = {}>(
                 config.headers = headers;
             }
             const response: AxiosResponse<T> = await axios.put(
-                BASE_URL + endpoint,
+                endpoint,
                 data,
                 config
             );
@@ -106,7 +107,7 @@ export const useDeleteCall = <T>(
                 config.headers = headers;
             }
             const response: AxiosResponse<T> = await axios.delete(
-                BASE_URL + endpoint,
+                endpoint,
                 config
             );
             return response.data;

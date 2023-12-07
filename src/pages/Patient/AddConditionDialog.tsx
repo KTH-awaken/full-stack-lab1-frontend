@@ -6,9 +6,9 @@ import { Button } from "../../components/ui/button"
 import SelectPopover from "../../components/SelectPopover"
 import { ReactNode, useState } from "react"
 import CustomTooltip from "../../components/Tooltip"
-import { BASE_URL, usePostCall } from "../../api/apiService"
+import { usePostCall } from "../../api/apiService"
 import { ConditionApi } from "../../api/types/condition"
-import { useAuth } from "../../context/auth-context"
+import { useOAuth2 } from "../../context/oauth2-context"
 
 interface Props {
     patientList: {
@@ -21,11 +21,11 @@ interface Props {
 const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
     const [patientId, setPatientId] = useState("");
     const [diagnosis, setDiagnosis] = useState("");
-    const {account} = useAuth();
-    const {mutate:newCondition} = usePostCall<ConditionApi>(BASE_URL.JOURNAL+"/condition","conditions")
+    const {userData} = useOAuth2();
+    const {mutate:newCondition} = usePostCall<ConditionApi>("/condition","conditions")
 
     const handleClick = () => {        
-        newCondition({diagnosis, patientId, doctorEmail:account?.email});
+        newCondition({diagnosis, patientId, doctorEmail:userData?.profile.email});
         (function () { document.getElementById('closeDialog')?.click(); }())
 
     }

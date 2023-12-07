@@ -1,12 +1,11 @@
 import {  Outlet } from "react-router-dom"
 import { Card } from "../../components/ui/card";
-import {useGetCall } from "../../api/apiService";
+import {BASE_URL, useGetCall } from "../../api/apiService";
 import CustomAlert from "../../components/CustomAlert";
 import NewChatDialog from "./NewChatDialog";
 import ChatRow, { ChatRowLoading } from "./ChatRow";
 import { ChatApi } from "../../api/types/chat";
-import { useAuth } from "../../context/auth-context";
-import { useEffect } from "react";
+import { useOAuth2 } from "../../context/oauth2-context";
 
 
 
@@ -14,12 +13,10 @@ import { useEffect } from "react";
 
 
 const Messages = () => {
-    const {account} = useAuth();
-    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>("/chats/"+account?.email);
+    const {userData} = useOAuth2();
+    const { data: chats, isLoading, isError } = useGetCall<ChatApi[]>(BASE_URL.MESSAGE_SERVICE + "/message/chats", "chats", {Authorization: `Bearer ${userData?.access_token}`});
 
-    useEffect(()=>{
-        
-    },[account?.email])
+  
 
     return (
         <div className="flex justify-between gap-10 h-[80vh] ">

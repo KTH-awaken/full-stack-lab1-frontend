@@ -2,7 +2,7 @@ import { Card } from '../../components/ui/card'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { BookUserIcon } from 'lucide-react'
 import { TooltipProvider } from '../../components/ui/tooltip'
-import { BASE_URL, useGetCall } from '../../api/apiService'
+import {  useGetCall } from '../../api/apiService'
 import { PatientApi } from '../../api/types/user'
 import { Skeleton } from '../../components/ui/skeleton'
 import { uid } from '../../helpers/helpers'
@@ -10,7 +10,6 @@ import { NavLink } from 'react-router-dom'
 import AddEncounterDialog from './AddEncounterDialog'
 import AddConditoinDialog from './AddConditionDialog'
 import CustomTooltip from '../../components/Tooltip'
-import { useAuth } from '../../context/auth-context'
 import CustomAlert from '../../components/CustomAlert'
 
 
@@ -29,8 +28,7 @@ export const Loading = () => {
 
 
 const Patients = () => {
-    const { account } = useAuth();
-    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>(BASE_URL.USER +"/patients");
+    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
     const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
 
     return (
@@ -62,11 +60,11 @@ const Patients = () => {
                                 <TableCell>{patient.account.email}</TableCell>
                                 <TableCell className="text-right flex items-center justify-end gap-4">
                                     <TooltipProvider>
-                                        {account?.userType === 'DOCTOR' && <CustomTooltip desciption='Patient Details'>
+                                         <CustomTooltip desciption='Patient Details'>
                                             <NavLink to={patient.id + ""}>
                                                 <BookUserIcon size={22} />
                                             </NavLink>
-                                        </CustomTooltip>}
+                                        </CustomTooltip>
 
 
                                         {patientList && <AddConditoinDialog patientList={patientList} />}

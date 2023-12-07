@@ -18,9 +18,9 @@ export interface MessageApi {
 }
 export interface MessageVm {
     text: string;
-    sender: number;
-    receiver: number;
-    senderFirstName:string;
+    sender: string;
+    receiverEmail: string;
+    senderEmail:string;
     senderLastName:string;
     receiverFirstName:string;
     receiverLastName:string;

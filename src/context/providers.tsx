@@ -1,23 +1,24 @@
 import { ReactNode } from "react"
 import { ThemeProvider } from "./theme-context"
 import { QueryClient, QueryClientProvider } from "react-query";
-import { AuthProvider } from "./auth-context";
-import {KeycloakProvider} from "./keycloak-context";
+import { OAuth2Provider } from "./oauth2-context";
+import { AuthProvider } from "oidc-react";
+import { oidcConfig } from "../api/auth-config";
 
 const queryClient = new QueryClient();
+
 
 const Providers = ({ children }: { children: ReactNode }) => {
     return (
         <QueryClientProvider client={queryClient}>
-            <KeycloakProvider>
-                <AuthProvider>
+            <AuthProvider {...oidcConfig}>
+                <OAuth2Provider>
                     <ThemeProvider>
                         {children}
                     </ThemeProvider>
-                </AuthProvider>
-            </KeycloakProvider>
+                </OAuth2Provider>
+            </AuthProvider>
         </QueryClientProvider>
-
 
     )
 }

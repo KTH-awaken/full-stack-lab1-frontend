@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
-import { useKeykloak } from '../context/keycloak-context';
+import { useOAuth2 } from '../context/oauth2-context';
 
 const Protected = ({ children }: { children: ReactNode }) => {
-    const { keycloak } = useKeykloak();
-    const isLoggedIn = keycloak.authenticated;
-    return isLoggedIn ? children : null;
+
+    const { isAuthenticated } = useOAuth2();
+    return isAuthenticated ? children : null;
 };
 
 export default Protected

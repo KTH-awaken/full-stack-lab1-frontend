@@ -1,4 +1,4 @@
-import { useGetCall } from "../../api/apiService";
+import { BASE_URL, useGetCall } from "../../api/apiService";
 import CustomAlert from "../../components/CustomAlert";
 import EncounterRow from "./EncounterRow";
 import { Accordion, } from "../../components/ui/accordion"
@@ -6,6 +6,7 @@ import { Card } from "../../components/ui/card";
 import { Skeleton } from "../../components/ui/skeleton";
 import { uid } from "../../helpers/helpers";
 import { EncounterApi } from "../../api/types/encounter";
+import { useOAuth2 } from "../../context/oauth2-context";
 
 
 
@@ -30,12 +31,13 @@ const Loading = () => {
 }
 
 const Encounters = () => {
-    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>("/encounter");
+    const {userData} = useOAuth2();
+    const header = {Authorization: `Bearer ${userData.access_token}`}
+    const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>(BASE_URL.JOURNAL_SERVICE +"/encounter", "encounter", header);
  
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
 
-    console.log(encounters);
     
     return (
         <Card className="p-6">

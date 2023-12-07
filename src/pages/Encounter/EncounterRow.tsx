@@ -1,11 +1,9 @@
-import { ReactNode } from "react"
-import { EncounterApi, ObservationApi } from "../../api/types/encounter"
+import { EncounterApi } from "../../api/types/encounter"
 import { AccordionContent, AccordionItem, AccordionTrigger } from "../../components/ui/accordion"
 import { Card } from "../../components/ui/card"
-import { uid } from "../../helpers/helpers"
 
 
-const EncounterRow = ({ encounter, children, className }: { encounter: EncounterApi, children?: ReactNode, className?: string }) => {
+const EncounterRow = ({ encounter, className }: { encounter: EncounterApi, className?: string }) => {
     return (
 
         <Card className={`mb-3`}>
@@ -27,12 +25,8 @@ const EncounterRow = ({ encounter, children, className }: { encounter: Encounter
                             <p className="font-semibold text-foreground/50 mb-1">Time</p>
                             <p> {encounter.date.substring(11, 16)}</p>
                         </div>
-                        <div>
-                            <p className="font-semibold text-foreground/50 mb-1">Doctor</p>
-                            <p>{encounter.doctor.firstName.concat(" "+encounter.doctor.lastName)}</p>
-                        </div>
-                        <div>
 
+                        {/* <div>
                             <p className="font-semibold text-foreground/50 mb-1">Observations</p>
                             <ul>
                                 {encounter.observations.map((o: ObservationApi) => <div key={o.id} className="flex gap-2 items-center mb-1 pl-2">
@@ -40,13 +34,12 @@ const EncounterRow = ({ encounter, children, className }: { encounter: Encounter
                                     <li key={uid()}>{o.description}</li>
                                 </div>)}
                             </ul>
-                        </div>
+                        </div> */}
+
                     </div>
 
 
-                    {children}
 
-                    {/* <Button className="bg-primary/10 hover:bg-primary/20  text-primary/80">More details</Button> */}
 
                 </AccordionContent>
             </AccordionItem>

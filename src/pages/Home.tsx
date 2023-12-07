@@ -1,11 +1,14 @@
-import { useAuth } from '../context/auth-context'
+import { useOAuth2 } from "../context/oauth2-context";
+
 
 
 const Home = () => {
-    const {account} = useAuth();
+    const { userData } = useOAuth2();
+   
+
     return (
         <>
-            <h1 className='font-bold text-3xl'>Hi {account && account.firstName}</h1>
+            <h1 className='font-bold text-3xl'>Hi {userData && userData.profile.name}</h1>
         </>
     )
 }

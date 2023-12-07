@@ -7,6 +7,7 @@ import { FormEvent, useState } from "react"
 import { Skeleton } from "../../components/ui/skeleton"
 import { uid } from "../../helpers/helpers"
 import CustomAlert from "../../components/CustomAlert"
+import { useOAuth2 } from "../../context/oauth2-context"
 
 
 
@@ -15,8 +16,12 @@ const SearchPage = () => {
     const [text, setText] = useState("");
     const [searchKey, setSearchKey] = useState("");
     const [hasSearched, setHasSearched] = useState<boolean | null>(null);
-
-    const { data, isLoading, isError, refetch } = useGetCall<SearchResultApi[]>("/search/find/" + searchKey, "search");
+    const { userData } = useOAuth2();
+    const { data, isLoading, isError, refetch } = useGetCall<SearchResultApi[]>(
+        "http://localhost:8084/search/find/" + searchKey,
+        "search",
+        { Authorization: `Bearer ${userData.access_token}` }
+    );
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()

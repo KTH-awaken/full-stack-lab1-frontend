@@ -9,9 +9,9 @@ import { DatePicker } from "../../components/DatePicker"
 import TimePicker from "../../components/TimePicker"
 import CustomTooltip from "../../components/Tooltip"
 import { Textarea } from "../../components/ui/textarea"
-import { BASE_URL, usePostCall } from "../../api/apiService"
+import { usePostCall } from "../../api/apiService"
 import { EncounterApi } from "../../api/types/encounter"
-import { useAuth } from "../../context/auth-context"
+import { useOAuth2 } from "../../context/oauth2-context"
 
 interface Props {
     patientList: {
@@ -22,20 +22,20 @@ interface Props {
 }
 
 const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
-    const {account} = useAuth();
+    const {userData} = useOAuth2();
     const [patient, setPatient] = useState("");
     const [date, setDate] = useState<Date>(new Date())
     const [details, setDetails] = useState("");
     const [time, setTime] = useState<{ hour: number, min: number }>({ hour: 0, min: 0 })
     const [title, setTitle] = useState("");
 
-    const {mutate:newEncounter} = usePostCall<EncounterApi>(BASE_URL.JOURNAL+"/encounter", "encounters")
+    const {mutate:newEncounter} = usePostCall<EncounterApi>("/encounter", "encounters")
 
     const handleClick = () => {
         
         console.log({
             patintId:+patient,       
-            doctorEmail: account?.email,
+            doctorEmail: userData?.profile.email,
             title,
             description:details,
             date,
@@ -45,7 +45,7 @@ const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
         newEncounter({
             patientId:+patient,       
             title,
-            doctorEmail:account?.email,
+            doctorEmail:userData?.profile.email,
             details,
             date,
             time,
