@@ -3,55 +3,39 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, Dialog
 import { Label } from "../../components/ui/label"
 import { Input } from "../../components/ui/input"
 import { Button } from "../../components/ui/button"
-import SelectPopover from "../../components/SelectPopover"
 import { ReactNode, useState } from "react"
 import { DatePicker } from "../../components/DatePicker"
 import TimePicker from "../../components/TimePicker"
 import CustomTooltip from "../../components/Tooltip"
 import { Textarea } from "../../components/ui/textarea"
-import { usePostCall } from "../../api/apiService"
+import { BASE_URL, usePostCall } from "../../api/apiService"
 import { EncounterApi } from "../../api/types/encounter"
 import { useOAuth2 } from "../../context/oauth2-context"
 
 interface Props {
-    patientList: {
-        label: string,
-        value: string
-    }[],
+    patientEmail: string,
     customTrigger?: ReactNode
 }
 
-const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
+const AddEncounterDialog = ({ patientEmail, customTrigger }: Props) => {
     const {userData} = useOAuth2();
-    const [patient, setPatient] = useState("");
     const [date, setDate] = useState<Date>(new Date())
     const [details, setDetails] = useState("");
     const [time, setTime] = useState<{ hour: number, min: number }>({ hour: 0, min: 0 })
     const [title, setTitle] = useState("");
 
-    const {mutate:newEncounter} = usePostCall<EncounterApi>("/encounter", "encounters")
+    const {mutate:newEncounter} = usePostCall<EncounterApi>(BASE_URL.JOURNAL_SERVICE + "/encounter", "encounters", { Authorization: `Bearer ${userData?.access_token}`} )
 
     const handleClick = () => {
-        
-        console.log({
-            patintId:+patient,       
+        const encoutner = {
+            patientEmail,       
             doctorEmail: userData?.profile.email,
             title,
             description:details,
             date,
             time,
-        });
-        
-        newEncounter({
-            patientId:+patient,       
-            title,
-            doctorEmail:userData?.profile.email,
-            details,
-            date,
-            time,
-        });
-       
-        
+        }
+        newEncounter(encoutner);
         (function () { document.getElementById('closeDialog')?.click(); }())
 
     }
@@ -82,7 +66,7 @@ const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
                         <Input onChange={(e) => setTitle(e.target.value)} className="col-span-3" placeholder="Encounter title..." />
                     </div>
 
-                    <div className="grid grid-flow-col grid-cols-4 items-center ">
+                    {/* <div className="grid grid-flow-col grid-cols-4 items-center ">
                         <Label className="col-span-1">Patient</Label>
                         <SelectPopover
                             className="col-span-3"
@@ -91,7 +75,7 @@ const AddEncounterDialog = ({ patientList, customTrigger }: Props) => {
                             value={patient}
                             onValueChange={(newValue) => setPatient(newValue)}
                         />
-                    </div>
+                    </div> */}
                     <div className="grid grid-flow-col grid-cols-4 items-start">
                         <Label className="col-span-1 pt-2">Details</Label>
                         <Textarea className="col-span-3" onChange={(e) => setDetails(e.target.value)}></Textarea>

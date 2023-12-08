@@ -60,7 +60,7 @@ export const router = createBrowserRouter([
                 element: <Protected><Patients /></Protected>,
             },
             {
-                path: 'patients/:patientId',
+                path: 'patients/:patientEmail',
                 element: <Protected><PatientDetails /></Protected>
             },
             {

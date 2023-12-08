@@ -30,7 +30,7 @@ const EncounterRow = ({ encounter, className }: { encounter: EncounterApi, class
                             <p> {encounter.date.substring(11, 16)}</p>
                         </div>
 
-                        <NavLink to={`${encounter.id}`} >
+                        <NavLink to={`/encounters/${encounter.id}`} >
                             <Button>More details <ArrowRightCircle className="ml-2 h-5"/></Button>
                         </NavLink>
                     </div>

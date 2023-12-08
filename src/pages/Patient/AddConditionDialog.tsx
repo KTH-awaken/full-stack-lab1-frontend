@@ -3,29 +3,24 @@ import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, Dialog
 import { Label } from "../../components/ui/label"
 import { Input } from "../../components/ui/input"
 import { Button } from "../../components/ui/button"
-import SelectPopover from "../../components/SelectPopover"
 import { ReactNode, useState } from "react"
 import CustomTooltip from "../../components/Tooltip"
-import { usePostCall } from "../../api/apiService"
+import { BASE_URL, usePostCall } from "../../api/apiService"
 import { ConditionApi } from "../../api/types/condition"
 import { useOAuth2 } from "../../context/oauth2-context"
 
 interface Props {
-    patientList: {
-        label: string,
-        value: string
-    }[],
+    patientEmail:string,
     customTrigger?: ReactNode
 }
 
-const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
-    const [patientId, setPatientId] = useState("");
+const AddConditoinDialog = ({ patientEmail, customTrigger }: Props) => {
     const [diagnosis, setDiagnosis] = useState("");
     const {userData} = useOAuth2();
-    const {mutate:newCondition} = usePostCall<ConditionApi>("/condition","conditions")
+    const {mutate:newCondition} = usePostCall<ConditionApi>(BASE_URL.JOURNAL_SERVICE + "/condition","conditions", { Authorization: `Bearer ${userData?.access_token}` })
 
     const handleClick = () => {        
-        newCondition({diagnosis, patientId, doctorEmail:userData?.profile.email});
+        newCondition({diagnosis, patientEmail, doctorEmail:userData?.profile.email});
         (function () { document.getElementById('closeDialog')?.click(); }())
 
     }
@@ -55,18 +50,6 @@ const AddConditoinDialog = ({ patientList, customTrigger }: Props) => {
                         <Label className="col-span-1" >Condition</Label>
                         <Input onChange={(e) => setDiagnosis(e.target.value)} className="col-span-3" placeholder="Condition..." />
                     </div>
-
-                    <div className="grid grid-flow-col grid-cols-4 items-center ">
-                        <Label className="col-span-1">Patient</Label>
-                        <SelectPopover
-                            className="col-span-3"
-                            title="patient"
-                            list={patientList}
-                            value={patientId}
-                            onValueChange={(newValue) => setPatientId(newValue)}
-                        />
-                    </div>
-
                 </div>
 
                 <DialogFooter>

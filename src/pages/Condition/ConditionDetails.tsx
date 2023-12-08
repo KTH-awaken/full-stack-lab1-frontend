@@ -4,7 +4,6 @@ import { Card } from "../../components/ui/card"
 import { useOAuth2 } from "../../context/oauth2-context";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
-import { AccountVm } from "../../api/types/user";
 import { uid } from "../../helpers/helpers";
 import { ConditionApi } from "../../api/types/condition";
 

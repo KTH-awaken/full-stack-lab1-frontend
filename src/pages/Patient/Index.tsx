@@ -2,8 +2,7 @@ import { Card } from '../../components/ui/card'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../../components/ui/table'
 import { BookUserIcon } from 'lucide-react'
 import { TooltipProvider } from '../../components/ui/tooltip'
-import {  useGetCall } from '../../api/apiService'
-import { PatientApi } from '../../api/types/user'
+import {  BASE_URL, useGetCall } from '../../api/apiService'
 import { Skeleton } from '../../components/ui/skeleton'
 import { uid } from '../../helpers/helpers'
 import { NavLink } from 'react-router-dom'
@@ -11,6 +10,8 @@ import AddEncounterDialog from './AddEncounterDialog'
 import AddConditoinDialog from './AddConditionDialog'
 import CustomTooltip from '../../components/Tooltip'
 import CustomAlert from '../../components/CustomAlert'
+import { AccountVm } from '../../api/types/user'
+import { useOAuth2 } from '../../context/oauth2-context'
 
 
 
@@ -28,8 +29,11 @@ export const Loading = () => {
 
 
 const Patients = () => {
-    const { data: patients, isLoading, isError } = useGetCall<PatientApi[]>("/patients");
-    const patientList = patients?.map(d => ({ label: d.account.lastName, value: d.id.toString() }))
+    const { userData } = useOAuth2();
+    const { data: patients, isLoading, isError } = useGetCall<AccountVm[]>(BASE_URL.USER_SERVICE + "/user/patients", "patients", { Authorization: `Bearer ${userData?.access_token}` });
+    const patientList = patients?.map(d => ({ label: d.firstName +" "+ d.lastName, value: d.email }))
+    
+    
 
     return (
         <>
@@ -56,19 +60,19 @@ const Patients = () => {
                         }
                         {patients && patients.map((patient) => (
                             <TableRow key={patient.id}>
-                                <TableCell className="font-medium">{patient.account.firstName.concat(" " + patient.account.lastName)}</TableCell>
-                                <TableCell>{patient.account.email}</TableCell>
+                                <TableCell className="font-medium">{patient.firstName.concat(" " + patient.lastName)}</TableCell>
+                                <TableCell>{patient.email}</TableCell>
                                 <TableCell className="text-right flex items-center justify-end gap-4">
                                     <TooltipProvider>
                                          <CustomTooltip desciption='Patient Details'>
-                                            <NavLink to={patient.id + ""}>
+                                            <NavLink to={patient.email.substring(0, patient.email.length-4) + ""}>
                                                 <BookUserIcon size={22} />
                                             </NavLink>
                                         </CustomTooltip>
 
 
-                                        {patientList && <AddConditoinDialog patientList={patientList} />}
-                                        {patientList && <AddEncounterDialog patientList={patientList} />}
+                                        {patientList && <AddConditoinDialog patientEmail={patient.email} />}
+                                        {patientList && <AddEncounterDialog patientEmail={patient.email} />}
 
                                     </TooltipProvider>
 

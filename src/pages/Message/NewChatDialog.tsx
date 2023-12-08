@@ -13,9 +13,9 @@ import {
 import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import SelectPopover from "../../components/SelectPopover";
-import { AccountVm } from "../../api/types/chat";
 import { useOAuth2 } from "../../context/oauth2-context";
 import { useNavigate } from "react-router-dom";
+import { AccountVm } from "../../api/types/user";
 
 
 

@@ -5,6 +5,8 @@ import { useOAuth2 } from "../../context/oauth2-context";
 import { EncounterDetailsApi } from "../../api/types/encounter";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
+import { uid } from "../../helpers/helpers";
+import AddObservationDialog from "../Patient/AddObservationDialog";
 
 
 const EncounterDetails = () => {
@@ -69,6 +71,8 @@ const EncounterDetails = () => {
                         <p className="font-semibold text-foreground/50 mb-1">Created at</p>
                         <p>{data?.timestamp.substring(0, 10)} {data?.timestamp.substring(11, 16)}</p>
                     </div>
+
+                    <AddObservationDialog encounterId={data.id}/>
                 </>
             }
         </Card>
@@ -79,8 +83,8 @@ const Loading = () => {
     const arr = new Array(7).fill(1);
     return (
         <div className="flex flex-col gap-7">
-            {arr.map(i => (
-                <div key={i} className="flex flex-col gap-4">
+            {arr.map(()=> (
+                <div key={uid()} className="flex flex-col gap-4">
                     <Skeleton className="h-5 w-[150px]" />
                     <Skeleton className="h-5 w-[400px]" />
                 </div>
