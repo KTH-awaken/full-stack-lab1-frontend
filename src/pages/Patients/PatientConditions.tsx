@@ -22,10 +22,12 @@ export const PatientConditions = ({ patientEmail }: { patientEmail: string }) =>
 
     return (
         <div className="flex flex-col justify-start mt-4 gap-3">
-            <PatientInforamtion />
-
             <TooltipProvider>
-                <AddConditoinDialog patientEmail={patientEmail} customTrigger={<ButtonNew text="condition" />} />
+
+                <PatientInforamtion>
+                    <AddConditoinDialog patientEmail={patientEmail} customTrigger={<ButtonNew text="condition" />} />
+                </PatientInforamtion>
+
             </TooltipProvider>
             {isError && <div className="mb-2"><CustomAlert title="Error" message="An error occured. Please try again later." /></div>}
             {conditions && conditions.length === 0 && <CustomAlert title="Info" message="This patient has no conditions" />}
@@ -51,7 +53,7 @@ export const PatientConditions = ({ patientEmail }: { patientEmail: string }) =>
                     {conditions && conditions.map((condition) => (
                         <TableRow key={condition.id}>
                             <TableCell>{condition.diagnosis}</TableCell>
-                            <TableCell>{condition.timestamp.substring(0,10)} {condition.timestamp.substring(11,16)}</TableCell>
+                            <TableCell>{condition.timestamp.substring(0, 10)} {condition.timestamp.substring(11, 16)}</TableCell>
                             <TableCell className="text-end">
                                 <NavLink to={`/condition/${condition.id}`}>
                                     <Button variant="outline">Details</Button>

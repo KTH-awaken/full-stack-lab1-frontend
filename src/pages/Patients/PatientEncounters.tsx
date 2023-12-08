@@ -18,13 +18,15 @@ export const PatientEncounters = ({ patientEmail }: { patientEmail: string }) =>
 
     if (isLoading) return <Loading />
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
-    
+
     return (
         <div className="flex flex-col justify-start mt-4 gap-5">
-            <PatientInforamtion />
-
             <TooltipProvider>
-                <AddEncounterDialog patientEmail={patientEmail} customTrigger={<ButtonNew text="encounter" />} />
+
+                <PatientInforamtion>
+                    <AddEncounterDialog patientEmail={patientEmail} customTrigger={<ButtonNew text="encounter" />} />
+                </PatientInforamtion>
+
             </TooltipProvider>
 
             {isError && <div className="mb-2"><CustomAlert title="Error" message="An error occured. Please try again later." /></div>}

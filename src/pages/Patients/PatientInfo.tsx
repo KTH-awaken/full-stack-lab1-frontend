@@ -5,12 +5,13 @@ import { AccountVm } from "../../api/types/user";
 import { Skeleton } from "../../components/ui/skeleton";
 import { uid } from "../../helpers/helpers";
 import CustomAlert from "../../components/CustomAlert";
+import { ReactNode } from "react";
 
 const InfoLoading = () => {
     const arr = new Array(3).fill(1);
     return (
         <div className="flex flex-col gap-7">
-            {arr.map(()=> (
+            {arr.map(() => (
                 <div key={uid()} className="flex flex-col gap-4">
                     <Skeleton className="h-5 w-[150px]" />
                     <Skeleton className="h-5 w-[400px]" />
@@ -20,24 +21,26 @@ const InfoLoading = () => {
     )
 }
 
-export const PatientInforamtion = () => {
-    const {userData} = useOAuth2();
+export const PatientInforamtion = ({children}:{children:ReactNode}) => {
+    const { userData } = useOAuth2();
     const params = useParams();
-    const { data: patient, isLoading, isError } = useGetCall<AccountVm>(BASE_URL.USER_SERVICE+"/user/" + params.patientEmail+".com", "patient", { Authorization: `Bearer ${userData?.access_token}` });
- 
-    if(isLoading) return <InfoLoading/>
-    if(isError) return <CustomAlert title="Error" message="An error occured. Please try again later"/>
+    const { data: patient, isLoading, isError } = useGetCall<AccountVm>(BASE_URL.USER_SERVICE + "/user/" + params.patientEmail + ".com", "patient", { Authorization: `Bearer ${userData?.access_token}` });
+
+    if (isLoading) return <InfoLoading />
+    if (isError) return <CustomAlert title="Error" message="An error occured. Please try again later" />
 
     return (
-        <div className="border-b pb-4">
-            {patient && <NavLink to={`/profile/${patient.id}`}><h1 className="text-2xl font-bold mb-4">Patient</h1></NavLink>}
-            <div className="flex flex-col gap-2">
-                <p><strong className="text-foreground/50 font-medium">Firstname: </strong> {patient && patient.firstName}</p>
-                <p><strong className="text-foreground/50 font-medium">Lastname: </strong> {patient && patient.lastName}</p>
-                <p><strong className="text-foreground/50 font-medium">Email: </strong> {patient && patient.email}</p>
-                
-
+        <div className="border-b pb-4 flex justify-between items-start">
+            <div>
+                {patient && <NavLink to={`/profile/${patient.id}`}><h1 className="text-2xl font-bold mb-4">Patient</h1></NavLink>}
+                <div className="flex flex-col gap-2">
+                    <p><strong className="text-foreground/50 font-medium">Firstname: </strong> {patient && patient.firstName}</p>
+                    <p><strong className="text-foreground/50 font-medium">Lastname: </strong> {patient && patient.lastName}</p>
+                    <p><strong className="text-foreground/50 font-medium">Email: </strong> {patient && patient.email}</p>
+                </div>
             </div>
+            {children}
+
         </div>
 
     )
