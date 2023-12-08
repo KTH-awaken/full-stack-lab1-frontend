@@ -12,6 +12,7 @@ import CustomTooltip from '../../components/Tooltip'
 import CustomAlert from '../../components/CustomAlert'
 import { AccountVm } from '../../api/types/user'
 import { useOAuth2 } from '../../context/oauth2-context'
+import AddPictureDialog from './AddPictureDialog'
 
 
 
@@ -65,6 +66,7 @@ const Patients = () => {
                                         </CustomTooltip>
                                         {patientList && <AddConditoinDialog patientEmail={patient.email} />}
                                         {patientList && <AddEncounterDialog patientEmail={patient.email} />}
+                                        {patientList && <AddPictureDialog patient={patient} />}
                                     </TooltipProvider>
                                 </TableCell>
                             </TableRow>

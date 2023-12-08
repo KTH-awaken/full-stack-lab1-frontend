@@ -8,6 +8,7 @@ import { AccountVm } from "../../api/types/user";
 import { useOAuth2 } from "../../context/oauth2-context";
 import { PatientConditions } from "./PatientConditions";
 import { PatientEncounters } from "./PatientEncounters";
+import PatientPicturesPage from "../Picture/PatientPicturesPage";
 
 
 
@@ -26,9 +27,12 @@ const PatientDetails = () => {
                 <TabsList className="mb-4 w-full justify-between">
                     <TabsTrigger className="w-1/2" value="condition">Conditions</TabsTrigger>
                     <TabsTrigger className="w-1/2" value="encounter">Encounters</TabsTrigger>
+                    <TabsTrigger className="w-1/3" value="pictures">Pictures</TabsTrigger>
                 </TabsList>
                 <TabsContent value="condition">{data && <PatientConditions patientEmail={data.email} />}</TabsContent>
                 <TabsContent value="encounter">{data && <PatientEncounters patientEmail={data.email} />}</TabsContent>
+                <TabsContent value="pictures"><PatientPicturesPage/> </TabsContent>
+
             </Tabs>
         </Card>
     )

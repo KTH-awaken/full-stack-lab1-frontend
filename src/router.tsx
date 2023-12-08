@@ -12,6 +12,8 @@ import SearchPage from "./pages/Search/Index.tsx";
 import EncounterDetails from "./pages/Encounter/EncounterDetails.tsx";
 import Profile from "./pages/Profile/Profile.tsx";
 import ConditionDetails from "./pages/Condition/ConditionDetails.tsx";
+import UploadPicture from "./pages/Picture/UploadPicture.tsx";
+import PatientPicturesPage from "./pages/Picture/PatientPicturesPage.tsx";
 
 export const router = createBrowserRouter([
     {
@@ -67,6 +69,14 @@ export const router = createBrowserRouter([
                 path: 'search',
                 element: <Protected><SearchPage /></Protected>
             },
+            {
+                path: 'picture',//todo move to patient details or encounter
+                element: <UploadPicture></UploadPicture>
+            },
+            {
+                path: 'pictures',//todo move to patient details or encounter
+                element: <PatientPicturesPage></PatientPicturesPage>
+            }
         ]
     },
 

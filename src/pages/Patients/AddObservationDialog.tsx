@@ -4,13 +4,15 @@ import { DialogClose, DialogDescription, DialogTitle } from '@radix-ui/react-dia
 import { Label } from '@radix-ui/react-menubar'
 import { Input } from '../../components/ui/input'
 import { Button } from '../../components/ui/button'
-import {usePostCall } from '../../api/apiService'
+import {BASE_URL, usePostCall } from '../../api/apiService'
 import { ObservationApi } from '../../api/types/encounter'
 import { useNavigate } from 'react-router-dom';
+import { useOAuth2 } from '../../context/oauth2-context'
 
 const AddObservationDialog = ({encounterId}: {encounterId:number}) => {
     const [observation, setObservation] = useState("");
-    const {mutate:newObservation} = usePostCall<ObservationApi>("/observation","observations")
+    const {userData} = useOAuth2()
+    const {mutate:newObservation} = usePostCall<ObservationApi>(BASE_URL.JOURNAL_SERVICE + "/observation","observations",{ Authorization: `Bearer ${userData?.access_token}`})
     const navigate = useNavigate()
 
     const handleClick = ()=>{

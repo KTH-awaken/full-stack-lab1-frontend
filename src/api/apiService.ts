@@ -20,7 +20,7 @@ export const BASE_URL = {
 export const useGetCall = <T>(
     endpoint: string,
     queryKey?: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseQueryResult<T, unknown> => {
     
     return useQuery<T, unknown>([queryKey, endpoint], async () => {
@@ -40,7 +40,7 @@ export const useGetCall = <T>(
 export const usePostCall = <T, U = {}>(
     endpoint: string,
     queryKey: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseMutationResult<T, unknown, U, unknown> => {
     const queryClient = useQueryClient();
     return useMutation<T, unknown, U>(
@@ -71,7 +71,7 @@ export const usePostCall = <T, U = {}>(
 
 export const usePutCall = <T, U = {}>(
     endpoint: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseMutationResult<T, unknown, U, unknown> => {
     const queryClient = useQueryClient();
     return useMutation<T, unknown, U>(
@@ -97,7 +97,7 @@ export const usePutCall = <T, U = {}>(
 
 export const useDeleteCall = <T>(
     endpoint: string,
-    headers?: AxiosRequestConfig["headers"]
+    headers?: AxiosRequestConfig["headers"],
 ): UseMutationResult<T, unknown, void, unknown> => {
     const queryClient = useQueryClient();
     return useMutation<T, unknown, void>(
