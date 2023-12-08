@@ -49,20 +49,24 @@ const SearchPage = () => {
                 <CustomAlert title='Error' message='An error occured. Please try again later' />
             }
             {data && data.length > 0 &&
-                <div>
+                <div className="flex flex-col ">
                     <p className="text-sm opacity-50 my-3">{data?.length} results</p>
-                    {
-                        data.map(r =>
-                            <SearchResult
-                                id={r.id}
-                                key={r.id + "-" + r.createdAt}
-                                title={r.title}
-                                type={r.type}
-                                createdAt={r.createdAt}
-                                matchKey={r.matchKey}
-                                strong={searchKey}
-                            />)
-                    }
+                    <div className="max-h-[700px] overflow-y-auto">
+                        {
+                            data.map(r =>
+                                <SearchResult
+                                    id={r.id}
+                                    key={r.id + "-" + r.createdAt}
+                                    title={r.title}
+                                    type={r.type}
+                                    createdAt={r.createdAt}
+                                    matchKey={r.matchKey}
+                                    strong={searchKey}
+                                />)
+                        }
+                    </div>
+
+
                 </div>
             }
             {hasSearched && data && data.length == 0 &&
@@ -83,10 +87,10 @@ const SearchPage = () => {
 
 const SearchResult = ({ type, title, matchKey, createdAt, strong, id }: SearchResultApi) => {
     const color = type === "Condition" ? "text-orange-500 bg-orange-50" : type === "Encounter" ? "text-blue-500 bg-blue-50" : "text-green-500 bg-green-50"
-    const navigatation = 
+    const navigatation =
         type === "Encounter" ? `/encounters/${id}` :
-        type === "Account" ? `/profile/${id}`
-            : `/condition/${id}`
+            type === "Account" ? `/profile/${id}`
+                : `/condition/${id}`
     return (
         <NavLink to={navigatation}>
             <Card className="p-4 mb-2 flex flex-col gap-2">

@@ -14,7 +14,6 @@ const AddObservationDialog = ({encounterId}: {encounterId:number}) => {
     const navigate = useNavigate()
 
     const handleClick = ()=>{
-        
         newObservation({content:observation, encounterId});
         (function () { document.getElementById('closeDialog')?.click(); }())
         navigate(0);
@@ -25,8 +24,6 @@ const AddObservationDialog = ({encounterId}: {encounterId:number}) => {
             <DialogTrigger>
                 <p className='mt-2 mb-0 cursor-pointer px-4 py-2 rounded-lg bg-primary text-primary-foreground'>Add observation</p>
             </DialogTrigger>
-
-
             <DialogContent className="sm:max-w-[425px]">
                 <DialogHeader>
                     <DialogTitle className='font-bold mb-2 text-xl'>New observation </DialogTitle>
@@ -34,15 +31,10 @@ const AddObservationDialog = ({encounterId}: {encounterId:number}) => {
                         Fill the information needed below. Click create when you're done.
                     </DialogDescription>
                 </DialogHeader>
-
-
                     <div className="flex flex-col justify-start gap-2 ">
                         <Label className="col-span-1" >Observation</Label>
                         <Input onChange={(e) => setObservation(e.target.value)} className="col-span-3" placeholder="Observation..." />
                     </div>
-
-
-
                 <DialogFooter>
                     <DialogClose asChild>
                         <Button variant="secondary">Cancel</Button>

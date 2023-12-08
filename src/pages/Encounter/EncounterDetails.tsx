@@ -6,7 +6,7 @@ import { EncounterDetailsApi } from "../../api/types/encounter";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
 import { uid } from "../../helpers/helpers";
-import AddObservationDialog from "../Patient/AddObservationDialog";
+import AddObservationDialog from "../Patients/AddObservationDialog";
 
 
 const EncounterDetails = () => {

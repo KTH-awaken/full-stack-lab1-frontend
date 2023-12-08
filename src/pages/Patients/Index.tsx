@@ -18,22 +18,16 @@ import { useOAuth2 } from '../../context/oauth2-context'
 export const Loading = () => {
     const arr = new Array(5).fill(1);
     return (
-
         <div className='flex flex-col gap-4 '>
             {arr.map(_ => (<div key={uid()} className='py-2'><Skeleton className='w-full h-6' /></div>))}
         </div>
-
     )
 }
-
-
 
 const Patients = () => {
     const { userData } = useOAuth2();
     const { data: patients, isLoading, isError } = useGetCall<AccountVm[]>(BASE_URL.USER_SERVICE + "/user/patients", "patients", { Authorization: `Bearer ${userData?.access_token}` });
     const patientList = patients?.map(d => ({ label: d.firstName +" "+ d.lastName, value: d.email }))
-    
-    
 
     return (
         <>
@@ -69,15 +63,9 @@ const Patients = () => {
                                                 <BookUserIcon size={22} />
                                             </NavLink>
                                         </CustomTooltip>
-
-
                                         {patientList && <AddConditoinDialog patientEmail={patient.email} />}
                                         {patientList && <AddEncounterDialog patientEmail={patient.email} />}
-
                                     </TooltipProvider>
-
-
-
                                 </TableCell>
                             </TableRow>
                         ))}
