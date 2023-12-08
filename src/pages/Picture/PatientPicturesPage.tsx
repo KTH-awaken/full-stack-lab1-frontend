@@ -23,10 +23,10 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
   const [isDrawing, setIsDrawing] = useState(false);
   const [PencilMode, setPencilMode] = useState(true);
   const [TextMode, setTextMode] = useState(false);
-  const [color, setColor] = useState('black');
+  const [color, setColor] = useState<string>('black');
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [textInput, setTextInput] = useState('');
-  const [textColor, setTextColor] = useState('black'); // Default color is black
+  const [textColor, setTextColor] = useState<string>('black'); 
   const [textSize] = useState('36px');
   const [startX, setStartX] = useState<number>(0);
   const [startY, setStartY] = useState<number>(0);
@@ -85,15 +85,12 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
         context.moveTo(event.offsetX, event.offsetY);
         setIsDrawing(true);
       }
-
     };
     
     const handleMouseUp = () => {
       if(PencilMode){
         setIsDrawing(false);
-      }
-      
-
+      }      
     };
 
     const handleMouseClick = () => {
@@ -115,8 +112,6 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
         context.font = '40px Verdana';
         context.fillText(textInput, startX, startY);
       }
-
-
     };
 
 
@@ -258,15 +253,14 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture}:Props) => 
           }}
         />
       )}
-
-
        <div className='flex flex-col absolute bottom-52 gap-3 right-5 bg-background rounded-lg cursor-pointer p-3' >
-        <button onClick={() => handelColorPicked('black')}><div className={`w-8 h-8 rounded-full bg-black border-[3px] ${selectedButton === 'black' ? ' border-[4px] border-black' : ''}`}>&nbsp;</div></button>
-        <button onClick={() => handelColorPicked('blue')}><div className={`w-8 h-8 rounded-full bg-blue-700 border-[3px] ${selectedButton === 'blue' ? 'border-[4px] border-blue-700' : ''}`}>&nbsp;</div></button>
-        <button onClick={() => handelColorPicked('red')}><div className={`w-8 h-8 rounded-full bg-red-600 border-[3px] ${selectedButton === 'red' ? 'border-[4px] border-red-600' : ''}`}>&nbsp;</div></button>
-        <button onClick={() => handelColorPicked('white')}><div className={`w-8 h-8 rounded-full bg-white border-[3px] ${selectedButton === 'white' ? 'border-[4px] border-black' : 'border-slate-500'}`}>&nbsp;</div></button>
-        <button onClick={() => handelPencilButtonClicked()}> <Pencil size={30} className={`${selectedButton === 'pencil' ? 'text-' + selectedButton : 'text-black'}`} style={{ color: !TextMode ? selectedButton : 'black' }} /></button>
-        <button onClick={() => handleTextButtonClicked()}> <Type size={30} className={`${selectedButton === 'text' ? 'text-' + selectedButton : 'text-black'}`} style={{ color: !PencilMode ? selectedButton : 'black' }} /></button>
+        <button onClick={() => handelColorPicked('black')}><div className={`w-8 h-8 rounded-full bg-black border-[3px] ${selectedButton === 'black' ? ' border-[5px] border-black' : ''}`}>&nbsp;</div></button>
+        <button onClick={() => handelColorPicked('blue')}><div className={`w-8 h-8 rounded-full bg-blue-700 border-[3px] ${selectedButton === 'blue' ? 'border-[5px] border-blue-700' : ''}`}>&nbsp;</div></button>
+        <button onClick={() => handelColorPicked('red')}><div className={`w-8 h-8 rounded-full bg-red-600 border-[3px] ${selectedButton === 'red' ? 'border-[5px] border-red-600' : ''}`}>&nbsp;</div></button>
+        <button onClick={() => handelColorPicked('white')}><div className={`w-8 h-8 rounded-full bg-white border-[3px] ${selectedButton === 'white' ? 'border-[5px] border-black' : 'border-slate-500'}`}>&nbsp;</div></button>
+
+        <button onClick={() => handelPencilButtonClicked()}> <Pencil size={30} className={`${PencilMode ? 'text-primary' : 'text-slate-500'}`}/></button>
+        <button onClick={() => handleTextButtonClicked()}> <Type size={30} className={`${TextMode ? 'text-primary' : 'text-slate-500'}`}/></button>
       </div>
       <div className='flex flex-col gap-2 absolute bottom-5 right-5' >
       {/* <button className='p-3 bg-primary text-white rounded-lg cursor-pointer' onClick={() => handleUndo()}><Undo size={30} /></button> */}
