@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
@@ -44,10 +44,11 @@ const Loading = () => {
 const ChatWindow = () => {
     const { userData } = useOAuth2();
     const params = useParams();
-    const { data: messages, isLoading, isError } = useGetCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message/chat/" + params.chatid, 'messages', { Authorization: `Bearer ${userData?.access_token}` });
+    const receiver = params.chatid+ ".com"
+    const { data: messages, isLoading, isError } = useGetCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message/chat/" + receiver, 'messages', { Authorization: `Bearer ${userData?.access_token}` });
     const { mutate: sendMessage } = usePostCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message", 'messages', { Authorization: `Bearer ${userData?.access_token}` });
     const [message, setMessage] = useState("");
-
+    const navigate = useNavigate()
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
@@ -57,12 +58,11 @@ const ChatWindow = () => {
         sendMessage({
             text: message,
             senderEmail: userData?.profile.email || "",
-            receiverEmail: params.chatid || "",
+            receiverEmail: receiver || "",
 
         });
 
-        setMessage("");
-
+        navigate(0)
     }
 
 

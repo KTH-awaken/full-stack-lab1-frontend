@@ -48,7 +48,7 @@ const Encounters = () => {
                     <EncounterRow
                         key={uid()}
                         encounter={enc}
-                        className="bg-accent shadow-none data-[state=open]:pb-4"
+                        className="bg-accent shadow-none data-[state=open]:pb-0"
                     />)}
             </Accordion>
 

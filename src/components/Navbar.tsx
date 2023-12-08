@@ -12,7 +12,7 @@ import { useOAuth2 } from "../context/oauth2-context"
 
 
 const AuthenticatedMenu = () => {
-    const {logout, userData} = useOAuth2();
+    const { logout, userData } = useOAuth2();
     return (
         <div className="flex items-center gap-8">
             <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>
@@ -30,11 +30,16 @@ const AuthenticatedMenu = () => {
                     </MenubarTrigger>
 
                     <MenubarContent className="p-4 border-none shadow-md">
+                        <MenubarItem disabled>Username: {userData && userData.profile.preferred_username}</MenubarItem>
                         <MenubarItem disabled>Email: {userData && userData.profile.email}</MenubarItem>
-                        <MenubarItem disabled>Username: {userData && userData.profile.username}</MenubarItem>
                         <MenubarSeparator />
-                        <MenubarItem>Setting <MenubarShortcut><SettingIcon /></MenubarShortcut></MenubarItem>
-                        <MenubarItem>Theme <MenubarShortcut><ToggleThemeSwitch /></MenubarShortcut></MenubarItem>
+                        <MenubarItem >
+                            Settings
+                            <MenubarShortcut>
+                                <SettingIcon />
+                            </MenubarShortcut>
+                        </MenubarItem>
+                        <MenubarItem >Theme <MenubarShortcut><ToggleThemeSwitch /></MenubarShortcut></MenubarItem>
                         <MenubarSeparator />
                         <MenubarItem onClick={logout}>Logout <MenubarShortcut><LogoutIcon /></MenubarShortcut></MenubarItem>
 
@@ -48,7 +53,7 @@ const AuthenticatedMenu = () => {
 }
 
 const GuestMenu = () => {
-    const {login} = useOAuth2();
+    const { login } = useOAuth2();
     return (
         <div className="flex items-center gap-2">
             <Button onClick={login} variant="secondary">Login</Button>
@@ -66,8 +71,8 @@ const Navbar = () => {
             <a href="/">
                 <Logo />
             </a>
-            {isAuthenticated&& <AuthenticatedMenu />}
-            {!isAuthenticated&& <GuestMenu />}
+            {isAuthenticated && <AuthenticatedMenu />}
+            {!isAuthenticated && <GuestMenu />}
 
 
         </Card>

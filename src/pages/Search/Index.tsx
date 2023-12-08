@@ -8,6 +8,7 @@ import { Skeleton } from "../../components/ui/skeleton"
 import { uid } from "../../helpers/helpers"
 import CustomAlert from "../../components/CustomAlert"
 import { useOAuth2 } from "../../context/oauth2-context"
+import { NavLink } from "react-router-dom"
 
 
 
@@ -80,17 +81,23 @@ const SearchPage = () => {
 
 
 
-const SearchResult = ({ type, title, matchKey, createdAt, strong }: SearchResultApi) => {
+const SearchResult = ({ type, title, matchKey, createdAt, strong, id }: SearchResultApi) => {
     const color = type === "Condition" ? "text-orange-500 bg-orange-50" : type === "Encounter" ? "text-blue-500 bg-blue-50" : "text-green-500 bg-green-50"
+    const navigatation = 
+        type === "Encounter" ? `/encounters/${id}` :
+        type === "Account" ? `/profile/${id}`
+            : `/condition/${id}`
     return (
-        <Card className="p-4 mb-2 flex flex-col gap-2 cursor-pointer">
-            <div className="flex items-center gap-2">
-                <h1 className="text-xl">{title}</h1>
-                <p className={`px-2 py-1 rounded-lg text-xs ${color}`}>{type}</p>
-            </div>
-            <p className="text-sm">{matchKey}: <strong className="font-semibold opacity-85">{strong}</strong></p>
-            <p className="opacity-50 text-sm">{createdAt.substring(0, 10)} {createdAt.substring(11, 16)}</p>
-        </Card>
+        <NavLink to={navigatation}>
+            <Card className="p-4 mb-2 flex flex-col gap-2">
+                <div className="flex items-center gap-2">
+                    <h1 className="text-xl">{title}</h1>
+                    <p className={`px-2 py-1 rounded-lg text-xs ${color}`}>{type}</p>
+                </div>
+                <p className="text-sm">{matchKey}: <strong className="font-semibold opacity-85">{strong}</strong></p>
+                <p className="opacity-50 text-sm">{createdAt.substring(0, 10)} {createdAt.substring(11, 16)}</p>
+            </Card>
+        </NavLink>
     )
 }
 

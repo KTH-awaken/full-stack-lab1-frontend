@@ -27,7 +27,7 @@ export const ChatRowLoading = () => {
 const ChatRow = ({ chat }: { chat: ChatApi }) => {
     const classes = "p-4 py-2 mb-2 block border-b flex gap-4 pl-2"
     return (
-        <NavLink end className={({ isActive }) => isActive ? `bg-accent rounded-xl border-none ${classes}` : classes} to={`/messages/${chat.otherParticipantId}`}>
+        <NavLink end className={({ isActive }) => isActive ? `bg-accent rounded-xl border-none ${classes}` : classes} to={`/messages/${chat.otherParticipantId.substring(0, chat.otherParticipantId.length - 4)}`}>
             <Avatar>
                 <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
             </Avatar>

@@ -1,16 +1,8 @@
-export interface PatientApi {
-    id: number;
-    mCondition: string;
-    account: {
-        id: number;
-        email: string;
-        receivedMessages: any[];
-        sentMessages: any[];
-        firstName: string;
-        lastName: string;
-        age: number;
-        userType: string;
-        password: string;
-        type: string;
-    };
+export interface AccountVm {
+    id:number;
+    firstName: string;
+    lastName: string;
+    email: string;
+    userType: string;
+    timestamp:string
 }
