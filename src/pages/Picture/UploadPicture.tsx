@@ -5,8 +5,7 @@ import { PictureApi } from '../../api/types/picture';
 
 const UploadPicture: React.FC = () => {
   const { mutate: uploadPicture } = usePostCall<PictureApi>(
-    'http://localhost:8000',
-    '/api/upload-picture',
+    'http://localhost:8000/api/upload-picture',
     'pictures',
   );
   const [file, setFile] = useState<File | null>(null);
@@ -79,4 +78,5 @@ const UploadPicture: React.FC = () => {
 };
 
 export default UploadPicture;
+
 

@@ -1,5 +1,4 @@
 import { ChangeEvent, ReactNode, useState } from "react"
-// import { useAuth } from "../../context/auth-context"
 import { PictureApi } from "../../api/types/picture"
 import { usePostCall } from "../../api/apiService"
 import { DatePicker } from "../../components/DatePicker"
@@ -7,11 +6,13 @@ import { Button } from "../../components/ui/button"
 import { ImagePlus } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTrigger, DialogTitle, DialogDescription, DialogFooter, DialogClose } from "../../components/ui/dialog"
 import { Label } from "../../components/ui/label"
-// import { Input } from "../../components/ui/input"
 import CustomTooltip from "../../components/Tooltip"
 import { Input } from "../../components/ui/input"
+import { AccountVm } from "../../api/types/user"
+import { useOAuth2 } from "../../context/oauth2-context"
 
 interface Props {
+    patient: AccountVm,
     customTrigger?: ReactNode
 }
 
@@ -36,19 +37,15 @@ const fileToBase64 = (file: File): Promise<string> => {
     });
   };
 
-const AddPictureDialog = ({ customTrigger }: Props) => {
-    
+const AddPictureDialog = ({patient, customTrigger }: Props) => {
     // const {account} = useAuth();
+    const {userData} = useOAuth2();
     const [file, setFile] = useState<File | null>(null);
-    const [patientEmail, setPatientEmail] = useState("Patient@Email1");
-    const [doctorEmail, setDoctorEmail] = useState("Doctor@Email1");
+    // const [doctorEmail, setDoctorEmail] = useState("");//todo get from Auth
     const [date, setDate] = useState<Date>(new Date())
 
     
-    const {mutate:newPicture} = usePostCall<PictureApi>(    
-    'http://localhost:8000',
-    '/api/upload-picture',
-    'pictures',)
+    const {mutate:newPicture} = usePostCall<PictureApi>('http://localhost:8000/api/upload-picture','pictures',)
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0] || null;
@@ -63,8 +60,8 @@ const AddPictureDialog = ({ customTrigger }: Props) => {
       
             const formData = new FormData();
             formData.append("picture_data_base64", base64String);
-            formData.append("patientEmail", patientEmail);
-            formData.append("doctorEmail", doctorEmail);
+            formData.append("patientEmail", patient.email);
+            formData.append("doctorEmail", userData.profile.email);
             formData.append("date", date.toISOString()); 
       
             newPicture(formData);
@@ -75,10 +72,8 @@ const AddPictureDialog = ({ customTrigger }: Props) => {
           }
         }
       
-        // Reset values and close the dialog
+ 
         document.getElementById("closeDialog")?.click();
-        setPatientEmail("Patient@Email1");
-        setDoctorEmail("Doctor@Email1");
         setDate(new Date());
       };
       

@@ -1,15 +1,15 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
 import { Card } from "../../components/ui/card";
-import { usePostCall } from "../../api/apiService";
+import { BASE_URL, useGetCall, usePostCall } from "../../api/apiService";
 import { Skeleton } from "../../components/ui/skeleton";
 import CustomAlert from "../../components/CustomAlert";
 import { MessageRow } from "./MessageRow";
-import { FormEvent, useEffect, useState } from "react";
-import { useAuth } from "../../context/auth-context";
+import { FormEvent, useState } from "react";
 import { MessageVm } from "../../api/types/chat";
+import { useOAuth2 } from "../../context/oauth2-context";
 
 
 
@@ -42,37 +42,29 @@ const Loading = () => {
 }
 
 const ChatWindow = () => {
-    const { account } = useAuth();
+    const { userData } = useOAuth2();
     const params = useParams();
-    const { mutate, data, isLoading, isError } = usePostCall<MessageVm[]>("http://localhost:8080",`/chat/${account?.id}/${params.chatid}`, '');
-    const { mutate: sendMessage } = usePostCall<MessageVm[]>("http://localhost:8080",`/message`, '');
-    const messages = data;
+    const receiver = params.chatid+ ".com"
+    const { data: messages, isLoading, isError } = useGetCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message/chat/" + receiver, 'messages', { Authorization: `Bearer ${userData?.access_token}` });
+    const { mutate: sendMessage } = usePostCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message", 'messages', { Authorization: `Bearer ${userData?.access_token}` });
     const [message, setMessage] = useState("");
-
-    useEffect(() => {
-        if (account?.id) {
-            mutate("");
-        }
-    }, [account?.id])
+    const navigate = useNavigate()
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!message.trim()) {
             return
         }
-        const messageVm: MessageVm = {
+        sendMessage({
             text: message,
-            sender: account?.id || -1,
-            receiver: Number(params.chatid),
-            senderFirstName: "",
-            senderLastName: "",
-            receiverFirstName: "",
-            receiverLastName: "",
-            date: ""
-        }
-        setMessage("");
-        sendMessage(messageVm);
+            senderEmail: userData?.profile.email || "",
+            receiverEmail: receiver || "",
+
+        });
+
+        navigate(0)
     }
+
 
     if (isLoading) return <Loading />;
     if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
@@ -88,14 +80,17 @@ const ChatWindow = () => {
                         </Avatar>
                         <div>
                             <p className="font-bold text-xl">
-                                {account && (messages[0].sender === account.id ? messages[0]?.receiverFirstName : messages[1]?.receiverFirstName)}{' '}
-                                {account && (messages[0].sender === account.id ? messages[0]?.receiverLastName : messages[1]?.receiverLastName)}
+                                {userData && (messages[0].sender === userData?.profile.given_name ? messages[0]?.receiverFirstName : messages[0]?.receiverFirstName)}{' '}
+                                {userData && (messages[0].sender === userData?.profile.family_name ? messages[0]?.receiverLastName : messages[0]?.receiverLastName)}
+                            </p>
+                            <p className="text-sm opacity-50">
+                                {userData && (messages[0].sender === userData?.profile.email ? messages[0]?.senderEmail: messages[0]?.receiverEmail)}{' '}
                             </p>
 
                         </div>
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
-                        {account && messages && messages.map((message, index) => <MessageRow key={index} self={message.sender === account.id} content={message.text} />)}
+                        {userData && messages && messages.map((message, index) => <MessageRow key={index} self={message.senderEmail === userData.profile.email} content={message.text} />)}
 
                     </div>
                     <form onSubmit={handleSubmit} className="flex gap-3 pt-3">

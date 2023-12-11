@@ -1,8 +1,6 @@
-export interface ObservationApi {
-    id:string;
-    description: string;
-    date: string;
-}
+import { AccountVm } from "./user";
+
+
 
 export interface EncounterApi {
     id: number;
@@ -22,4 +20,20 @@ export interface EncounterApi {
     description: string;
     date: string;
     observations: ObservationApi[];
+}
+export interface EncounterDetailsApi {
+    id: number;
+    doctor: AccountVm;
+    patient: AccountVm;
+    title: string;
+    description: string;
+    date: string;
+    timestamp: string;
+    observations: ObservationApi[];
+}
+
+export interface ObservationApi {
+    id: string;
+    description: string;
+    date: string;
 }

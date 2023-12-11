@@ -5,11 +5,13 @@ import Messages from './pages/Message/Index.tsx';
 import Encounters from './pages/Encounter/Encounters.tsx';
 import Chat from "./pages/Message/ChatWindow.tsx";
 import Home from "./pages/Home.tsx";
-import Patients from "./pages/Patient/Index.tsx";
-import PatientDetails from "./pages/Patient/PatientDetails.tsx";
-import SignIn from "./pages/SignIn.tsx";
-import Register from "./pages/Register.tsx";
+import Patients from "./pages/Patients/Index.tsx";
+import PatientDetails from "./pages/Patients/PatientDetails.tsx";
 import Protected from "./components/Protected.tsx";
+import SearchPage from "./pages/Search/Index.tsx";
+import EncounterDetails from "./pages/Encounter/EncounterDetails.tsx";
+import Profile from "./pages/Profile/Profile.tsx";
+import ConditionDetails from "./pages/Condition/ConditionDetails.tsx";
 import UploadPicture from "./pages/Picture/UploadPicture.tsx";
 import PatientPicturesPage from "./pages/Picture/PatientPicturesPage.tsx";
 
@@ -36,24 +38,36 @@ export const router = createBrowserRouter([
                 ]
             },
             {
+                path: 'profile/:userid',
+                element: <Protected><Profile /></Protected>,
+     
+            },
+            {
                 path: 'encounters',
-                element: <Protected><Encounters /></Protected>
+                element: <Protected><Encounters /></Protected>,
+     
+            },
+            {
+
+                path: "encounters/:encounterId",
+                element: <EncounterDetails />
+            },
+            {
+
+                path: "condition/:conditionId",
+                element: <ConditionDetails />
             },
             {
                 path: 'patients',
                 element: <Protected><Patients /></Protected>,
             },
             {
-                path: 'patients/:patientId',
+                path: 'patients/:patientEmail',
                 element: <Protected><PatientDetails /></Protected>
             },
             {
-                path: 'register',
-                element: <Register></Register>
-            },
-            {
-                path: 'login',
-                element: <SignIn></SignIn>
+                path: 'search',
+                element: <Protected><SearchPage /></Protected>
             },
             {
                 path: 'picture',//todo move to patient details or encounter
