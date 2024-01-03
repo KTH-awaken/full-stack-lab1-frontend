@@ -17,7 +17,7 @@ export const PatientEncounters = ({ patientEmail }: { patientEmail: string }) =>
     const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>(BASE_URL.JOURNAL_SERVICE + "/encounter/" + params.patientEmail + ".com", "encounters", { Authorization: `Bearer ${userData?.access_token}` });
 
     if (isLoading) return <Loading />
-    if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
+    if (isError) return <CustomAlert title='Error' message='An error occurred. Please try again later' />
 
     return (
         <div className="flex flex-col justify-start mt-4 gap-5">
@@ -29,7 +29,7 @@ export const PatientEncounters = ({ patientEmail }: { patientEmail: string }) =>
 
             </TooltipProvider>
 
-            {isError && <div className="mb-2"><CustomAlert title="Error" message="An error occured. Please try again later." /></div>}
+            {isError && <div className="mb-2"><CustomAlert title="Error" message="An error occurred. Please try again later." /></div>}
             {encounters && encounters.length === 0 && <CustomAlert title="Info" message="This patient has no encounters" />}
             <Accordion type="single" collapsible>
                 {encounters && encounters.map((enc: EncounterApi) =>

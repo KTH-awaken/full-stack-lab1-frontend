@@ -32,7 +32,7 @@ const Loading = () => {
 
 const Encounters = () => {
     const {userData} = useOAuth2();
-    const header = {Authorization: `Bearer ${userData.access_token}`}
+    const header = {Authorization: `Bearer ${userData?.access_token}`}
     const { data: encounters, isLoading, isError } = useGetCall<EncounterApi[]>(BASE_URL.JOURNAL_SERVICE +"/encounter", "encounter", header);
  
     console.log(encounters);
