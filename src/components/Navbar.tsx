@@ -12,13 +12,14 @@ import { useOAuth2 } from "../context/oauth2-context"
 
 
 const AuthenticatedMenu = () => {
-    const { logout, userData } = useOAuth2();
+    const { logout, userData, hasRole } = useOAuth2();
     return (
         <div className="flex items-center gap-8">
-            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>
+            {!hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>}
             <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/messages">Messages</NavLink>
             <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/encounters">Encounters</NavLink>
-            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/search"><SearchIcon /></NavLink>
+            {hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/conditions">Conditions</NavLink>}
+            {!hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/search"><SearchIcon /></NavLink>}
 
             <Menubar className="border-none cursor-pointer">
                 <MenubarMenu>

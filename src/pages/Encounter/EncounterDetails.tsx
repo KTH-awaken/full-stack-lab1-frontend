@@ -62,13 +62,18 @@ const EncounterDetails = () => {
                     </div>
 
                     <div>
-                        <p className="font-semibold text-foreground/50 mb-1">Observations</p>
+                        <p className="font-semibold text-foreground/50 mb-2">Observations</p>
                         {data.observations.length === 0 && <p>No observations</p>}
-                        <ul>
+                        <ul >
                             {data.observations.map(o => (
                                 <div key={o.id} className="flex gap-2 items-center mb-2 pl-2">
-                                    <span className="w-2 h-2 block rounded-full bg-primary/80"></span>
-                                    <li>{o.description}</li>
+                                    <li>
+                                        <div className="flex flex-row gap-2 items-center">
+                                            <span className="w-2 h-2 block rounded-full bg-primary/80"></span>
+                                            <p>{o.description}</p>
+                                        </div>
+                                        <span className="text-xs opacity-50 pl-4">{o.date.substring(0, 10)} {o.date.substring(11, 16)}</span>
+                                    </li>
                                 </div>
 
                             ))}

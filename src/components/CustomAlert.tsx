@@ -12,7 +12,7 @@ interface Props {
 const colors: Color[] = [
     { type: 'Error', bgColor: 'bg-red-50', textColor: "text-red-800" },
     { type: 'Success', bgColor: 'bg-green-50', textColor: "text-green-800" },
-    { type: 'Warning', bgColor: 'bg-oranage-50', textColor: "text-oranage-800" },
+    { type: 'Warning', bgColor: 'bg-orange-50', textColor: "text-orange-800" },
     { type: 'Info', bgColor: 'bg-blue-50', textColor: "text-blue-800" },
 
 ]
