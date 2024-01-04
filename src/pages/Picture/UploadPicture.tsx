@@ -1,11 +1,11 @@
 //Todo remove old page replaced by addpicture dialog
 import React, { useState, ChangeEvent } from 'react';
-import { usePostCall } from '../../api/apiService';
+import { BASE_URL, usePostCall } from '../../api/apiService';
 import { PictureApi } from '../../api/types/picture';
 
 const UploadPicture: React.FC = () => {
   const { mutate: uploadPicture } = usePostCall<PictureApi>(
-    'http://localhost:8000/api/upload-picture',
+    BASE_URL.PICTURE_SERVICE+ '/api/upload-picture',
     'pictures',
   );
   const [file, setFile] = useState<File | null>(null);

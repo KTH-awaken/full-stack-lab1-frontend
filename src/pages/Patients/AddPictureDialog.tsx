@@ -57,11 +57,11 @@ const AddPictureDialog = ({patient, customTrigger }: Props) => {
         if (file) {
           try {
             const base64String = await fileToBase64(file);
-      
+            const doctorEmail = userData ? userData.profile.email : " "
             const formData = new FormData();
             formData.append("picture_data_base64", base64String);
             formData.append("patientEmail", patient.email);
-            formData.append("doctorEmail", userData.profile.email);
+            formData.append("doctorEmail", doctorEmail);
             formData.append("date", date.toISOString()); 
       
             newPicture(formData);

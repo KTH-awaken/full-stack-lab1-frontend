@@ -21,7 +21,7 @@ const SearchPage = () => {
     const { data, isLoading, isError, refetch } = useGetCall<SearchResultApi[]>(
         "http://localhost:8084/search/find/" + searchKey,
         "search",
-        { Authorization: `Bearer ${userData.access_token}` }
+        { Authorization: `Bearer ${userData?.access_token}` }
     );
 
     const handleSubmit = (e: FormEvent<HTMLFormElement>) => {

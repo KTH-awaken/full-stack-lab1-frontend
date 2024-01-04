@@ -41,7 +41,6 @@ export interface UserData {
 }
 
 function mapToUserData(classInstance: any): UserData {
-    console.log(classInstance);
 
     return {
         id_token: classInstance.id_token,
@@ -96,7 +95,7 @@ export const OAuth2Provider = ({ children }: { children: ReactNode }) => {
         if (oidcAuth.userData) {
             setUserData(mapToUserData(oidcAuth.userData));
         }
-    }, [oidcAuth.isLoading, oidcAuth.userData]);
+    }, [oidcAuth.isLoading, oidcAuth.userData, oidcAuth.userData?.access_token]);
 
     const login = () => oidcAuth.signIn();
     const logout = () => oidcAuth.signOutRedirect();

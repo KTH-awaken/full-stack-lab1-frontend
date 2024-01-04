@@ -13,7 +13,9 @@ export const BASE_URL = {
     USER_SERVICE: "http://localhost:8081",
     JOURNAL_SERVICE: "http://localhost:8082",
     MESSAGE_SERVICE: "http://localhost:8083",
-    SEARCH_SERVICE: "http://localhost:8084"
+    SEARCH_SERVICE: "http://localhost:8084",
+    PICTURE_SERVICE: "http://localhost:8000"
+
 }
 
 

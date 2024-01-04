@@ -276,7 +276,7 @@ const Information = ({ nrOfPictures }: { nrOfPictures: number }) => {
   const { data: patient } = useGetCall<AccountVm>(BASE_URL.USER_SERVICE + "/user/" + params.patientEmail + ".com", "patient", { Authorization: `Bearer ${userData?.access_token}` });
   return (
     <>
-      <h1 className="text-2xl font-bold mb-4">Patient</h1>
+      <h1 className="text-2xl font-bold mb-4 mt-4">Patient</h1>
       <div className="flex flex-col gap-2 pb-5">
         <p><strong className="text-foreground/50 font-medium">Firstname: </strong> {patient && patient.firstName}</p>
         <p><strong className="text-foreground/50 font-medium">Lastname: </strong> {patient && patient.lastName}</p>
@@ -293,7 +293,7 @@ interface PictureListProps {
 }
 const PictureList: React.FC<PictureListProps> = ({ email }) => {
   const { data: pictures, isLoading, isError } = useGetCall<PictureApi[]>(
-    `http://localhost:8000/api/get-pictures/${encodeURIComponent(email)}`,
+    `${BASE_URL.PICTURE_SERVICE}/api/get-pictures/${encodeURIComponent(email)}`,
     'pictures'
   );
   const [selectedPicture, setSelectedPicture] = useState<PictureApi>();
