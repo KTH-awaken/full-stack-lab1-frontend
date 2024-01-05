@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Button } from "../../components/ui/button";
 import { Input } from "../../components/ui/input";
 import { Avatar, AvatarImage } from "@radix-ui/react-avatar";
@@ -10,8 +10,6 @@ import { MessageRow } from "./MessageRow";
 import { FormEvent, useState } from "react";
 import { MessageVm } from "../../api/types/chat";
 import { useOAuth2 } from "../../context/oauth2-context";
-
-
 
 const Loading = () => {
     return (
@@ -38,71 +36,114 @@ const Loading = () => {
                 <Skeleton className="h-12 w-[100px] rounded-2xl" />
             </div>
         </Card>
-    )
-}
+    );
+};
 
 const ChatWindow = () => {
     const { userData } = useOAuth2();
     const params = useParams();
-    const receiver = params.chatid+ ".com"
-    const { data: messages, isLoading, isError } = useGetCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message/chat/" + receiver, 'messages', { Authorization: `Bearer ${userData?.access_token}` });
-    const { mutate: sendMessage } = usePostCall<MessageVm[]>(BASE_URL.MESSAGE_SERVICE + "/message", 'messages', { Authorization: `Bearer ${userData?.access_token}` });
+    const receiver = params.chatid + ".com";
+    const {
+        data: messages,
+        isLoading,
+        isError,
+    } = useGetCall<MessageVm[]>(
+        BASE_URL.MESSAGE_SERVICE + "/message/chat/" + receiver,
+        "messages",
+        { Authorization: `Bearer ${userData?.access_token}` }
+    );
+    const { mutate: sendMessage } = usePostCall<MessageVm[]>(
+        BASE_URL.MESSAGE_SERVICE + "/message",
+        "messages",
+        { Authorization: `Bearer ${userData?.access_token}` }
+    );
     const [message, setMessage] = useState("");
-    const navigate = useNavigate()
 
     const handleSubmit = (e: FormEvent) => {
         e.preventDefault();
         if (!message.trim()) {
-            return
+            return;
         }
         sendMessage({
             text: message,
             senderEmail: userData?.profile.email || "",
             receiverEmail: receiver || "",
-
         });
-
-        navigate(0)
-    }
-
+    };
 
     if (isLoading) return <Loading />;
-    if (isError) return <CustomAlert title='Error' message='An error occured. Please try again later' />
+    if (isError)
+        return (
+            <CustomAlert
+                title="Error"
+                message="An error occured. Please try again later"
+            />
+        );
 
     return (
         <>
-            {
-                messages &&
+            {messages && (
                 <Card className="bg-background p-6 flex flex-col justify-center rounded-2xl h-[80vh] ">
                     <div className="mb-4 pb-2 flex gap-3">
                         <Avatar>
-                            <AvatarImage className="w-12 rounded-full" src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png" alt="@shadcn" />
+                            <AvatarImage
+                                className="w-12 rounded-full"
+                                src="https://cdn.pixabay.com/photo/2015/10/05/22/37/blank-profile-picture-973460_1280.png"
+                                alt="@shadcn"
+                            />
                         </Avatar>
                         <div>
                             <p className="font-bold text-xl">
-                                {userData && (messages[0].sender === userData?.profile.given_name ? messages[0]?.receiverFirstName : messages[0]?.receiverFirstName)}{' '}
-                                {userData && (messages[0].sender === userData?.profile.family_name ? messages[0]?.receiverLastName : messages[0]?.receiverLastName)}
+                                {userData &&
+                                    (messages[0].sender ===
+                                    userData?.profile.given_name
+                                        ? messages[0]?.receiverFirstName
+                                        : messages[0]?.receiverFirstName)}{" "}
+                                {userData &&
+                                    (messages[0].sender ===
+                                    userData?.profile.family_name
+                                        ? messages[0]?.receiverLastName
+                                        : messages[0]?.receiverLastName)}
                             </p>
                             <p className="text-sm opacity-50">
-                                {userData && (messages[0].sender === userData?.profile.email ? messages[0]?.senderEmail: messages[0]?.receiverEmail)}{' '}
+                                {userData &&
+                                    (messages[0].sender ===
+                                    userData?.profile.email
+                                        ? messages[0]?.senderEmail
+                                        : messages[0]?.receiverEmail)}{" "}
                             </p>
-
                         </div>
                     </div>
                     <div className="flex flex-col gap-3 grow overflow-y-auto">
-                        {userData && messages && messages.map((message, index) => <MessageRow key={index} self={message.senderEmail === userData.profile.email} content={message.text} />)}
-
+                        {userData &&
+                            messages &&
+                            messages.map((message, index) => (
+                                <MessageRow
+                                    key={index}
+                                    self={
+                                        message.senderEmail ===
+                                        userData.profile.email
+                                    }
+                                    content={message.text}
+                                />
+                            ))}
                     </div>
                     <form onSubmit={handleSubmit} className="flex gap-3 pt-3">
-                        <Input value={message} onChange={(e) => setMessage(e.target.value)} className="border-none bg-accent" placeholder="Type a message..." type="text" name="" id="" ></Input>
+                        <Input
+                            value={message}
+                            onChange={(e) => setMessage(e.target.value)}
+                            className="border-none bg-accent"
+                            placeholder="Type a message..."
+                            type="text"
+                            name=""
+                            id=""
+                        ></Input>
                         <Button type="submit">Send</Button>
                     </form>
-
                 </Card>
-            }
+            )}
         </>
+    );
+};
 
-    )
-}
-
-export default ChatWindow
+export default ChatWindow;

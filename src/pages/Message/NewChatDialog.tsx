@@ -14,7 +14,6 @@ import { Button } from "../../components/ui/button";
 import { Textarea } from "../../components/ui/textarea";
 import SelectPopover from "../../components/SelectPopover";
 import { useOAuth2 } from "../../context/oauth2-context";
-import { useNavigate } from "react-router-dom";
 import { AccountVm } from "../../api/types/user";
 
 
@@ -26,7 +25,6 @@ const NewChatDialog = () => {
     const { mutate } = usePostCall(BASE_URL.MESSAGE_SERVICE + "/message", "messages", { Authorization: `Bearer ${userData?.access_token}` })
     const [message, setMessage] = useState("");
     const [receiver, setReceiver] = useState("");
-    const navigate = useNavigate()
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -37,7 +35,6 @@ const NewChatDialog = () => {
 
         });       
         document.getElementById("closeDialog")?.click();
-        navigate(0);
     };
 
     return (
