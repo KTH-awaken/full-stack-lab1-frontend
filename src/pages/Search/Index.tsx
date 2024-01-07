@@ -19,7 +19,7 @@ const SearchPage = () => {
     const [hasSearched, setHasSearched] = useState<boolean | null>(null);
     const { userData } = useOAuth2();
     const { data, isLoading, isError, refetch } = useGetCall<SearchResultApi[]>(
-        BASE_URL.SEARCH_SERVICE + "/search/find",
+        BASE_URL.SEARCH_SERVICE + "/search/find/" + searchKey,
         "search",
         { Authorization: `Bearer ${userData?.access_token}` }
     );
