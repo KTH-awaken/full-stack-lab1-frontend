@@ -1,40 +1,20 @@
-on:
+name: kthcloud-ci
+"on":
   push:
     branches:
-      - main
-
+    - main
 jobs:
-  build-and-test:
+  docker:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
-
-      - name: Setup Node
-        uses: actions/setup-node@v3
-
-      - name: Install dependencies
-        uses: bahmutov/npm-install@v1
-
-      - name: Build project
-        run: npm run build
-
-      - name: Upload production-ready build files
-        uses: actions/upload-artifact@v3
-        with:
-          name: production-files
-          path: ./dist
-
-      - name: Login to Docker Hub
-        uses: docker/login-action@v3
-        with:
-          registry: registry.cloud.cbh.kth.se
-          username: ${{ secrets.DOCKER_USERNAME }}
-          password: ${{ secrets.DOCKER_PASSWORD }}
-
-      - name: Build and push Docker image
-        uses: docker/build-push-action@v5
-        with:
-          context: ./dist
-          push: true
-          tags: ${{ secrets.DOCKER_TAG }}
+    - name: Login to Docker Hub
+      uses: docker/login-action@v3
+      with:
+        registry: registry.cloud.cbh.kth.se
+        username: ${{ secrets.DOCKER_USERNAME }}
+        password: ${{ secrets.DOCKER_PASSWORD }}
+    - name: Build and push
+      uses: docker/build-push-action@v5
+      with:
+        push: true
+        tags: ${{ secrets.DOCKER_TAG }}
