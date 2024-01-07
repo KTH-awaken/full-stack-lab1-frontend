@@ -18,8 +18,8 @@ export const oidcConfig = {
     },
     authority:"http://vm.cloud.cbh.kth.se:2542/realms/journal-realm",
     clientId:"journal-client",
-    redirectUri:"http://localhost:3000",
-    postLogoutRedirectUri: "http://localhost:3000",
+    redirectUri:"https://user-interface.app.cloud.cbh.kth.se/",
+    postLogoutRedirectUri: "https://user-interface.app.cloud.cbh.kth.se/",
     responseType: "code",
     scope: "openid profile email offline_access roles",
 };
