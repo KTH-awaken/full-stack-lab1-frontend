@@ -1,7 +1,0 @@
-- Add authorization (role based access) in backend
-- Add authorization (role based ui and actions) in frontend
-- Make sure all components communicate with each other throw docker locally
-
-- Write test code
-- Add actions in git hub run test
-- Deploy in cloud
