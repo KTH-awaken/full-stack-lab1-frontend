@@ -16,7 +16,7 @@ export const oidcConfig = {
             headers: { Authorization: `Bearer ${user.access_token}` },
         });
     },
-    authority:"http://localhost:8181/realms/journal-realm",
+    authority:"http://vm.cloud.cbh.kth.se:2542/realms/journal-realm",
     clientId:"journal-client",
     redirectUri:"http://localhost:3000",
     postLogoutRedirectUri: "http://localhost:3000",

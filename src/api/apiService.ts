@@ -10,11 +10,11 @@ import {
 
 
 export const BASE_URL = {
-    USER_SERVICE: "http://localhost:8081",
-    JOURNAL_SERVICE: "http://localhost:8082",
-    MESSAGE_SERVICE: "http://localhost:8083",
-    SEARCH_SERVICE: "http://localhost:8084",
-    PICTURE_SERVICE: "http://localhost:8000"
+    USER_SERVICE: "https://health-user-service.app.cloud.cbh.kth.se",
+    JOURNAL_SERVICE: "https://health-journal-service.app.cloud.cbh.kth.se",
+    MESSAGE_SERVICE: "https://health-message-service.app.cloud.cbh.kth.se",
+    SEARCH_SERVICE: "https://health-search-service.app.cloud.cbh.kth.se",
+    PICTURE_SERVICE: "https://health-picture-service.app.cloud.cbh.kth.se"
 
 }
 

@@ -1,7 +1,7 @@
 import { SearchIcon } from "lucide-react"
 import { Input } from "../../components/ui/input"
 import { Card } from "../../components/ui/card"
-import { useGetCall } from "../../api/apiService"
+import { BASE_URL, useGetCall } from "../../api/apiService"
 import { SearchResultApi } from "../../api/types/search"
 import { FormEvent, useState } from "react"
 import { Skeleton } from "../../components/ui/skeleton"
@@ -19,7 +19,7 @@ const SearchPage = () => {
     const [hasSearched, setHasSearched] = useState<boolean | null>(null);
     const { userData } = useOAuth2();
     const { data, isLoading, isError, refetch } = useGetCall<SearchResultApi[]>(
-        "http://localhost:8084/search/find/" + searchKey,
+        BASE_URL.SEARCH_SERVICE + "/search/find",
         "search",
         { Authorization: `Bearer ${userData?.access_token}` }
     );

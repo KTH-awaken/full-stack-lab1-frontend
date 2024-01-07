@@ -34,7 +34,7 @@ const DrawOnPicture = ({ imageUrl, onSave, onCancel, selectedPicture }: Props) =
   const [isInputActive, setIsInputActive] = useState(false);
   const [selectedButton, setSelectedButton] = useState<string | null>(null);
 
-  const { mutate: newPicture } = usePostCall<PictureApi>('http://localhost:8000/api/replace-picture', 'pictures')
+  const { mutate: newPicture } = usePostCall<PictureApi>(BASE_URL.PICTURE_SERVICE + '/api/replace-picture', 'pictures')
 
   useEffect(() => {
     const canvas = canvasRef.current;

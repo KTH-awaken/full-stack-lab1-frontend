@@ -1,6 +1,6 @@
 import { ChangeEvent, ReactNode, useState } from "react"
 import { PictureApi } from "../../api/types/picture"
-import { usePostCall } from "../../api/apiService"
+import { BASE_URL, usePostCall } from "../../api/apiService"
 import { DatePicker } from "../../components/DatePicker"
 import { Button } from "../../components/ui/button"
 import { ImagePlus } from "lucide-react"
@@ -45,7 +45,7 @@ const AddPictureDialog = ({patient, customTrigger }: Props) => {
     const [date, setDate] = useState<Date>(new Date())
 
     
-    const {mutate:newPicture} = usePostCall<PictureApi>('http://localhost:8000/api/upload-picture','pictures',)
+    const {mutate:newPicture} = usePostCall<PictureApi>(BASE_URL.PICTURE_SERVICE+ '/api/upload-picture','pictures',)
 
     const handleFileChange = (e: ChangeEvent<HTMLInputElement>) => {
         const selectedFile = e.target.files?.[0] || null;
