@@ -16,7 +16,7 @@ export const oidcConfig = {
             headers: { Authorization: `Bearer ${user.access_token}` },
         });
     },
-    authority:"http://vm.cloud.cbh.kth.se:2542/realms/journal-realm",
+    authority:"	https://keycloak-prox.vm-app.cloud.cbh.kth.se/realms/journal-realm",
     clientId:"journal-client",
     redirectUri:"https://user-interface.app.cloud.cbh.kth.se/",
     postLogoutRedirectUri: "https://user-interface.app.cloud.cbh.kth.se/",
