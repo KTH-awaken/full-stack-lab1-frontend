@@ -10,6 +10,7 @@ import { AlignJustify, SearchIcon } from "lucide-react"
 import { useOAuth2 } from "../context/oauth2-context"
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetFooter,
     SheetHeader,
@@ -52,11 +53,11 @@ const AuthenticatedMenu = () => {
                             </div>
                         </SheetHeader>
                         <div className={"flex items-start flex-col gap-8 flex-grow"}>
-                            {!hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients">Patients</NavLink>}
-                            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/messages">Messages</NavLink>
-                            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/encounters">Encounters</NavLink>
-                            {hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/conditions">Conditions</NavLink>}
-                            {!hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/search">Search</NavLink>}
+                            {!hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/patients"><SheetClose>Patients</SheetClose></NavLink>}
+                            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/messages"><SheetClose>Messages</SheetClose></NavLink>
+                            <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/encounters"><SheetClose>Encounters</SheetClose> </NavLink>            
+                            {hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/conditions"><SheetClose>Conditions</SheetClose></NavLink>}
+                            {!hasRole('PATIENT') && <NavLink className={({ isActive }) => (isActive ? 'text-primary' : 'opacity-75')} to="/search"><SheetClose>Search</SheetClose></NavLink>}
                         </div>
                         <SheetFooter className="flex flex-col py-2 mt-2 border-t">
                             <Button onClick={logout} variant="secondary" className="flex gap-2"><LogoutIcon /> Logout</Button>
