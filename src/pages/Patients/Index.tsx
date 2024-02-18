@@ -41,7 +41,7 @@ const Patients = () => {
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[200px]">Name</TableHead>
-                            <TableHead className='hidden lg:inline-block'>Email</TableHead>
+                            <TableHead className='hidden lg:table-cell'>Email</TableHead>
                             <TableHead className="text-right">Actions</TableHead>
                         </TableRow>
                     </TableHeader>
@@ -49,14 +49,14 @@ const Patients = () => {
                         {isLoading &&
                             <TableRow>
                                 <TableCell><Loading /></TableCell>
-                                <TableCell className='hidden lg:inline-block'><Loading /></TableCell>
+                                <TableCell className='hidden lg:table-cell'><Loading /></TableCell>
                                 <TableCell><Loading /></TableCell>
                             </TableRow>
                         }
                         {patients && patients.map((patient) => (
                             <TableRow key={patient.id}>
                                 <TableCell className="font-medium">{patient.firstName.concat(" " + patient.lastName)}</TableCell>
-                                <TableCell className='hidden lg:inline-block'>{patient.email}</TableCell>
+                                <TableCell className='hidden lg:table-cell'>{patient.email}</TableCell>
                                 <TableCell className="text-right flex items-center justify-end gap-4">
                                     <TooltipProvider>
                                          <CustomTooltip desciption='Patient Details'>
