@@ -8,6 +8,7 @@ import { ChatApi } from "../../api/types/chat";
 import { useOAuth2 } from "../../context/oauth2-context";
 import {
     Sheet,
+    SheetClose,
     SheetContent,
     SheetHeader,
     SheetTitle,
@@ -52,8 +53,8 @@ const Messages = () => {
             <div className="lg:hidden block">
                 <Sheet>
                     <SheetTrigger className="w-full">
-                        <Button className="w-full flex gap-3">Chats <MessageCircleIcon/></Button>
-                        
+                        <Button className="w-full flex gap-3">Chats <MessageCircleIcon /></Button>
+
                     </SheetTrigger>
                     <SheetContent className="w-full">
                         <SheetHeader className="mb-3 border-b pb-2">
@@ -65,9 +66,9 @@ const Messages = () => {
                         {isError && <CustomAlert title='Error' message='An error occured. Please try again later' />}
 
 
-                        <div >
+                        <SheetClose >
                             {chats && chats.map((chat, index) => <ChatRow key={index} chat={chat} />)}
-                        </div>
+                        </SheetClose>
 
                     </SheetContent>
                 </Sheet>
