@@ -114,7 +114,7 @@ const Navbar = () => {
     const { isAuthenticated } = useOAuth2();
 
     return (
-        <Card className="flex justify-between items-center sticky top-0 bg-background  px-4 py-2 rounded-2xl">
+        <Card className="flex justify-between items-center sticky top-0 z-50 bg-background  px-4 py-2 rounded-2xl">
             <a href="/">
                 <Logo />
             </a>

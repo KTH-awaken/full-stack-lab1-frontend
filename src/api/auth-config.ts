@@ -15,18 +15,18 @@ export const oidcConfig = {
             headers: { Authorization: `Bearer ${user.access_token}` },
         });
     },
-    authority:
-        "https://keycloak-prox.vm-app.cloud.cbh.kth.se/realms/journal-realm",
-    clientId: "journal-client",
-    redirectUri:"https://user-interface.app.cloud.cbh.kth.se/",
-    postLogoutRedirectUri: "https://user-interface.app.cloud.cbh.kth.se/",
-
-
     // authority:
-    //     "http://localhost:8080/realms/journal-realm",
+    //     "https://keycloak-prox.vm-app.cloud.cbh.kth.se/realms/journal-realm",
     // clientId: "journal-client",
-    // redirectUri: "http://localhost:3000/",
-    // postLogoutRedirectUri: "http://localhost:3000/",
+    // redirectUri:"https://user-interface.app.cloud.cbh.kth.se/",
+    // postLogoutRedirectUri: "https://user-interface.app.cloud.cbh.kth.se/",
+
+
+    authority:
+        "http://localhost:8080/realms/journal-realm",
+    clientId: "journal-client",
+    redirectUri: "http://localhost:3000/",
+    postLogoutRedirectUri: "http://localhost:3000/",
 
 
     responseType: "code",

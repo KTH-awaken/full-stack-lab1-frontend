@@ -19,9 +19,9 @@ const Messages = () => {
   
 
     return (
-        <div className="flex justify-between gap-10 h-[80vh] ">
+        <div className="flex justify-between flex-col-reverse lg:flex-row gap-10  min-h-[80vh] ">
 
-            <Card className="w-1/2 p-6 pt-0 bg-background rounded-2xl overflow-y-auto relative">
+            <Card className="lg:w-1/2 p-6 pt-0 bg-background rounded-2xl overflow-y-auto relative min-h-[80vh]">
 
                 <div className="flex items-start justify-between mb-4 pb-2 pt-6  sticky top-0 bg-background">
                     <h1 className="text-2xl font-semibold mb-5">Message</h1>
@@ -41,7 +41,7 @@ const Messages = () => {
             </Card>
 
 
-            <div className="w-1/2 h-full">
+            <div className="lg:w-1/2 min-h-[80vh]">
                 <Outlet />
             </div>
 
