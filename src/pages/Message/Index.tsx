@@ -8,7 +8,6 @@ import { ChatApi } from "../../api/types/chat";
 import { useOAuth2 } from "../../context/oauth2-context";
 import {
     Sheet,
-    SheetClose,
     SheetContent,
     SheetHeader,
     SheetTitle,
@@ -31,7 +30,7 @@ const Messages = () => {
     return (
         <div className="flex justify-between flex-col lg:flex-row gap-10  min-h-[80vh] ">
 
-            <Card className="hidden lg:w-1/2 p-6 pt-0 bg-background rounded-2xl overflow-y-auto relative min-h-[50vh]">
+            <Card className="hidden lg:block lg:w-1/2 p-6 pt-0 bg-background rounded-2xl overflow-y-auto relative min-h-[50vh]">
 
                 <div className="flex items-start justify-between mb-4 pb-2 pt-6  sticky top-0 bg-background">
                     <h1 className="text-2xl font-semibold mb-5">Message</h1>
@@ -66,9 +65,7 @@ const Messages = () => {
                         {isError && <CustomAlert title='Error' message='An error occured. Please try again later' />}
 
 
-                        <SheetClose >
-                            {chats && chats.map((chat, index) => <ChatRow key={index} chat={chat} />)}
-                        </SheetClose>
+                        {chats && chats.map((chat, index) => <ChatRow key={index} chat={chat} />)}
 
                     </SheetContent>
                 </Sheet>
